@@ -1,0 +1,11 @@
+#WelcomeLabel {
+	-fx-font-size: 20pt;
+	-fx-text-fill: black;
+	-fx-font-family: Courier;
+}
+
+#FileChooserBt {
+	-fx-font-size: 20pt;
+	-fx-text-fill: black;
+	-fx-font-family: Courier;
+}
