@@ -1,12 +1,12 @@
 Protokoll vom 27.06.2016
 
-1. Versucht bei GitHub anzumelden, jedoch bei der Gruppenregistrierung
-     Problem gelöst durch Paul, er hat den Link zur Regristierung gefunden
-2. Besprechung über den Aufbau des Programms
-    -> Welche Erweiterung wir gewählt haben: Babysteps und Tracking
-    -> Besprechung über den Aufbau des GUI ( siehe "Aufbau GUI.txt")
+1. Versucht bei GitHub anzumelden, jedoch gab es Probleme bei der Gruppenregistrierung
+     Problem gelÃ¶st durch Paul, er hat den Link zur Regristierung gefunden
+2. Besprechung Ã¼ber den Aufbau des Programms
+    -> Welche Erweiterung wir gewÃ¤hlt haben: Babysteps und Tracking
+    -> Besprechung Ã¼ber den Aufbau des GUI ( siehe "Aufbau GUI.txt")
 3. Arbeitsaufteilung in Gruppen:
     -> Lorcan und Paul arbeiten an der GUI
     -> Markus, Alona und Jenusa  arbeiten an den Grundaufbau der Methoden. (siehe "Grundaufbau.txt")
-4.nächste Terminvereinbarung: 30.06.2016 um 14:30 Uhr
+4.nÃ¤chste Terminvereinbarung: 30.06.2016 um 14:30 Uhr
   Ziel: Weiterarbeiten an GUI und Implementierung der Methoden.
