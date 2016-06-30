@@ -1,0 +1,16 @@
+import java.util.List;
+import java.util.LinkedList;
+
+public class Punkt1{
+
+  public void start1(File dateifile){
+    List<String> datei = LinkedList<String>();
+    datei = Files.readAllLines(dateifile);
+  }
+  
+  public void testladen(File testfile){
+    List<String> test = LinkedList<String>();
+    test = FIles.readAllLines(testfile);
+    }
+    
+}
