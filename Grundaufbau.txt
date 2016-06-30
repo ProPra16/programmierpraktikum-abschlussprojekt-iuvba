@@ -1,26 +1,27 @@
 Punkt 1:
-Laden: Grundgerüst der Übung
-übergibt das an Punkt 2
+Laden: GrundgerÃ¼st der Ãœbung
+Ã¼bergibt das an Punkt 2
 
 Punkt 2:
-Datei speichern als .java Datei
+
 Eingabe als Liste
 [boolean variable x
 if - Anweisung ( wenn nicht kompilierbar) x= false
-if -Anweisung ( wenn der Test fehlschlägt) x = false
+if -Anweisung ( wenn ein Test fehlschlÃ¤gt) x = false
 else return true
 return x] -> eigene Funktion (Check-Funktion)
+Datei speichern als .java Datei
 
 Punkt 3:
-Liste (code) verändern, Speichern ->  Check-Button (Check-Funktion)
+Liste (code) verÃ¤ndern, Speichern ->  Check-Button (Check-Funktion)
 if (true) -> Weiter-Button wird visible
-if (zurück z RED) -> Code von Punkt 2
-	                (Vorläufige und Original Datei anlegen. Man schreibt in der vorläufigen Datei und erst bei
-		Betätigung des Weiter-Buttons, wird die vorläufige in Original gespeichert.)
+if (zurÃ¼ck z RED) -> Code von Punkt 2
+	                (VorlÃ¤ufige und Original Datei anlegen. Man schreibt in der vorlÃ¤ufigen Datei und erst bei
+		BetÃ¤tigung des Weiter-Buttons, wird die vorlÃ¤ufige in Original gespeichert.)
 
 
 Punkt 4:
-Veränderung (Verbesserung) in der Liste
+VerÃ¤nderung (Verbesserung) in der Liste
 Button-> Check-Funktion- Aufruf: Weiter-Button wird erst sichtbar wenn x=true
 
 Punkt 5:
