@@ -6,11 +6,13 @@ public class Punkt1{
   public void start1(File dateifile){
     List<String> datei = LinkedList<String>();
     datei = Files.readAllLines(dateifile);
+    return datei;
   }
   
   public void testladen(File testfile){
     List<String> test = LinkedList<String>();
     test = FIles.readAllLines(testfile);
+    return test;
     }
     
 }
