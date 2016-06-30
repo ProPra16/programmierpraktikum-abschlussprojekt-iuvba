@@ -1,5 +1,7 @@
-import java.awt.Desktop;
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -10,7 +12,6 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.ScrollBar;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
@@ -24,18 +25,17 @@ public class FensterControllerMenu {
 	private Label WelcomeLabel;
 	
 	@FXML
-	private Button FileChooserBtTestFile;
+	private Button FileChooserBtFile;
 	
 	@FXML
-	private Button FileChooserBtFile;
+	private Button FileChooserBtTestFile;
 	
 	@FXML
 	protected void btPressedFCFile(ActionEvent event) {
 		Stage subStage = new Stage();
 		FileChooser fileChooserTest = new FileChooser();
-		fileChooserTest.setTitle("Open Recource File");
-		fileChooserTest.getExtensionFilters().addAll(
-				new ExtensionFilter("Java Files", "*.java"));
+		fileChooserTest.setTitle("Open File");
+		fileChooserTest.getExtensionFilters().addAll(new ExtensionFilter("Java Files", "*.java"));
 		File selectedFile = fileChooserTest.showOpenDialog(subStage);
 	}
 	
@@ -44,8 +44,7 @@ public class FensterControllerMenu {
 		Stage subStage = new Stage();
 		FileChooser fileChooserTest = new FileChooser();
 		fileChooserTest.setTitle("Open Test File");
-		fileChooserTest.getExtensionFilters().addAll(
-				new ExtensionFilter("Java Files", "*.java"));
+		fileChooserTest.getExtensionFilters().addAll(new ExtensionFilter("Java Files", "*.java"));
 		File selectedTestFile = fileChooserTest.showOpenDialog(subStage);
 		if (selectedTestFile != null) {
             openTestFile(selectedTestFile);
@@ -67,6 +66,8 @@ public class FensterControllerMenu {
 		textfield.setId("textfield");
 		textfield.setPrefSize(450.0, 600.0);
 		
+		textfield.setText(readFile(selectedFileTest));
+		
 		subPane.add(textfield, 0, 0);
 		
 		subStage.setTitle("Red");
@@ -75,32 +76,31 @@ public class FensterControllerMenu {
 		
 	}
 	
-	
-	/*
-	private Desktop desktop = Desktop.getDesktop();
-	
-	 private void openFile(File selectedFile) {
-	        try {
-	            desktop.open(selectedFile);
-	        } catch (IOException ex) {
-	            Logger.getLogger(FensterControllerMenu.class.getName()).log(
-	                Level.SEVERE, null, ex
-	            );
-	        }
-	    }
-	
-	public Stage newWindow () {
-		
-		GridPane subPane = new GridPane();
-		subPane.setAlignment(Pos.CENTER);
-		StackPane subLayout = new StackPane();
-		subLayout.getChildren().add(subPane);
-		Scene subScene = new Scene(subLayout, 500, 500);
-		Stage subStage = new Stage();
-		subStage.setScene(subScene);
-		
-		return subStage;
-	}
-	*/
+	private String readFile(File file){
+        StringBuilder stringBuffer = new StringBuilder();
+        BufferedReader bufferedReader = null;
+         
+        try {
+ 
+            bufferedReader = new BufferedReader(new FileReader(file));
 
+            String text;
+            while ((text = bufferedReader.readLine()) != null) {
+                stringBuffer.append(text);
+            }
+ 
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(FensterControllerMenu.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(FensterControllerMenu.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                bufferedReader.close();
+            } catch (IOException ex) {
+                Logger.getLogger(FensterControllerMenu.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } 
+         
+        return stringBuffer.toString();
+    }
 }
