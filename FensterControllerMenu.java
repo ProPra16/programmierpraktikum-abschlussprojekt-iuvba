@@ -40,7 +40,7 @@ public class FensterControllerMenu {
 	}
 	
 	@FXML
-	protected void btPressedFCTestFile(ActionEvent event) {
+	protected void btPressedFCTestFile(ActionEvent event) throws IOException {
 		Stage subStage = new Stage();
 		FileChooser fileChooserTest = new FileChooser();
 		fileChooserTest.setTitle("Open Test File");
@@ -51,7 +51,7 @@ public class FensterControllerMenu {
         }
 	}
 	
-	private void openTestFile(File selectedFileTest) {
+	private void openTestFile(File selectedTestFile) throws IOException {
 		
 		GridPane subPane = new GridPane();
 		subPane.setAlignment(Pos.TOP_LEFT);
@@ -66,8 +66,12 @@ public class FensterControllerMenu {
 		textfield.setId("textfield");
 		textfield.setPrefSize(450.0, 600.0);
 		
-		textfield.setText(readFile(selectedFileTest));
+//		textfield.setText(readFile(selectedTestFile));
 		
+		StringBuilder sb = null;
+		sb = readFile(selectedTestFile);
+		textfield.setText(sb.toString());
+
 		subPane.add(textfield, 0, 0);
 		
 		subStage.setTitle("Red");
@@ -76,31 +80,20 @@ public class FensterControllerMenu {
 		
 	}
 	
-	private String readFile(File file){
-        StringBuilder stringBuffer = new StringBuilder();
-        BufferedReader bufferedReader = null;
-         
-        try {
- 
-            bufferedReader = new BufferedReader(new FileReader(file));
-
-            String text;
-            while ((text = bufferedReader.readLine()) != null) {
-                stringBuffer.append(text);
-            }
- 
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(FensterControllerMenu.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
-            Logger.getLogger(FensterControllerMenu.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
-            try {
-                bufferedReader.close();
-            } catch (IOException ex) {
-                Logger.getLogger(FensterControllerMenu.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        } 
-         
-        return stringBuffer.toString();
-    }
+	public StringBuilder readFile(File selectedFile){
+		StringBuilder sb = new StringBuilder(1024);
+		String curLine = "";
+		try{
+		  FileReader fr = new FileReader(selectedFile);
+		  BufferedReader br = new BufferedReader(fr);
+		  
+		  while(curLine != null){
+			  curLine = br.readLine();
+			  sb.append(curLine).append("\n");
+		 }
+		} catch (Exception e){
+			e.getMessage();
+		}
+		return sb;
+	}
 }
