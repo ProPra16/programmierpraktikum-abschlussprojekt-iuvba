@@ -7,12 +7,15 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
+import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.FileChooser;
@@ -53,14 +56,17 @@ public class FensterControllerMenu {
 	
 	private void openTestFile(File selectedTestFile) throws IOException {
 		
-		GridPane subPane = new GridPane();
-		subPane.setAlignment(Pos.TOP_LEFT);
+		GridPane subPaneRed = new GridPane();
+		subPaneRed.setAlignment(Pos.TOP_LEFT);
 		StackPane subLayout = new StackPane();
-		subLayout.getChildren().add(subPane);
+		subLayout.getChildren().add(subPaneRed);
 		Scene subScene = new Scene(subLayout, 600, 600);
 		subScene.getStylesheets().add(getClass().getResource("StyleMenu.css").toExternalForm());
 		Stage subStage = new Stage();
 		subStage.setScene(subScene);
+		subStage.setTitle("Red");
+		subStage.setResizable(false);
+		subPaneRed.setId("subPaneRed");
 		
 		TextArea textfield = new TextArea();
 		textfield.setId("textfield");
@@ -69,11 +75,28 @@ public class FensterControllerMenu {
 		StringBuilder sb = null;
 		sb = readFile(selectedTestFile);
 		textfield.setText(sb.toString());
-
-		subPane.add(textfield, 0, 0);
 		
-		subStage.setTitle("Red");
-		subStage.setResizable(false);
+		subPaneRed.add(textfield, 0, 0);
+		
+		Button goToGreen = new Button();
+		goToGreen.setPrefSize(145.0, 50.0);
+		goToGreen.setText("Go to Green");
+		
+		goToGreen.addEventFilter(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(MouseEvent event) {
+				if (event.getButton() == MouseButton.PRIMARY) {
+					
+					// Statt print soll subPaneRed geschlossen werden und SubPaneGreen wird geöffnet.
+					System.out.println("Open SubPane to Green");
+				}
+			}
+		});
+		
+		subPaneRed.add(goToGreen, 1, 0);
+		
+		
+		
         subStage.show();
 		
 	}
