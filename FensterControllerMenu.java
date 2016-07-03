@@ -3,9 +3,6 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -33,13 +30,16 @@ public class FensterControllerMenu {
 	@FXML
 	private Button FileChooserBtTestFile;
 	
+	private File selectedFile;
+	private File selectedTestFile;
+	
 	@FXML
 	protected void btPressedFCFile(ActionEvent event) {
 		Stage subStage = new Stage();
 		FileChooser fileChooserTest = new FileChooser();
 		fileChooserTest.setTitle("Open File");
 		fileChooserTest.getExtensionFilters().addAll(new ExtensionFilter("Java Files", "*.java"));
-		File selectedFile = fileChooserTest.showOpenDialog(subStage);
+		selectedFile = fileChooserTest.showOpenDialog(subStage);
 	}
 	
 	@FXML
@@ -48,7 +48,7 @@ public class FensterControllerMenu {
 		FileChooser fileChooserTest = new FileChooser();
 		fileChooserTest.setTitle("Open Test File");
 		fileChooserTest.getExtensionFilters().addAll(new ExtensionFilter("Java Files", "*.java"));
-		File selectedTestFile = fileChooserTest.showOpenDialog(subStage);
+		selectedTestFile = fileChooserTest.showOpenDialog(subStage);
 		if (selectedTestFile != null) {
             openTestFile(selectedTestFile);
         }
@@ -58,25 +58,25 @@ public class FensterControllerMenu {
 		
 		GridPane subPaneRed = new GridPane();
 		subPaneRed.setAlignment(Pos.TOP_LEFT);
-		StackPane subLayout = new StackPane();
-		subLayout.getChildren().add(subPaneRed);
-		Scene subScene = new Scene(subLayout, 600, 600);
-		subScene.getStylesheets().add(getClass().getResource("StyleMenu.css").toExternalForm());
-		Stage subStage = new Stage();
-		subStage.setScene(subScene);
-		subStage.setTitle("Red");
-		subStage.setResizable(false);
 		subPaneRed.setId("subPaneRed");
+		StackPane subLayoutRed = new StackPane();
+		subLayoutRed.getChildren().add(subPaneRed);
+		Scene subSceneRed = new Scene(subLayoutRed, 600, 600);
+		subSceneRed.getStylesheets().add(getClass().getResource("StyleMenu.css").toExternalForm());
+		Stage subStageRed = new Stage();
+		subStageRed.setScene(subSceneRed);
+		subStageRed.setTitle("Red");
+		subStageRed.setResizable(false);
 		
-		TextArea textfield = new TextArea();
-		textfield.setId("textfield");
-		textfield.setPrefSize(450.0, 600.0);
+		TextArea textfieldRed = new TextArea();
+		textfieldRed.setId("textfieldRed");
+		textfieldRed.setPrefSize(450.0, 600.0);
 				
-		StringBuilder sb = null;
-		sb = readFile(selectedTestFile);
-		textfield.setText(sb.toString());
+		StringBuilder sbRed = null;
+		sbRed = readFile(selectedTestFile);
+		textfieldRed.setText(sbRed.toString());
 		
-		subPaneRed.add(textfield, 0, 0);
+		subPaneRed.add(textfieldRed, 0, 0);
 		
 		Button goToGreen = new Button();
 		goToGreen.setPrefSize(145.0, 50.0);
@@ -87,17 +87,70 @@ public class FensterControllerMenu {
 			public void handle(MouseEvent event) {
 				if (event.getButton() == MouseButton.PRIMARY) {
 					
-					// Statt print soll subPaneRed geschlossen werden und SubPaneGreen wird geöffnet.
-					System.out.println("Open SubPane to Green");
+					subStageRed.close();
+					
+					GridPane subPaneGreen = new GridPane();
+					subPaneGreen.setAlignment(Pos.TOP_LEFT);
+					subPaneGreen.setId("subPaneGreen");
+					StackPane subLayoutGreen = new StackPane();
+					subLayoutGreen.getChildren().add(subPaneGreen);
+					Scene subSceneGreen = new Scene(subLayoutGreen, 600, 600);
+					subSceneGreen.getStylesheets().add(getClass().getResource("StyleMenu.css").toExternalForm());
+					Stage subStageGreen = new Stage();
+					subStageGreen.setScene(subSceneGreen);
+					subStageGreen.setTitle("Green");
+					subStageGreen.setResizable(false);
+					
+					TextArea textfieldGreen = new TextArea();
+					textfieldGreen.setId("textfieldGreen");
+					textfieldGreen.setPrefSize(450.0, 600.0);
+					// textfieldGreen braucht irgendeinen rowspan damit die Buttons ordentlich angezeigt werden können.
+							
+					StringBuilder sbGreen = null;
+					sbGreen = readFile(selectedFile);
+					textfieldGreen.setText(sbGreen.toString());
+					
+					subPaneGreen.add(textfieldGreen, 0, 0);
+					
+					Button backToRed = new Button();
+					backToRed.setPrefSize(145.0, 50.0);
+					backToRed.setText("Back to Red");
+					
+					Button goToBlack = new Button();
+					goToBlack.setPrefSize(145.0, 50.0);
+					goToBlack.setText("Go to Black");
+					
+					backToRed.addEventFilter(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+						@Override
+						public void handle(MouseEvent event) {
+							if (event.getButton() == MouseButton.PRIMARY) {
+								// Richtige Implementierung statt print.
+								System.out.println("Back to Red");
+							}
+						}
+					});
+					
+					goToBlack.addEventFilter(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+						@Override
+						public void handle(MouseEvent event) {
+							if (event.getButton() == MouseButton.PRIMARY) {
+								// Richtige Implementierung statt print.
+								System.out.println("Go to Black");
+							}
+						}
+					});
+					
+					subPaneGreen.add(backToRed, 1, 0);
+					subPaneGreen.add(goToBlack, 1, 1);
+					
+					subStageGreen.show();
 				}
 			}
 		});
 		
 		subPaneRed.add(goToGreen, 1, 0);
 		
-		
-		
-        subStage.show();
+        subStageRed.show();
 		
 	}
 	

@@ -15,3 +15,12 @@
 	-fx-text-fill: black;
 	-fx-font-family: Courier;
 }
+
+#subPaneRed {
+	-fx-background-color: red;
+}
+
+#subPaneGreen {
+	-fx-background-color: green;
+}
+
