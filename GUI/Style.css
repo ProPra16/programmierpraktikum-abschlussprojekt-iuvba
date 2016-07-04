@@ -1,0 +1,64 @@
+#WelcomeLabel {
+	-fx-font-size: 20pt;
+	-fx-text-fill: black;
+	-fx-font-family: Courier;
+}
+
+#FileChooserBtFile {
+	-fx-font-size: 14pt;
+	-fx-text-fill: black;
+	-fx-font-family: Courier;
+}
+
+#WeiterButton {
+	-fx-font-size: 14pt;
+	-fx-text-fill: black;
+	-fx-font-family: Courier;
+}
+
+
+#FileChooserBtTestFile {
+	-fx-font-size: 14pt;
+	-fx-text-fill: black;
+	-fx-font-family: Courier;
+}
+
+#subPaneRed {
+	-fx-background-color: red;
+}
+
+#subPaneGreen {
+	-fx-background-color: green;
+}
+
+#subPaneBlack {
+	-fx-background-color: black;
+}
+
+#goToGreen {
+	-fx-font-size: 10pt;
+	-fx-text-fill: black;
+	-fx-font-family: Courier;
+}
+
+#backToRed {
+	-fx-font-size: 10pt;
+	-fx-text-fill: black;
+	-fx-font-family: Courier;
+}
+
+#goToBlack {
+	-fx-font-size: 10pt;
+	-fx-text-fill: black;
+	-fx-font-family: Courier;
+}
+
+#goToRed {
+	-fx-font-size: 10pt;
+	-fx-text-fill: black;
+	-fx-font-family: Courier;
+}
+
+
+
+
