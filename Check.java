@@ -8,7 +8,9 @@ import java.util.LinkedList;
 public class Check{
 
 	boolean KompilierbarUndEinTestFailed;
+	private static boolean KompilierbarUndKeinTestFailed;
 	JavaStringCompiler compiler;
+
 /*	public static void main(String[] args){
 		checkRED(args[0],args[1],false);
 }*/
