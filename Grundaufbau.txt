@@ -25,4 +25,4 @@ Veränderung (Verbesserung) in der Liste
 Button-> Check-Funktion- Aufruf: Weiter-Button wird erst sichtbar wenn x=true
 
 Punkt 5:
-Weiter-Button ruftn wieder RED (Punkt 2) auf
+Weiter-Button ruft wieder RED (Punkt 2) auf
