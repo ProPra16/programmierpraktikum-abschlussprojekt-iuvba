@@ -13,10 +13,12 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
+import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.stage.FileChooser.ExtensionFilter;
@@ -66,9 +68,87 @@ public class FensterController {
 	
 	@FXML
 	protected void btPressedWeiter(ActionEvent event) throws IOException {
+		
+		
 		if (selectedFile != null && selectedTestFile != null) {
-			openTestFile(selectedTestFile);
+			
+			Stage subStage = new Stage();
+			DirectoryChooser directoryChooser = new DirectoryChooser();
+			directoryChooser.setTitle("Choose a directory");
+	        File selectedDirectory = directoryChooser.showDialog(subStage);
+	        
+	        if(selectedDirectory == null) {
+	        	Alert alert = new Alert(Alert.AlertType.ERROR, "Es wurde kein Ordner ausgewählt.");
+				alert.showAndWait();
+	        }
+	        else {
+	        
+	        	GridPane subPaneDirName = new GridPane();
+	    		subPaneDirName.setAlignment(Pos.TOP_LEFT);
+	    		subPaneDirName.setId("subPaneDirName");
+	    		subPaneDirName.setHgap(25.0);
+	    		subPaneDirName.setVgap(10.0);
+	    		subPaneDirName.setPadding(new Insets(25, 25, 25, 25));
+	    		StackPane subLayoutDirName = new StackPane();
+	    		subLayoutDirName.getChildren().add(subPaneDirName);
+	    		Scene subSceneDirName = new Scene(subLayoutDirName, 300, 300);
+	    		subSceneDirName.getStylesheets().add(getClass().getResource("Style.css").toExternalForm());
+	    		Stage subStageDirName = new Stage();
+	    		subStageDirName.setScene(subSceneDirName);
+	    		subStageDirName.setTitle("Folder Name");
+	    		subStageDirName.setResizable(false);
+	    		
+	    		TextField dirNameText = new TextField();
+	    		dirNameText.setPromptText("Enter the directory name");
+	    		
+	    		Button submit = new Button();
+	    		submit.setPrefSize(145.0, 50.0);
+	    		submit.setId("submit");
+	    		submit.setText("Submit");
+	    		
+	    		submit.addEventFilter(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+
+					@Override
+					public void handle(MouseEvent event) {
+						String directoryName = dirNameText.getText();
+						
+						if (directoryName.length() == 0) {
+							Alert alert = new Alert(Alert.AlertType.ERROR, "Kein Ordnername ausgewählt.");
+							alert.showAndWait();
+						}
+						
+						else {
+							subStageDirName.close();
+						
+							File dir = new File(selectedDirectory.getAbsolutePath(), directoryName);
+							if (!dir.exists()) {
+								boolean result = false;
+			    			
+								try {
+									dir.mkdirs();
+									result = true;
+								} catch (SecurityException se) {
+			    			
+								}
+							}
+							try {
+								openTestFile(selectedTestFile);
+							} catch (IOException e) {
+								e.printStackTrace();
+							}
+						}
+					}
+	    			
+	    		});
+	    		
+	    		subPaneDirName.add(dirNameText, 0, 0);
+	    		subPaneDirName.add(submit, 0, 1);
+	    		
+	    		subStageDirName.show();
+
+	        }
 		}
+		
 		else {
 			if (selectedFile == null && selectedTestFile == null) {
 				Alert alert = new Alert(Alert.AlertType.ERROR, "Es wurde nichts ausgewählt.");
