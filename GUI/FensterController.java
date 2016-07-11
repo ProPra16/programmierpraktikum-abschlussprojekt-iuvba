@@ -99,6 +99,9 @@ public class FensterController {
 	    		submit.setId("submit");
 	    		submit.setText("Submit");
 	    		
+	    		subPaneDirName.add(dirNameText, 0, 0);
+	    		subPaneDirName.add(submit, 0, 1);
+	    		
 	    		submit.addEventFilter(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
 
 					@Override
@@ -133,9 +136,6 @@ public class FensterController {
 					}
 	    			
 	    		});
-	    		
-	    		subPaneDirName.add(dirNameText, 0, 0);
-	    		subPaneDirName.add(submit, 0, 1);
 	    		
 	    		subStageDirName.show();
 
@@ -183,6 +183,8 @@ public class FensterController {
 		goToGreen.setId("goToGreen");
 		goToGreen.setText("Go to Green");
 		
+		subPaneRed.add(goToGreen, 1, 0);
+		
 		goToGreen.addEventFilter(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent event) {
@@ -217,6 +219,9 @@ public class FensterController {
 					goToBlack.setPrefSize(145.0, 50.0);
 					goToBlack.setId("goToBlack");
 					goToBlack.setText("Go to Black");
+					
+					subPaneGreen.add(backToRed, 1, 0);
+					subPaneGreen.add(goToBlack, 1, 2);
 					
 					backToRed.addEventFilter(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
 						@Override
@@ -258,6 +263,9 @@ public class FensterController {
 								goToRed.setId("goToRed");
 								goToRed.setText("Go to Red");
 								
+								subPaneBlack.add(textfieldBlack, 0, 0, 1, 20);
+								subPaneBlack.add(goToRed, 1, 0);
+								
 								goToRed.addEventFilter(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
 
 									@Override
@@ -268,8 +276,7 @@ public class FensterController {
 									}
 								});
 								
-								subPaneBlack.add(textfieldBlack, 0, 0, 1, 20);
-								subPaneBlack.add(goToRed, 1, 0);
+								
 								
 								subStageBlack.show();
 								
@@ -277,15 +284,10 @@ public class FensterController {
 						}
 					});
 					
-					subPaneGreen.add(backToRed, 1, 0);
-					subPaneGreen.add(goToBlack, 1, 2);
-					
 					subStageGreen.show();
 				}
 			}
 		});
-		
-		subPaneRed.add(goToGreen, 1, 0);
 		
         subStageRed.show();
 		
