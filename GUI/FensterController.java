@@ -48,21 +48,21 @@ public class FensterController {
 	
 	@FXML
 	protected void btPressedFCFile(ActionEvent event) {
-		Stage subStage = new Stage();
+		Stage subStageFCFile = new Stage();
 		FileChooser fileChooserTest = new FileChooser();
 		fileChooserTest.setTitle("Open File");
 		fileChooserTest.getExtensionFilters().addAll(new ExtensionFilter("Java Files", "*.java"));
-		selectedFile = fileChooserTest.showOpenDialog(subStage);
+		selectedFile = fileChooserTest.showOpenDialog(subStageFCFile);
 		ChoosenFile.setText(selectedFile.getName());
 	}
 	
 	@FXML
 	protected void btPressedFCTestFile(ActionEvent event) throws IOException {
-		Stage subStage = new Stage();
+		Stage subStageFCTestFile = new Stage();
 		FileChooser fileChooserTest = new FileChooser();
 		fileChooserTest.setTitle("Open Test File");
 		fileChooserTest.getExtensionFilters().addAll(new ExtensionFilter("Java Files", "*.java"));
-		selectedTestFile = fileChooserTest.showOpenDialog(subStage);
+		selectedTestFile = fileChooserTest.showOpenDialog(subStageFCTestFile);
 		ChoosenTestfile.setText(selectedTestFile.getName());
 	}
 	
@@ -72,10 +72,10 @@ public class FensterController {
 		
 		if (selectedFile != null && selectedTestFile != null) {
 			
-			Stage subStage = new Stage();
+			Stage subStageDC = new Stage();
 			DirectoryChooser directoryChooser = new DirectoryChooser();
 			directoryChooser.setTitle("Choose a directory");
-	        File selectedDirectory = directoryChooser.showDialog(subStage);
+	        File selectedDirectory = directoryChooser.showDialog(subStageDC);
 	        
 	        if(selectedDirectory == null) {
 	        	Alert alert = new Alert(Alert.AlertType.ERROR, "Es wurde kein Ordner ausgewählt.");
@@ -291,17 +291,17 @@ public class FensterController {
 		
 	}
 	
-	public Stage createSubStage (GridPane subPane1, String title){
+	public Stage createSubStage (GridPane subPane, String title){
 
 		StackPane subLayout = new StackPane();
-		subLayout.getChildren().add(subPane1);
+		subLayout.getChildren().add(subPane);
 		Scene subScene = new Scene(subLayout, 600, 600);
 		subScene.getStylesheets().add(getClass().getResource("Style.css").toExternalForm());
-		Stage subStage1 = new Stage();
-		subStage1.setScene(subScene);
-		subStage1.setTitle(title);
-		subStage1.setResizable(false);
-		return subStage1;
+		Stage subStage = new Stage();
+		subStage.setScene(subScene);
+		subStage.setTitle(title);
+		subStage.setResizable(false);
+		return subStage;
 	}
 	
 	public StringBuilder readFile(File selectedFile){

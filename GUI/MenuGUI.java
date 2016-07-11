@@ -15,7 +15,7 @@ public class MenuGUI extends Application {
 		
 		Parent root = FXMLLoader.load(MenuGUI.class.getResource("LayoutMenu.fxml"));
 		
-		Scene scene = new Scene(root, 500, 500);
+		Scene scene = new Scene(root);
 		
 		String stylesheet = getClass().getResource("Style.css").toExternalForm();
 		scene.getStylesheets().add(stylesheet);
