@@ -89,14 +89,7 @@ public class FensterController {
 	    		subPaneDirName.setHgap(25.0);
 	    		subPaneDirName.setVgap(10.0);
 	    		subPaneDirName.setPadding(new Insets(25, 25, 25, 25));
-	    		StackPane subLayoutDirName = new StackPane();
-	    		subLayoutDirName.getChildren().add(subPaneDirName);
-	    		Scene subSceneDirName = new Scene(subLayoutDirName, 300, 300);
-	    		subSceneDirName.getStylesheets().add(getClass().getResource("Style.css").toExternalForm());
-	    		Stage subStageDirName = new Stage();
-	    		subStageDirName.setScene(subSceneDirName);
-	    		subStageDirName.setTitle("Folder Name");
-	    		subStageDirName.setResizable(false);
+	    		Stage subStageDirName = createSubStage(subPaneDirName, "Folder Name");
 	    		
 	    		TextField dirNameText = new TextField();
 	    		dirNameText.setPromptText("Enter the directory name");
