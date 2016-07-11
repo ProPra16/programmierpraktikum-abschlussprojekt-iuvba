@@ -173,14 +173,7 @@ public class FensterController {
 		subPaneRed.setHgap(25.0);
 		subPaneRed.setVgap(10.0);
 		subPaneRed.setPadding(new Insets(25, 25, 25, 25));
-		StackPane subLayoutRed = new StackPane();
-		subLayoutRed.getChildren().add(subPaneRed);
-		Scene subSceneRed = new Scene(subLayoutRed, 600, 600);
-		subSceneRed.getStylesheets().add(getClass().getResource("Style.css").toExternalForm());
-		Stage subStageRed = new Stage();
-		subStageRed.setScene(subSceneRed);
-		subStageRed.setTitle("Red");
-		subStageRed.setResizable(false);
+		Stage subStageRed = createSubStage(subPaneRed, "Red");
 		
 		TextArea textfieldRed = new TextArea();
 		textfieldRed.setId("textfieldRed");
@@ -210,14 +203,7 @@ public class FensterController {
 					subPaneGreen.setHgap(25.0);
 					subPaneGreen.setVgap(10.0);
 					subPaneGreen.setPadding(new Insets(25, 25, 25, 25));
-					StackPane subLayoutGreen = new StackPane();
-					subLayoutGreen.getChildren().add(subPaneGreen);
-					Scene subSceneGreen = new Scene(subLayoutGreen, 600, 600);
-					subSceneGreen.getStylesheets().add(getClass().getResource("Style.css").toExternalForm());
-					Stage subStageGreen = new Stage();
-					subStageGreen.setScene(subSceneGreen);
-					subStageGreen.setTitle("Green");
-					subStageGreen.setResizable(false);
+					Stage subStageGreen = createSubStage(subPaneGreen, "Green");
 					
 					TextArea textfieldGreen = new TextArea();
 					textfieldGreen.setId("textfieldGreen");
@@ -256,21 +242,15 @@ public class FensterController {
 							if (event.getButton() == MouseButton.PRIMARY) {
 								
 								subStageGreen.close();
-								
 								GridPane subPaneBlack = new GridPane();
 								subPaneBlack.setAlignment(Pos.TOP_LEFT);
 								subPaneBlack.setId("subPaneBlack");
 								subPaneBlack.setHgap(25.0);
 								subPaneBlack.setVgap(10.0);
 								subPaneBlack.setPadding(new Insets(25, 25, 25, 25));
-								StackPane subLayoutBlack = new StackPane();
-								subLayoutBlack.getChildren().add(subPaneBlack);
-								Scene subSceneBlack = new Scene(subLayoutBlack, 600, 600);
-								subSceneBlack.getStylesheets().add(getClass().getResource("Style.css").toExternalForm());
-								Stage subStageBlack = new Stage();
-								subStageBlack.setScene(subSceneBlack);
-								subStageBlack.setTitle("Green");
-								subStageBlack.setResizable(false);
+
+								
+								Stage subStageBlack = createSubStage(subPaneBlack, "Black");
 								
 								TextArea textfieldBlack = new TextArea();
 								textfieldBlack.setId("textfieldBlack");
@@ -316,6 +296,19 @@ public class FensterController {
 		
         subStageRed.show();
 		
+	}
+	
+	public Stage createSubStage (GridPane subPane1, String title){
+
+		StackPane subLayout = new StackPane();
+		subLayout.getChildren().add(subPane1);
+		Scene subScene = new Scene(subLayout, 600, 600);
+		subScene.getStylesheets().add(getClass().getResource("Style.css").toExternalForm());
+		Stage subStage1 = new Stage();
+		subStage1.setScene(subScene);
+		subStage1.setTitle(title);
+		subStage1.setResizable(false);
+		return subStage1;
 	}
 	
 	public StringBuilder readFile(File selectedFile){

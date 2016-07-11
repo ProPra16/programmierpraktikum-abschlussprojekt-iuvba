@@ -6,20 +6,26 @@
 
 #FileChooserBtFile {
 	-fx-font-size: 14pt;
-	-fx-text-fill: black;
+	-fx-text-fill: white;
+	-fx-background-color: linear-gradient(blue, lightblue);
+	-fx-effect: dropshadow(three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1);
 	-fx-font-family: Courier;
 }
 
 #WeiterButton {
 	-fx-font-size: 14pt;
-	-fx-text-fill: black;
+	-fx-text-fill: white;
+	-fx-background-color: linear-gradient(blue, lightblue);
+	-fx-effect: dropshadow(three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1);
 	-fx-font-family: Courier;
 }
 
 
 #FileChooserBtTestFile {
 	-fx-font-size: 14pt;
-	-fx-text-fill: black;
+	-fx-text-fill: white;
+	-fx-background-color: linear-gradient(blue, lightblue);
+	-fx-effect: dropshadow(three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1);
 	-fx-font-family: Courier;
 }
 
@@ -37,25 +43,33 @@
 
 #goToGreen {
 	-fx-font-size: 10pt;
-	-fx-text-fill: black;
+	-fx-text-fill: white;
+	-fx-background-color: linear-gradient(blue, lightblue);
+	-fx-effect: dropshadow(three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1);
 	-fx-font-family: Courier;
 }
 
 #backToRed {
 	-fx-font-size: 10pt;
-	-fx-text-fill: black;
+	-fx-text-fill: white;
+	-fx-background-color: linear-gradient(blue, lightblue);
+	-fx-effect: dropshadow(three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1);
 	-fx-font-family: Courier;
 }
 
 #goToBlack {
 	-fx-font-size: 10pt;
-	-fx-text-fill: black;
+	-fx-text-fill: white;
+	-fx-background-color: linear-gradient(blue, lightblue);
+	-fx-effect: dropshadow(three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1);
 	-fx-font-family: Courier;
 }
 
 #goToRed {
 	-fx-font-size: 10pt;
-	-fx-text-fill: black;
+	-fx-text-fill: white;
+	-fx-background-color: linear-gradient(blue, lightblue);
+	-fx-effect: dropshadow(three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1);
 	-fx-font-family: Courier;
 }
 

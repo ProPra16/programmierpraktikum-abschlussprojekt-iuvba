@@ -13,14 +13,14 @@ public class MenuGUI extends Application {
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		
-		Parent rootMenu = FXMLLoader.load(MenuGUI.class.getResource("LayoutMenu.fxml"));
+		Parent root = FXMLLoader.load(MenuGUI.class.getResource("LayoutMenu.fxml"));
 		
-		Scene sceneMenu = new Scene(rootMenu);
+		Scene scene = new Scene(root, 500, 500);
 		
 		String stylesheet = getClass().getResource("Style.css").toExternalForm();
-		sceneMenu.getStylesheets().add(stylesheet);
+		scene.getStylesheets().add(stylesheet);
 		
-		primaryStage.setScene(sceneMenu);
+		primaryStage.setScene(scene);
 		primaryStage.setTitle("TDD Trainer");
 		primaryStage.setResizable(false);
 		primaryStage.show();
