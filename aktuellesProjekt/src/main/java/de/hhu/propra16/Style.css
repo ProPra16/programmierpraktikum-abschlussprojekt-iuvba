@@ -4,27 +4,54 @@
 	-fx-font-family: Courier;
 }
 
+#MenuStart {
+	-fx-background-color: linear-gradient(white, lightgray);
+}
+
 #FileChooserBtFile {
 	-fx-font-size: 14pt;
-	-fx-text-fill: white;
-	-fx-background-color: linear-gradient(blue, lightblue);
+	-fx-text-fill: black;
+	-fx-background-color: linear-gradient(white, lightblue);
+	-fx-effect: dropshadow(three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1);
+	-fx-font-family: Courier;
+}
+
+#FileChooserBtFile:hover {
+	-fx-font-size: 14pt;
+	-fx-text-fill: black;
+	-fx-background-color: linear-gradient(lightblue, white);
 	-fx-effect: dropshadow(three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1);
 	-fx-font-family: Courier;
 }
 
 #WeiterButton {
 	-fx-font-size: 14pt;
-	-fx-text-fill: white;
-	-fx-background-color: linear-gradient(blue, lightblue);
+	-fx-text-fill: black;
+	-fx-background-color: linear-gradient(white, lightblue);
 	-fx-effect: dropshadow(three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1);
 	-fx-font-family: Courier;
 }
 
+#WeiterButton:hover {
+	-fx-font-size: 14pt;
+	-fx-text-fill: black;
+	-fx-background-color: linear-gradient(lightblue, white);
+	-fx-effect: dropshadow(three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1);
+	-fx-font-family: Courier;
+}
 
 #FileChooserBtTestFile {
 	-fx-font-size: 14pt;
-	-fx-text-fill: white;
-	-fx-background-color: linear-gradient(blue, lightblue);
+	-fx-text-fill: black;
+	-fx-background-color: linear-gradient(white, lightblue);
+	-fx-effect: dropshadow(three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1);
+	-fx-font-family: Courier;
+}
+
+#FileChooserBtTestFile:hover {
+	-fx-font-size: 14pt;
+	-fx-text-fill: black;
+	-fx-background-color: linear-gradient(lightblue, white);
 	-fx-effect: dropshadow(three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1);
 	-fx-font-family: Courier;
 }
@@ -44,7 +71,14 @@
 #goToGreen {
 	-fx-font-size: 10pt;
 	-fx-text-fill: white;
-	-fx-background-color: linear-gradient(blue, lightblue);
+	-fx-background-color: linear-gradient(white, lightgreen);
+	-fx-effect: dropshadow(three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1);
+	-fx-font-family: Courier;
+}
+#goToGreen:hover {
+	-fx-font-size: 10pt;
+	-fx-text-fill: white;
+	-fx-background-color: linear-gradient(lightgreen, white);
 	-fx-effect: dropshadow(three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1);
 	-fx-font-family: Courier;
 }
@@ -52,7 +86,14 @@
 #backToRed {
 	-fx-font-size: 10pt;
 	-fx-text-fill: white;
-	-fx-background-color: linear-gradient(blue, lightblue);
+	-fx-background-color: linear-gradient(white, lightred);
+	-fx-effect: dropshadow(three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1);
+	-fx-font-family: Courier;
+}
+#backToRed:hover {
+	-fx-font-size: 10pt;
+	-fx-text-fill: white;
+	-fx-background-color: linear-gradient(lightred, white);
 	-fx-effect: dropshadow(three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1);
 	-fx-font-family: Courier;
 }
@@ -60,7 +101,14 @@
 #goToBlack {
 	-fx-font-size: 10pt;
 	-fx-text-fill: white;
-	-fx-background-color: linear-gradient(blue, lightblue);
+	-fx-background-color: linear-gradient(white, lightblack);
+	-fx-effect: dropshadow(three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1);
+	-fx-font-family: Courier;
+}
+#goToBlack:hover {
+	-fx-font-size: 10pt;
+	-fx-text-fill: white;
+	-fx-background-color: linear-gradient(lightblack, white);
 	-fx-effect: dropshadow(three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1);
 	-fx-font-family: Courier;
 }
@@ -68,10 +116,20 @@
 #goToRed {
 	-fx-font-size: 10pt;
 	-fx-text-fill: white;
-	-fx-background-color: linear-gradient(blue, lightblue);
+	-fx-background-color: linear-gradient(white, lightred);
 	-fx-effect: dropshadow(three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1);
 	-fx-font-family: Courier;
 }
+#goToRed:hover {
+	-fx-font-size: 10pt;
+	-fx-text-fill: white;
+	-fx-background-color: linear-gradient(lightred, white);
+	-fx-effect: dropshadow(three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1);
+	-fx-font-family: Courier;
+}
+
+
+
 
 
 
