@@ -1,0 +1,15 @@
+[
+  {
+    "Name":"Aufgabe1",
+    "Beschreibung":"Print Hello World",
+    "ClassName":"HelloWorld",
+    "Inhalt":"public class HelloWorld {\n public static void main (String[] args){}}"
+  },
+  {
+    "Name":"Aufgabe2",
+    "Beschreibung":"Print 1+1",
+    "ClassName":"Addieren",
+    "Inhalt":"public class Addieren {\n public static void main (String[] args){}}"
+  }
+
+]
