@@ -7,3 +7,5 @@ Anwesend: Alle
 -> Auseinandersetzung mit Tarvis und einbinden von travis.yml Datei
 -> Versuchen die Programme GUI und Funktionsweise von Programm zu verbinden
 -> Babysteps einbinden
+-> JSON Aufgabe und Test aufrufen und einbinden
+
