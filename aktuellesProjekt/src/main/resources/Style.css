@@ -1,0 +1,162 @@
+#WelcomeLabel {
+	-fx-font-size: 20pt;
+	-fx-text-fill: black;
+	-fx-font-family: Courier;
+}
+
+#MenuStart {
+	-fx-background-color: linear-gradient(white, lightgray);
+}
+
+#FileChooserBtFile {
+	-fx-font-size: 14pt;
+	-fx-text-fill: black;
+	-fx-background-color: linear-gradient(white, lightblue);
+	-fx-effect: dropshadow(three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1);
+	-fx-font-family: Courier;
+}
+
+#FileChooserBtFile:hover {
+	-fx-font-size: 14pt;
+	-fx-text-fill: black;
+	-fx-background-color: linear-gradient(lightblue, white);
+	-fx-effect: dropshadow(three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1);
+	-fx-font-family: Courier;
+}
+
+#WeiterButton {
+	-fx-font-size: 14pt;
+	-fx-text-fill: black;
+	-fx-background-color: linear-gradient(white, lightblue);
+	-fx-effect: dropshadow(three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1);
+	-fx-font-family: Courier;
+}
+
+#WeiterButton:hover {
+	-fx-font-size: 14pt;
+	-fx-text-fill: black;
+	-fx-background-color: linear-gradient(lightblue, white);
+	-fx-effect: dropshadow(three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1);
+	-fx-font-family: Courier;
+}
+
+#FileChooserBtTestFile {
+	-fx-font-size: 14pt;
+	-fx-text-fill: black;
+	-fx-background-color: linear-gradient(white, lightblue);
+	-fx-effect: dropshadow(three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1);
+	-fx-font-family: Courier;
+}
+
+#FileChooserBtTestFile:hover {
+	-fx-font-size: 14pt;
+	-fx-text-fill: black;
+	-fx-background-color: linear-gradient(lightblue, white);
+	-fx-effect: dropshadow(three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1);
+	-fx-font-family: Courier;
+}
+
+#subPaneRed {
+	-fx-background-color: red;
+}
+
+#subPaneGreen {
+	-fx-background-color: green;
+}
+
+#subPaneBlack {
+	-fx-background-color: black;
+}
+
+#subPaneDirName {
+    -fx-background-color: silver;
+}
+
+
+
+#goToGreen {
+	-fx-font-size: 10pt;
+	-fx-text-fill: white;
+	-fx-background-color: linear-gradient(white, lightgreen);
+	-fx-effect: dropshadow(three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1);
+	-fx-font-family: Courier;
+}
+#goToGreen:hover {
+	-fx-font-size: 10pt;
+	-fx-text-fill: white;
+	-fx-background-color: linear-gradient(lightgreen, white);
+	-fx-effect: dropshadow(three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1);
+	-fx-font-family: Courier;
+}
+
+#backToRed {
+	-fx-font-size: 10pt;
+	-fx-text-fill: white;
+	-fx-background-color: linear-gradient(white, red);
+	-fx-effect: dropshadow(three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1);
+	-fx-font-family: Courier;
+}
+#backToRed:hover {
+	-fx-font-size: 10pt;
+	-fx-text-fill: white;
+	-fx-background-color: linear-gradient(red, white);
+	-fx-effect: dropshadow(three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1);
+	-fx-font-family: Courier;
+}
+
+#goToBlack {
+	-fx-font-size: 10pt;
+	-fx-text-fill: white;
+	-fx-background-color: linear-gradient(white, gray);
+	-fx-effect: dropshadow(three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1);
+	-fx-font-family: Courier;
+}
+#goToBlack:hover {
+	-fx-font-size: 10pt;
+	-fx-text-fill: white;
+	-fx-background-color: linear-gradient(gray, white);
+	-fx-effect: dropshadow(three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1);
+	-fx-font-family: Courier;
+}
+
+#goToRed {
+	-fx-font-size: 10pt;
+	-fx-text-fill: white;
+	-fx-background-color: linear-gradient(white, red);
+	-fx-effect: dropshadow(three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1);
+	-fx-font-family: Courier;
+}
+#goToRed:hover {
+	-fx-font-size: 10pt;
+	-fx-text-fill: white;
+	-fx-background-color: linear-gradient(red, white);
+	-fx-effect: dropshadow(three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1);
+	-fx-font-family: Courier;
+}
+
+#timelabelRed {
+    -fx-font-size: 12pt;
+    -fx-font-family: Courier;
+}
+
+#timelabelGreen {
+    -fx-font-size: 12pt;
+    -fx-font-family: Courier;
+}
+
+#timelabelRed:hover {
+     -fx-font-size: 26pt;
+     -fx-font-family: Courier;
+ }
+
+ #timelabelGreen:hover {
+      -fx-font-size: 26pt;
+      -fx-font-family: Courier;
+  }
+
+
+
+
+
+
+

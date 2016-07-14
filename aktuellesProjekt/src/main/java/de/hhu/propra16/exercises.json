@@ -3,13 +3,25 @@
     "Name":"Aufgabe1",
     "Beschreibung":"Print Hello World",
     "ClassName":"HelloWorld",
-    "Inhalt":"public class HelloWorld {\n public static void main (String[] args){}}"
+    "Inhalt":"public class HelloWorld {\n\tpublic static void main (String[] args) {\n\n\t}\n}"
   },
   {
     "Name":"Aufgabe2",
     "Beschreibung":"Print 1+1",
     "ClassName":"Addieren",
-    "Inhalt":"public class Addieren {\n public static void main (String[] args){}}"
+    "Inhalt":"public class Addieren {\n\tpublic static void main (String[] args) {\n\n\t}\n}"
+  },
+  {
+    "Name":"Test1",
+    "Beschreibung":"Test Hello World",
+    "ClassName":"HelloWorldTest",
+    "Inhalt":"Just a test abc"
+  },
+  {
+    "Name":"Test2",
+    "Beschreibung":"Test A2",
+    "ClassName":"A2Test",
+    "Inhalt":"Just a test for 2"
   }
 
 ]

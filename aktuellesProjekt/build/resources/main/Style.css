@@ -68,6 +68,12 @@
 	-fx-background-color: black;
 }
 
+#subPaneDirName {
+    -fx-background-color: silver;
+}
+
+
+
 #goToGreen {
 	-fx-font-size: 10pt;
 	-fx-text-fill: white;
@@ -86,14 +92,14 @@
 #backToRed {
 	-fx-font-size: 10pt;
 	-fx-text-fill: white;
-	-fx-background-color: linear-gradient(white, lightred);
+	-fx-background-color: linear-gradient(white, red);
 	-fx-effect: dropshadow(three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1);
 	-fx-font-family: Courier;
 }
 #backToRed:hover {
 	-fx-font-size: 10pt;
 	-fx-text-fill: white;
-	-fx-background-color: linear-gradient(lightred, white);
+	-fx-background-color: linear-gradient(red, white);
 	-fx-effect: dropshadow(three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1);
 	-fx-font-family: Courier;
 }
@@ -101,14 +107,14 @@
 #goToBlack {
 	-fx-font-size: 10pt;
 	-fx-text-fill: white;
-	-fx-background-color: linear-gradient(white, lightblack);
+	-fx-background-color: linear-gradient(white, gray);
 	-fx-effect: dropshadow(three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1);
 	-fx-font-family: Courier;
 }
 #goToBlack:hover {
 	-fx-font-size: 10pt;
 	-fx-text-fill: white;
-	-fx-background-color: linear-gradient(lightblack, white);
+	-fx-background-color: linear-gradient(gray, white);
 	-fx-effect: dropshadow(three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1);
 	-fx-font-family: Courier;
 }
@@ -116,17 +122,37 @@
 #goToRed {
 	-fx-font-size: 10pt;
 	-fx-text-fill: white;
-	-fx-background-color: linear-gradient(white, lightred);
+	-fx-background-color: linear-gradient(white, red);
 	-fx-effect: dropshadow(three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1);
 	-fx-font-family: Courier;
 }
 #goToRed:hover {
 	-fx-font-size: 10pt;
 	-fx-text-fill: white;
-	-fx-background-color: linear-gradient(lightred, white);
+	-fx-background-color: linear-gradient(red, white);
 	-fx-effect: dropshadow(three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1);
 	-fx-font-family: Courier;
 }
+
+#timelabelRed {
+    -fx-font-size: 12pt;
+    -fx-font-family: Courier;
+}
+
+#timelabelGreen {
+    -fx-font-size: 12pt;
+    -fx-font-family: Courier;
+}
+
+#timelabelRed:hover {
+     -fx-font-size: 26pt;
+     -fx-font-family: Courier;
+ }
+
+ #timelabelGreen:hover {
+      -fx-font-size: 26pt;
+      -fx-font-family: Courier;
+  }
 
 
 

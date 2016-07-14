@@ -19,7 +19,7 @@ public class MenuGUI extends Application {
 		
 		Scene scene = new Scene(root);
 		
-		String stylesheet = getClass().getResource("/Style.css").toExternalForm();
+		String stylesheet = getClass().getResource("Style.css").toExternalForm();
 		scene.getStylesheets().add(stylesheet);
 		
 		primaryStage.setScene(scene);

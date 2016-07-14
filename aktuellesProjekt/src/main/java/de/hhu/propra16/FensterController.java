@@ -13,17 +13,17 @@ import java.util.ArrayList;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
+import javafx.application.Platform;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
@@ -46,22 +46,23 @@ public class FensterController {
 	private Button FileChooserBtFile;
 	
 	@FXML
-	private Button FileChooserBtTestFile;
-	
-	@FXML
 	private Label ChoosenFile;
-	
-	@FXML
-	private Label ChoosenTestfile;
 	
 	@FXML
 	private Button WeiterButton;
 	
 	private File selectedFile;
-	private File selectedTestFile;
 
 	private Gson gsonFile = new Gson();
 	private ArrayList<Aufgabe> aufgabeArrayList = new ArrayList<>();
+
+	private int choiceBoxFileIndex = 0;
+	private int choiceBoxTestFileIndex = 0;
+
+	private Label timelabel = new Label();
+	private Thread timeThread;
+	private boolean running = false;
+	private long time = 120000;
 	
 	@FXML
 	protected void btPressedFCFile(ActionEvent event) {
@@ -84,20 +85,10 @@ public class FensterController {
 	}
 	
 	@FXML
-	protected void btPressedFCTestFile(ActionEvent event) throws IOException {
-		Stage subStageFCTestFile = new Stage();
-		FileChooser fileChooserTest = new FileChooser();
-		fileChooserTest.setTitle("Open Test File");
-		fileChooserTest.getExtensionFilters().addAll(new ExtensionFilter("Java Files", "*.java"));
-		selectedTestFile = fileChooserTest.showOpenDialog(subStageFCTestFile);
-		ChoosenTestfile.setText(selectedTestFile.getName());
-	}
-	
-	@FXML
 	protected void btPressedWeiter(ActionEvent event) throws IOException {
 		
 		
-		if (selectedFile != null && selectedTestFile != null) {
+		if (selectedFile != null) {
 			
 			Stage subStageDC = new Stage();
 			DirectoryChooser directoryChooser = new DirectoryChooser();
@@ -116,13 +107,14 @@ public class FensterController {
 	    		subPaneDirName.setHgap(25.0);
 	    		subPaneDirName.setVgap(10.0);
 	    		subPaneDirName.setPadding(new Insets(25, 25, 25, 25));
-	    		Stage subStageDirName = createSubStage(subPaneDirName, "Folder Name");
+	    		Stage subStageDirName = createSubStage(200, 100, subPaneDirName, "Folder Name");
 	    		
 	    		TextField dirNameText = new TextField();
+				dirNameText.setPrefSize(150.0, 50.0);
 	    		dirNameText.setPromptText("Enter the directory name");
 	    		
 	    		Button submit = new Button();
-	    		submit.setPrefSize(145.0, 50.0);
+	    		submit.setPrefSize(150.0, 50.0);
 	    		submit.setId("submit");
 	    		submit.setText("Submit");
 	    		
@@ -154,38 +146,77 @@ public class FensterController {
 			    			
 								}
 							}
-							try {
-								openTestFile(selectedTestFile);
-							} catch (IOException e) {
-								e.printStackTrace();
+
+							GridPane subPaneChoiceBox = new GridPane();
+							subPaneChoiceBox.setAlignment(Pos.TOP_LEFT);
+							subPaneChoiceBox.setId("subPaneChoiseBox");
+							subPaneChoiceBox.setHgap(25.0);
+							subPaneChoiceBox.setVgap(10.0);
+							subPaneChoiceBox.setPadding(new Insets(25, 25, 25, 25));
+							Stage subStageChoiceBox = createSubStage(200, 100, subPaneChoiceBox, "Folder Name");
+
+							String[] aufgabenNamen = new String[aufgabeArrayList.size()/2];
+
+							for (int i = 0; i < (aufgabeArrayList.size()/2); i++) {
+								aufgabenNamen[i] = aufgabeArrayList.get(i).Name;
 							}
+
+							ChoiceBox choiceBox = new ChoiceBox();
+							choiceBox.setItems(FXCollections.observableArrayList(
+
+								aufgabenNamen)
+							);
+
+							choiceBox.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {
+								@Override
+								public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+									choiceBoxFileIndex = newValue.intValue();
+									choiceBoxTestFileIndex = (choiceBoxFileIndex + (aufgabeArrayList.size()/2));
+								}
+							});
+
+							Button startWorking = new Button();
+							startWorking.setPrefSize(150.0, 50.0);
+							startWorking.setId("startWorking");
+							startWorking.setText("Start Working");
+
+							subPaneChoiceBox.add(choiceBox, 0, 0);
+							subPaneChoiceBox.add(startWorking, 0, 1);
+
+							startWorking.addEventFilter(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+
+								@Override
+								public void handle(MouseEvent event) {
+
+									if (event.getButton() == MouseButton.PRIMARY) {
+
+										try {
+											openFile();
+										} catch (IOException e) {
+											e.printStackTrace();
+										}
+									}
+
+								}
+							});
+							subStageChoiceBox.show();
 						}
 					}
 	    			
 	    		});
-	    		
 	    		subStageDirName.show();
-
 	        }
 		}
 		
 		else {
-			if (selectedFile == null && selectedTestFile == null) {
-				Alert alert = new Alert(Alert.AlertType.ERROR, "Es wurde nichts ausgewählt.");
-				alert.showAndWait();
-			}
-			if (selectedFile == null && selectedTestFile != null) {
-				Alert alert = new Alert(Alert.AlertType.ERROR, "Es wurde keine Datei ausgewählt.");
-				alert.showAndWait();
-			}
-			if (selectedFile != null && selectedTestFile == null) {
-				Alert alert = new Alert(Alert.AlertType.ERROR, "Es wurde keine Testdatei ausgewählt.");
+			if (selectedFile == null) {
+				Alert alert = new Alert(Alert.AlertType.ERROR, "Es wurde keine JSON Datei ausgewählt.");
 				alert.showAndWait();
 			}
 		}
 	}
 	
-	private void openTestFile(File selectedTestFile) throws IOException {
+	private void openFile() throws IOException {
 		
 		GridPane subPaneRed = new GridPane();
 		subPaneRed.setAlignment(Pos.TOP_LEFT);
@@ -193,16 +224,26 @@ public class FensterController {
 		subPaneRed.setHgap(25.0);
 		subPaneRed.setVgap(10.0);
 		subPaneRed.setPadding(new Insets(25, 25, 25, 25));
-		Stage subStageRed = createSubStage(subPaneRed, "Red");
-		
+		Stage subStageRed = createSubStage(600, 600, subPaneRed, "Red");
+		Label timelabel = new Label();
+		end();
+		timelabel = start();
+		timelabel.setId("timelabelRed");
+		timelabel.setAlignment(Pos.CENTER);
+
+		if (timelabel.getText() == "00:00") {
+			end();
+			subStageRed.close();
+			//subStageGreen.show(); // geht nicht.
+		}
+
+		subPaneRed.add(timelabel, 1, 0);
+
 		TextArea textfieldRed = new TextArea();
 		textfieldRed.setId("textfieldRed");
 		textfieldRed.setPrefSize(450.0, 600.0);
-				
-		StringBuilder sbRed = null;
-		sbRed = readFile(selectedTestFile);
-		//textfieldRed.setText(sbRed.toString());
-		textfieldRed.setText(aufgabeArrayList.get(0).Inhalt);
+
+		textfieldRed.setText(aufgabeArrayList.get(choiceBoxTestFileIndex).Inhalt);
 		
 		subPaneRed.add(textfieldRed, 0, 0, 1, 20);
 		
@@ -211,9 +252,7 @@ public class FensterController {
 		goToGreen.setId("goToGreen");
 		goToGreen.setText("Go to Green");
 
-
-
-		subPaneRed.add(goToGreen, 1, 0);
+		subPaneRed.add(goToGreen, 1, 1);
 		
 		goToGreen.addEventFilter(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
 			@Override
@@ -221,11 +260,14 @@ public class FensterController {
 				if (event.getButton() == MouseButton.PRIMARY) {
 
 
+					// Testet, ob etwas kompilierbar ist.
+					/*
 					CompilationUnit compile = new CompilationUnit("Test", "Das ist ein Test.", false);
 					JavaStringCompiler sc = CompilerFactory.getCompiler(compile);
 					sc.compileAndRunTests();
 					CompilerResult cr = sc.getCompilerResult();
 					cr.hasCompileErrors();
+					*/
 
 					subStageRed.close();
 					
@@ -235,17 +277,21 @@ public class FensterController {
 					subPaneGreen.setHgap(25.0);
 					subPaneGreen.setVgap(10.0);
 					subPaneGreen.setPadding(new Insets(25, 25, 25, 25));
-					Stage subStageGreen = createSubStage(subPaneGreen, "Green");
+					Stage subStageGreen = createSubStage(600, 600, subPaneGreen, "Green");
 					
 					TextArea textfieldGreen = new TextArea();
 					textfieldGreen.setId("textfieldGreen");
 					textfieldGreen.setPrefSize(450.0, 600.0);
-							
-					StringBuilder sbGreen = null;
-					sbGreen = readFile(selectedFile);
-					textfieldGreen.setText(sbGreen.toString());
+
+					textfieldGreen.setText(aufgabeArrayList.get(choiceBoxFileIndex).Inhalt);
 					
 					subPaneGreen.add(textfieldGreen, 0, 0, 1, 20);
+					end();
+					Label timelabel = start();
+					timelabel.setId("timelabelGreen");
+					timelabel.setAlignment(Pos.CENTER);
+
+					subPaneGreen.add(timelabel, 1, 0);
 					
 					Button backToRed = new Button();
 					backToRed.setPrefSize(145.0, 50.0);
@@ -257,8 +303,8 @@ public class FensterController {
 					goToBlack.setId("goToBlack");
 					goToBlack.setText("Go to Black");
 					
-					subPaneGreen.add(backToRed, 1, 0);
-					subPaneGreen.add(goToBlack, 1, 2);
+					subPaneGreen.add(backToRed, 1, 1);
+					subPaneGreen.add(goToBlack, 1, 3);
 					
 					backToRed.addEventFilter(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
 						@Override
@@ -285,15 +331,13 @@ public class FensterController {
 								subPaneBlack.setPadding(new Insets(25, 25, 25, 25));
 
 								
-								Stage subStageBlack = createSubStage(subPaneBlack, "Black");
+								Stage subStageBlack = createSubStage(600, 600, subPaneBlack, "Black");
 								
 								TextArea textfieldBlack = new TextArea();
 								textfieldBlack.setId("textfieldBlack");
 								textfieldBlack.setPrefSize(450.0, 600.0);
-										
-								StringBuilder sbBlack = null;
-								sbBlack = readFile(selectedFile);
-								textfieldBlack.setText(sbBlack.toString());
+
+								textfieldBlack.setText(aufgabeArrayList.get(0).Inhalt);
 								
 								Button goToRed = new Button();
 								goToRed.setPrefSize(145.0, 50.0);
@@ -330,34 +374,56 @@ public class FensterController {
 		
 	}
 	
-	public Stage createSubStage (GridPane subPane, String title){
+	public Stage createSubStage (int x, int y, GridPane subPane, String title){
 
 		StackPane subLayout = new StackPane();
 		subLayout.getChildren().add(subPane);
-		Scene subScene = new Scene(subLayout, 600, 600);
-		subScene.getStylesheets().add(getClass().getResource("Style.css").toExternalForm());
+		Scene subScene = new Scene(subLayout, x, y);
+		subScene.getStylesheets().add(getClass().getResource("/Style.css").toExternalForm());
 		Stage subStage = new Stage();
 		subStage.setScene(subScene);
 		subStage.setTitle(title);
 		subStage.setResizable(false);
 		return subStage;
 	}
-	
-	public StringBuilder readFile(File selectedFile){
-		StringBuilder sb = new StringBuilder(1024);
-		
-		String line;
-		try(BufferedReader bufferedReader = new BufferedReader(new FileReader(selectedFile))) {
-			
-			while( (line = bufferedReader.readLine()) != null) {
-				sb.append(line).append("\n");
-			}
-		} catch (FileNotFoundException e) {
-			System.out.println("Datei existiert nicht.");
-		} catch (IOException e) {
-			e.printStackTrace();
+
+	public Label start() {
+
+		if (!running) {
+
+			running = true;
+			timeThread = new Thread(new Runnable() {
+
+				@Override
+				public void run() {
+
+					while (running) {
+
+						Platform.runLater(new Runnable() {
+
+							@Override
+							public void run() {
+								timelabel.setText(String.format("%02d:%02d", time/60000, time/1000%60));
+							}
+						});
+
+						try {
+							Thread.sleep(1000);
+						} catch (InterruptedException e) {
+							e.printStackTrace();
+						}
+						time -= 1000;
+					}
+				}
+			});
+			timeThread.setDaemon(true);
+			timeThread.start();
 		}
-		
-		return sb;
+		return timelabel;
+	}
+
+	public void end() {
+		running = false;
+		time = 120000;
 	}
 }
