@@ -19,7 +19,7 @@ public class Check {
 	// compiles and a test fails
 
 	public static boolean checkRED(String NameDerDatei, String file, boolean isTest){
-		if (NameDerDatei == null && file == null && isTest == false) {
+		if (NameDerDatei == null && file == null && isTest == true) {
 			int laenge = NameDerDatei.length();
 			NameDerDatei = NameDerDatei.substring(0,laenge-5);
 			//System.out.print(NameDerDatei);
@@ -43,7 +43,7 @@ public class Check {
 		}
 		return KompilierbarUndEinTestFailed;
 		}
-		return true;
+		return false;
 	}
 	
 //	compiles and test passes -- refactor??
