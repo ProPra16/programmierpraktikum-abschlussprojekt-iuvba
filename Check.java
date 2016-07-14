@@ -1,7 +1,3 @@
-////import vk.core.api.CompilerFactory.java;
-//import vk.core.api.*;
-//import java.util.List;
-
 import main.CompilationUnit;
 import main.CompilerFactory;
 import main.JavaStringCompiler;
@@ -15,22 +11,27 @@ public class Check {
 	static boolean KompilierbarUndEinTestFailed;
 	static boolean KompilierbarUndKeinTestFailed;
 	static JavaStringCompiler compiler;
-
+	
 //	public static void main(String[] args){
 //		checkRED(args[0],args[1],false);
 //}
 
 	// compiles and a test fails
+
 	public static boolean checkRED(String NameDerDatei, String file, boolean isTest){
+		if (NameDerDatei == null && file == null && isTest == false) {
 			int laenge = NameDerDatei.length();
 			NameDerDatei = NameDerDatei.substring(0,laenge-5);
 			//System.out.print(NameDerDatei);
 			//return false;
+			
+			//TODO: check if the variables are null or not and print it out
 			CompilationUnit compilationUnits = new CompilationUnit(NameDerDatei,file,isTest);
-			compiler = CompilerFactory.getCompiler(compilationUnits);
 			compiler.compileAndRunTests();
-
+			compiler = CompilerFactory.getCompiler(compilationUnits);
+			
 		if(!((CompilerResult) compiler).hasCompileErrors()) {
+//		if(!compiler.hasCompileErrors()) {
 			KompilierbarUndEinTestFailed = false;
 		}
 		else{ 
@@ -38,12 +39,14 @@ public class Check {
 			if(((TestResult) compiler).getNumberOfFailedTests() == 1){
 				return true;
 			}
-			KompilierbarUndEinTestFailed = false;
+			KompilierbarUndEinTestFailed = true;
 		}
 		return KompilierbarUndEinTestFailed;
+		}
+		return true;
 	}
 	
-//	compiles and test passes
+//	compiles and test passes -- refactor??
 	public static boolean check(String NameDerDatei, String file, boolean isTest){
 			int laenge = NameDerDatei.length();
 			NameDerDatei = NameDerDatei.substring(0,laenge-5);
