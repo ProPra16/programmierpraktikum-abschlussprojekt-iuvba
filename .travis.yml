@@ -2,6 +2,10 @@ language: java
 
 jdk: oraclejdk8
 
-script: gradle build
+install: /bin/true
+script:
+  - echo "Hello Build"
+  - gradle clean build
+  - echo "Done"
 
 
