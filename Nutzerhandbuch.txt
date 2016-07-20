@@ -7,6 +7,7 @@ REFACTOR: code optimieren
 Wie es genau funktioniert wird unten beschrieben.
 
 Beim öffnen soll eine JSON Datei ausgewählt werden.
+Nach dem Klicken auf den "Weiter" Button soll außerdem ein Ordner ausgewählt werden, dort wird der Fortschritt gespeichert(die java Dateien):
 Danach wird man zum Green Teil weitergeleitet. 
 
 GREEN
