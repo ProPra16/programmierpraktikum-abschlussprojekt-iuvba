@@ -61,6 +61,15 @@ public class FensterController {
 	private Thread timeThread;
 	private boolean running = false;
 	private long time = 120000;
+
+	// Testet, ob etwas kompilierbar ist.
+	/*
+	CompilationUnit compile = new CompilationUnit("Test", "Das ist ein Test.", false);
+	JavaStringCompiler sc = CompilerFactory.getCompiler(compile);
+	sc.compileAndRunTests();
+	CompilerResult cr = sc.getCompilerResult();
+	cr.hasCompileErrors();
+	*/
 	
 	@FXML
 	protected void btPressedFCFile(ActionEvent event) {
@@ -128,7 +137,7 @@ public class FensterController {
 						if (event.getButton() == MouseButton.PRIMARY) {
 
 							try {
-								openFile();
+								open();
 							} catch (IOException e) {
 								e.printStackTrace();
 							}
@@ -144,163 +153,71 @@ public class FensterController {
 			}
 		}
 	}
-	
-	private void openFile() throws IOException {
-		
-		GridPane subPaneRed = new GridPane();
-		subPaneRed.setAlignment(Pos.TOP_LEFT);
-		subPaneRed.setId("subPaneRed");
-		subPaneRed.setHgap(25.0);
-		subPaneRed.setVgap(10.0);
-		subPaneRed.setPadding(new Insets(25, 25, 25, 25));
-		Stage subStageRed = createSubStage(600, 600, subPaneRed, "Red");
-		Label timelabel = new Label();
-		end();
-		timelabel = start();
-		timelabel.setId("timelabelRed");
-		timelabel.setAlignment(Pos.CENTER);
 
-		if (timelabel.getText() == "00:00") {
-			end();
-			subStageRed.close();
-			//subStageGreen.show(); // geht nicht.
-		}
+	private void open() throws IOException {
 
-		subPaneRed.add(timelabel, 1, 0);
+		GridPane subPane = new GridPane();
+		subPane.setAlignment(Pos.TOP_LEFT);
+		subPane.setId("subPane");
+		subPane.setHgap(25.0);
+		subPane.setVgap(10.0);
+		subPane.setPadding(new Insets(25, 25, 25, 25));
+		Stage subStage = createSubStage(1150, 600, subPane, "Work");
+		// subStage.setFullScreen(true);
 
-		TextArea textfieldRed = new TextArea();
-		textfieldRed.setId("textfieldRed");
-		textfieldRed.setPrefSize(450.0, 600.0);
+		TextArea textAreaR = new TextArea();
+		textAreaR.setId("textAreaR");
+		textAreaR.setPrefSize(450.0, 600.0);
+		textAreaR.setText(aufgabeArrayList.get(choiceBoxTestFileIndex).Inhalt);
 
-		textfieldRed.setText(aufgabeArrayList.get(choiceBoxTestFileIndex).Inhalt);
-		
-		subPaneRed.add(textfieldRed, 0, 0, 1, 20);
-		
+		subPane.add(textAreaR, 0, 0, 1, 20);
+
+		TextArea textAreaGB = new TextArea();
+		textAreaGB.setId("textAreaGB");
+		textAreaGB.setPrefSize(450.0, 600.0);
+		textAreaGB.setText(aufgabeArrayList.get(choiceBoxFileIndex).Inhalt);
+
+		subPane.add(textAreaGB, 4, 0, 1, 20);
+
+		Label timeLabel = new Label();
+		timeLabel.setId("timeLabel");
+		timeLabel.setText("Time");
+		timeLabel.setAlignment(Pos.CENTER);
+
+		subPane.add(timeLabel, 1, 0, 3, 1);
+
+		// Buttons
+
 		Button goToGreen = new Button();
 		goToGreen.setPrefSize(145.0, 50.0);
 		goToGreen.setId("goToGreen");
 		goToGreen.setText("Go to Green");
 
-		subPaneRed.add(goToGreen, 1, 1);
-		
-		goToGreen.addEventFilter(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
-			@Override
-			public void handle(MouseEvent event) {
-				if (event.getButton() == MouseButton.PRIMARY) {
+		subPane.add(goToGreen, 1, 2, 3, 2);
+
+		Button backToRed = new Button();
+		backToRed.setPrefSize(145.0, 50.0);
+		backToRed.setId("backToRed");
+		backToRed.setText("Back to Red");
+
+		subPane.add(backToRed, 1, 4, 3, 2);
+
+		Button goToBlack = new Button();
+		goToBlack.setPrefSize(145.0, 50.0);
+		goToBlack.setId("goToBlack");
+		goToBlack.setText("Go to Black");
+
+		subPane.add(goToBlack, 1, 6, 3, 2);
+
+		Button goToRed = new Button();
+		goToRed.setPrefSize(145.0, 50.0);
+		goToRed.setId("goToRed");
+		goToRed.setText("Go to Red");
+
+		subPane.add(goToRed, 1, 8, 3, 2);
 
 
-					// Testet, ob etwas kompilierbar ist.
-					/*
-					CompilationUnit compile = new CompilationUnit("Test", "Das ist ein Test.", false);
-					JavaStringCompiler sc = CompilerFactory.getCompiler(compile);
-					sc.compileAndRunTests();
-					CompilerResult cr = sc.getCompilerResult();
-					cr.hasCompileErrors();
-					*/
-
-					subStageRed.close();
-					
-					GridPane subPaneGreen = new GridPane();
-					subPaneGreen.setAlignment(Pos.TOP_LEFT);
-					subPaneGreen.setId("subPaneGreen");
-					subPaneGreen.setHgap(25.0);
-					subPaneGreen.setVgap(10.0);
-					subPaneGreen.setPadding(new Insets(25, 25, 25, 25));
-					Stage subStageGreen = createSubStage(600, 600, subPaneGreen, "Green");
-					
-					TextArea textfieldGreen = new TextArea();
-					textfieldGreen.setId("textfieldGreen");
-					textfieldGreen.setPrefSize(450.0, 600.0);
-
-					textfieldGreen.setText(aufgabeArrayList.get(choiceBoxFileIndex).Inhalt);
-					
-					subPaneGreen.add(textfieldGreen, 0, 0, 1, 20);
-					end();
-					Label timelabel = start();
-					timelabel.setId("timelabelGreen");
-					timelabel.setAlignment(Pos.CENTER);
-
-					subPaneGreen.add(timelabel, 1, 0);
-					
-					Button backToRed = new Button();
-					backToRed.setPrefSize(145.0, 50.0);
-					backToRed.setId("backToRed");
-					backToRed.setText("Back to Red");
-					
-					Button goToBlack = new Button();
-					goToBlack.setPrefSize(145.0, 50.0);
-					goToBlack.setId("goToBlack");
-					goToBlack.setText("Go to Black");
-					
-					subPaneGreen.add(backToRed, 1, 1);
-					subPaneGreen.add(goToBlack, 1, 3);
-					
-					backToRed.addEventFilter(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
-						@Override
-						public void handle(MouseEvent event) {
-							if (event.getButton() == MouseButton.PRIMARY) {
-								
-								subStageGreen.close();
-								subStageRed.show();
-							}
-						}
-					});
-					
-					goToBlack.addEventFilter(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
-						@Override
-						public void handle(MouseEvent event) {
-							if (event.getButton() == MouseButton.PRIMARY) {
-								
-								subStageGreen.close();
-								GridPane subPaneBlack = new GridPane();
-								subPaneBlack.setAlignment(Pos.TOP_LEFT);
-								subPaneBlack.setId("subPaneBlack");
-								subPaneBlack.setHgap(25.0);
-								subPaneBlack.setVgap(10.0);
-								subPaneBlack.setPadding(new Insets(25, 25, 25, 25));
-
-								
-								Stage subStageBlack = createSubStage(600, 600, subPaneBlack, "Black");
-								
-								TextArea textfieldBlack = new TextArea();
-								textfieldBlack.setId("textfieldBlack");
-								textfieldBlack.setPrefSize(450.0, 600.0);
-
-								textfieldBlack.setText(aufgabeArrayList.get(0).Inhalt);
-								
-								Button goToRed = new Button();
-								goToRed.setPrefSize(145.0, 50.0);
-								goToRed.setId("goToRed");
-								goToRed.setText("Go to Red");
-								
-								subPaneBlack.add(textfieldBlack, 0, 0, 1, 20);
-								subPaneBlack.add(goToRed, 1, 0);
-								
-								goToRed.addEventFilter(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
-
-									@Override
-									public void handle(MouseEvent event) {
-										
-										subStageBlack.close();
-										subStageRed.show();
-									}
-								});
-								
-								
-								
-								subStageBlack.show();
-								
-							}
-						}
-					});
-					
-					subStageGreen.show();
-				}
-			}
-		});
-		
-        subStageRed.show();
-		
+		subStage.show();
 	}
 	
 	public Stage createSubStage (int x, int y, GridPane subPane, String title){
