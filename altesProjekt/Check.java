@@ -68,8 +68,8 @@ public class Check {
 			KompilierbarUndKeinTestFailed = false;
 		}
 		else{ 
-			compiler.compileAndRunTests();
-			if(((TestResult) compiler).getNumberOfFailedTests() == 0){  // get#OfFailedTests(): return number of tests failed
+			compiler2.compileAndRunTests();
+			if(((TestResult) compiler2).getNumberOfFailedTests() == 0){  // get#OfFailedTests(): return number of tests failed
 				return true;
 			}
 			KompilierbarUndKeinTestFailed = false;
