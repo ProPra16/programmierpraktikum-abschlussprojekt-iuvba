@@ -26,6 +26,7 @@
   {
     "Name":"Test1",
     "Beschreibung":"Test Hello World",
+    "Babysteps": "on",
     "ClassName":"HelloWorldTest",
     "Inhalt":"import static org.junit.Assert.*;\nimport org.junit.Test;\n\npublic class HelloWorldTest {\n\n\t}\n}"
   },
@@ -37,13 +38,13 @@
   },
   {
 	"Name":"Test Flaecheninhalt",
-	"Beschreibung":"Test von Flaecheninhalt"
+	"Beschreibung":"Test von Flaecheninhalt",
 	"ClassName":"FlaecheninhatTest",
 	"Inhalt":"import static org.junit.Assert.*;\nimport org.junit.Test;\n\npublic class FlaecheninhaltTest {\n\n\t}\n}"
   },
   {
 	"Name":"Test FizzBuzz",
-	"Beschreibung":"Test von FizzBuzz"
+	"Beschreibung":"Test von FizzBuzz",
 	"ClassName":"FizzBuzzTest",
 	"Inhalt":"import static org.junit.Assert.*;\nimport org.junit.Test;\n\npublic class FizzBuzzTest {\n\n\t}\n}"
   }
