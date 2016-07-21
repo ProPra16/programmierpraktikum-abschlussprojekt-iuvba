@@ -26,7 +26,6 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
-import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.stage.FileChooser.ExtensionFilter;
@@ -165,26 +164,46 @@ public class FensterController {
 		Stage subStage = createSubStage(1150, 600, subPane, "Work");
 		// subStage.setFullScreen(true);
 
+		// Beschreibungs Label
+
+		Label beschreibungTest = new Label();
+		beschreibungTest.setId("beschreibungTest");
+		beschreibungTest.setText(aufgabeArrayList.get(choiceBoxTestFileIndex).Beschreibung);
+
+		subPane.add(beschreibungTest, 0, 0, 1, 1);
+
+		Label beschreibung = new Label();
+		beschreibung.setId("beschreibung");
+		beschreibung.setText(aufgabeArrayList.get(choiceBoxFileIndex).Beschreibung);
+
+		subPane.add(beschreibung, 4, 0, 1, 1);
+
+		// TextArea
+
 		TextArea textAreaR = new TextArea();
 		textAreaR.setId("textAreaR");
 		textAreaR.setPrefSize(450.0, 600.0);
 		textAreaR.setText(aufgabeArrayList.get(choiceBoxTestFileIndex).Inhalt);
 
-		subPane.add(textAreaR, 0, 0, 1, 20);
+		textAreaR.setDisable(false);
+
+		subPane.add(textAreaR, 0, 1, 1, 20);
 
 		TextArea textAreaGB = new TextArea();
 		textAreaGB.setId("textAreaGB");
 		textAreaGB.setPrefSize(450.0, 600.0);
 		textAreaGB.setText(aufgabeArrayList.get(choiceBoxFileIndex).Inhalt);
 
-		subPane.add(textAreaGB, 4, 0, 1, 20);
+		textAreaGB.setDisable(true);
+
+		subPane.add(textAreaGB, 4, 1, 1, 20);
 
 		Label timeLabel = new Label();
 		timeLabel.setId("timeLabel");
 		timeLabel.setText("Time");
 		timeLabel.setAlignment(Pos.CENTER);
 
-		subPane.add(timeLabel, 1, 0, 3, 1);
+		subPane.add(timeLabel, 1, 1, 3, 1);
 
 		// Buttons
 
@@ -193,28 +212,50 @@ public class FensterController {
 		goToGreen.setId("goToGreen");
 		goToGreen.setText("Go to Green");
 
-		subPane.add(goToGreen, 1, 2, 3, 2);
+		subPane.add(goToGreen, 1, 3, 3, 2);
+
+		goToGreen.setOnAction(new EventHandler<ActionEvent>() {
+			@Override public void handle(ActionEvent e) {
+
+				String nameTF = aufgabeArrayList.get(choiceBoxTestFileIndex).Name;
+				String inhaltTextAreaR = textAreaR.getText();
+
+				boolean check = false;
+
+				check = Check.checkRED(nameTF, inhaltTextAreaR, true);
+
+				System.out.println(check);
+				System.out.println(inhaltTextAreaR);
+
+				if (check == true) {
+					textAreaR.setDisable(true);
+					textAreaGB.setDisable(false);
+				}
+
+
+			}
+		});
 
 		Button backToRed = new Button();
 		backToRed.setPrefSize(145.0, 50.0);
 		backToRed.setId("backToRed");
 		backToRed.setText("Back to Red");
 
-		subPane.add(backToRed, 1, 4, 3, 2);
+		subPane.add(backToRed, 1, 5, 3, 2);
 
 		Button goToBlack = new Button();
 		goToBlack.setPrefSize(145.0, 50.0);
 		goToBlack.setId("goToBlack");
 		goToBlack.setText("Go to Black");
 
-		subPane.add(goToBlack, 1, 6, 3, 2);
+		subPane.add(goToBlack, 1, 7, 3, 2);
 
 		Button goToRed = new Button();
 		goToRed.setPrefSize(145.0, 50.0);
 		goToRed.setId("goToRed");
 		goToRed.setText("Go to Red");
 
-		subPane.add(goToRed, 1, 8, 3, 2);
+		subPane.add(goToRed, 1, 9, 3, 2);
 
 
 		subStage.show();

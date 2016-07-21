@@ -1,20 +1,20 @@
 [
   {
-    "Name":"Aufgabe1",
+    "Name":"HelloWorld",
     "Beschreibung":"Print Hello World",
     "ClassName":"HelloWorld",
     "Inhalt":"public class HelloWorld {\n\tpublic static void main (String[] args) {\n\n\t}\n}"
   },
   {
-    "Name":"Aufgabe2",
+    "Name":"Addieren",
     "Beschreibung":"Print 1+1",
     "ClassName":"Addieren",
     "Inhalt":"public class Addieren {\n\tpublic static void main (String[] args) {\n\n\t}\n}"
   },
   {
-	"Name":"Flaecheninhalt Rechteck",
+	"Name":"FlaecheninhaltRechteck",
 	"Beschreibung":"Berechnung Flaecheninhalt: a*b",
-	"ClassName":"Flaecheninhalt",
+	"ClassName":"FlaecheninhaltRechteck",
 	"Inhalt":"public class Flaecheninhalt {\n\tpublic static void main (String[] args) {\n\n\t}\n}"
   },
   {
@@ -24,29 +24,29 @@
 	"Inhalt":"public class FizzBuzz {\n\tpublic static void main (String[] args) {\n\n\t}\n}"
   },
   {
-    "Name":"Test1",
+    "Name":"HelloWorldTest",
     "Beschreibung":"Test Hello World",
     "Babysteps": "on",
     "ClassName":"HelloWorldTest",
-    "Inhalt":"import static org.junit.Assert.*;\nimport org.junit.Test;\n\npublic class HelloWorldTest {\n\n\t}\n}"
+    "Inhalt":"import static org.junit.Assert.*;\nimport org.junit.Test;\n\npublic class HelloWorldTest {\n\n}"
   },
   {
-    "Name":"Test2",
+    "Name":"AddierenTest",
     "Beschreibung":"Test A2",
-    "ClassName":"A2Test",
-    "Inhalt":"import static org.junit.Assert.*;\nimport org.junit.Test;\n\npublic class A2Test {\n\n\t}\n}"
+    "ClassName":"AddierenTest",
+    "Inhalt":"import static org.junit.Assert.*;\nimport org.junit.Test;\n\npublic class A2Test {\n\n}"
   },
   {
-	"Name":"Test Flaecheninhalt",
+	"Name":"FlaecheninhaltTest",
 	"Beschreibung":"Test von Flaecheninhalt",
 	"ClassName":"FlaecheninhatTest",
-	"Inhalt":"import static org.junit.Assert.*;\nimport org.junit.Test;\n\npublic class FlaecheninhaltTest {\n\n\t}\n}"
+	"Inhalt":"import static org.junit.Assert.*;\nimport org.junit.Test;\n\npublic class FlaecheninhaltTest {\n\n}"
   },
   {
-	"Name":"Test FizzBuzz",
+	"Name":"FizzBuzzTest",
 	"Beschreibung":"Test von FizzBuzz",
 	"ClassName":"FizzBuzzTest",
-	"Inhalt":"import static org.junit.Assert.*;\nimport org.junit.Test;\n\npublic class FizzBuzzTest {\n\n\t}\n}"
+	"Inhalt":"import static org.junit.Assert.*;\nimport org.junit.Test;\n\npublic class FizzBuzzTest {\n\n}"
   }
 
 ]
