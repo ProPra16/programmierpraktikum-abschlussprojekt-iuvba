@@ -12,16 +12,40 @@
     "Inhalt":"public class Addieren {\n\tpublic static void main (String[] args) {\n\n\t}\n}"
   },
   {
+	"Name":"Flaecheninhalt Rechteck",
+	"Beschreibung":"Berechnung Flaecheninhalt: a*b",
+	"ClassName":"Flaecheninhalt",
+	"Inhalt":"public class Flaecheninhalt {\n\tpublic static void main (String[] args) {\n\n\t}\n}"
+  },
+  {
+	"Name":"FizzBuzz",
+	"Beschreibung":"Vielfaches von 4 wird FIZZ ausgegeben,Vielfaches von 6 wird BUZZ ausgegeben",
+	"ClassName":"FizzBuzz",
+	"Inhalt":"public class FizzBuzz {\n\tpublic static void main (String[] args) {\n\n\t}\n}"
+  },
+  {
     "Name":"Test1",
     "Beschreibung":"Test Hello World",
     "ClassName":"HelloWorldTest",
-    "Inhalt":"Just a test abc"
+    "Inhalt":"import static org.junit.Assert.*;\nimport org.junit.Test;\n\npublic class HelloWorldTest {\n\n\t}\n}"
   },
   {
     "Name":"Test2",
     "Beschreibung":"Test A2",
     "ClassName":"A2Test",
-    "Inhalt":"Just a test for 2"
+    "Inhalt":"import static org.junit.Assert.*;\nimport org.junit.Test;\n\npublic class A2Test {\n\n\t}\n}"
+  },
+  {
+	"Name":"Test Flaecheninhalt",
+	"Beschreibung":"Test von Flaecheninhalt"
+	"ClassName":"FlaecheninhatTest",
+	"Inhalt":"import static org.junit.Assert.*;\nimport org.junit.Test;\n\npublic class FlaecheninhaltTest {\n\n\t}\n}"
+  },
+  {
+	"Name":"Test FizzBuzz",
+	"Beschreibung":"Test von FizzBuzz"
+	"ClassName":"FizzBuzzTest",
+	"Inhalt":"import static org.junit.Assert.*;\nimport org.junit.Test;\n\npublic class FizzBuzzTest {\n\n\t}\n}"
   }
 
 ]
