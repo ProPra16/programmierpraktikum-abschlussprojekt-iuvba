@@ -1,7 +1,5 @@
 package de.hhu.propra16;
 
-// Test
-
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -89,125 +87,56 @@ public class FensterController {
 		
 		
 		if (selectedFile != null) {
-			
-			Stage subStageDC = new Stage();
-			DirectoryChooser directoryChooser = new DirectoryChooser();
-			directoryChooser.setTitle("Choose a directory");
-	        File selectedDirectory = directoryChooser.showDialog(subStageDC);
-	        
-	        if(selectedDirectory == null) {
-	        	Alert alert = new Alert(Alert.AlertType.ERROR, "Es wurde kein Ordner ausgewählt.");
-				alert.showAndWait();
-	        }
-	        else {
-	        
-	        	GridPane subPaneDirName = new GridPane();
-	    		subPaneDirName.setAlignment(Pos.TOP_LEFT);
-	    		subPaneDirName.setId("subPaneDirName");
-	    		subPaneDirName.setHgap(25.0);
-	    		subPaneDirName.setVgap(10.0);
-	    		subPaneDirName.setPadding(new Insets(25, 25, 25, 25));
-	    		Stage subStageDirName = createSubStage(200, 100, subPaneDirName, "Folder Name");
-	    		
-	    		TextField dirNameText = new TextField();
-				dirNameText.setPrefSize(150.0, 50.0);
-	    		dirNameText.setPromptText("Enter the directory name");
-	    		
-	    		Button submit = new Button();
-	    		submit.setPrefSize(150.0, 50.0);
-	    		submit.setId("submit");
-	    		submit.setText("Submit");
-	    		
-	    		subPaneDirName.add(dirNameText, 0, 0);
-	    		subPaneDirName.add(submit, 0, 1);
-	    		
-	    		submit.addEventFilter(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
 
-					@Override
-					public void handle(MouseEvent event) {
-						String directoryName = dirNameText.getText();
-						
-						if (directoryName.length() == 0) {
-							Alert alert = new Alert(Alert.AlertType.ERROR, "Kein Ordnername ausgewählt.");
-							alert.showAndWait();
-						}
-						
-						else {
-							subStageDirName.close();
-						
-							File dir = new File(selectedDirectory.getAbsolutePath(), directoryName);
-							if (!dir.exists()) {
-								boolean result = false;
-			    			
-								try {
-									dir.mkdirs();
-									result = true;
-								} catch (SecurityException se) {
-			    			
-								}
+			GridPane subPaneChoiceBox = new GridPane();
+			subPaneChoiceBox.setAlignment(Pos.TOP_LEFT);
+			subPaneChoiceBox.setId("subPaneChoiseBox");
+			subPaneChoiceBox.setHgap(25.0);
+			subPaneChoiceBox.setVgap(10.0);
+			subPaneChoiceBox.setPadding(new Insets(25, 25, 25, 25));
+			Stage subStageChoiceBox = createSubStage(200, 100, subPaneChoiceBox, "Folder Name");
+
+			String[] aufgabenNamen = new String[aufgabeArrayList.size()/2];
+
+			for (int i = 0; i < (aufgabeArrayList.size()/2); i++) {
+				aufgabenNamen[i] = aufgabeArrayList.get(i).Name;
+			}
+
+			ChoiceBox choiceBox = new ChoiceBox();
+			choiceBox.setItems(FXCollections.observableArrayList(aufgabenNamen));
+
+			choiceBox.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {
+				@Override
+				public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+					choiceBoxFileIndex = newValue.intValue();
+					choiceBoxTestFileIndex = (choiceBoxFileIndex + (aufgabeArrayList.size()/2));
+				}
+			});
+
+			Button startWorking = new Button();
+			startWorking.setPrefSize(150.0, 50.0);
+			startWorking.setId("startWorking");
+			startWorking.setText("Start Working");
+
+			subPaneChoiceBox.add(choiceBox, 0, 0);
+			subPaneChoiceBox.add(startWorking, 0, 1);
+
+			startWorking.addEventFilter(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+
+				@Override
+				public void handle(MouseEvent event) {
+						if (event.getButton() == MouseButton.PRIMARY) {
+
+							try {
+								openFile();
+							} catch (IOException e) {
+								e.printStackTrace();
 							}
-
-							GridPane subPaneChoiceBox = new GridPane();
-							subPaneChoiceBox.setAlignment(Pos.TOP_LEFT);
-							subPaneChoiceBox.setId("subPaneChoiseBox");
-							subPaneChoiceBox.setHgap(25.0);
-							subPaneChoiceBox.setVgap(10.0);
-							subPaneChoiceBox.setPadding(new Insets(25, 25, 25, 25));
-							Stage subStageChoiceBox = createSubStage(200, 100, subPaneChoiceBox, "Folder Name");
-
-							String[] aufgabenNamen = new String[aufgabeArrayList.size()/2];
-
-							for (int i = 0; i < (aufgabeArrayList.size()/2); i++) {
-								aufgabenNamen[i] = aufgabeArrayList.get(i).Name;
-							}
-
-							ChoiceBox choiceBox = new ChoiceBox();
-							choiceBox.setItems(FXCollections.observableArrayList(
-
-								aufgabenNamen)
-							);
-
-							choiceBox.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {
-								@Override
-								public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-									choiceBoxFileIndex = newValue.intValue();
-									choiceBoxTestFileIndex = (choiceBoxFileIndex + (aufgabeArrayList.size()/2));
-								}
-							});
-
-							Button startWorking = new Button();
-							startWorking.setPrefSize(150.0, 50.0);
-							startWorking.setId("startWorking");
-							startWorking.setText("Start Working");
-
-							subPaneChoiceBox.add(choiceBox, 0, 0);
-							subPaneChoiceBox.add(startWorking, 0, 1);
-
-							startWorking.addEventFilter(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
-
-								@Override
-								public void handle(MouseEvent event) {
-
-									if (event.getButton() == MouseButton.PRIMARY) {
-
-										try {
-											openFile();
-										} catch (IOException e) {
-											e.printStackTrace();
-										}
-									}
-
-								}
-							});
-							subStageChoiceBox.show();
 						}
-					}
-	    			
-	    		});
-	    		subStageDirName.show();
-	        }
+				}
+			});
+			subStageChoiceBox.show();
 		}
-		
 		else {
 			if (selectedFile == null) {
 				Alert alert = new Alert(Alert.AlertType.ERROR, "Es wurde keine JSON Datei ausgewählt.");
