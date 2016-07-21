@@ -199,12 +199,11 @@ public class FensterController {
 		timeLabel.setText("TimeBaby");
 		timeLabel.setAlignment(Pos.CENTER);
 
+		subPane.add(timeLabel, 1, 0, 3, 1);
 
         if ((getTime()) == 0){              // Aufruf von der Klasse TimerBaby
             // Aufruf von changeTextArea();
         }
-
-		subPane.add(timeLabel, 1, 0, 3, 1);
 
 		// Buttons
 
@@ -221,9 +220,7 @@ public class FensterController {
 				String nameTF = aufgabeArrayList.get(choiceBoxTestFileIndex).Name;
 				String inhaltTextAreaR = textAreaR.getText();
 
-				boolean check = false;
-
-				check = Check.checkRED(nameTF, inhaltTextAreaR, true);
+				boolean check = Check.checkRED(nameTF, inhaltTextAreaR, true);
 
 				System.out.println(check);
 				System.out.println(inhaltTextAreaR);
