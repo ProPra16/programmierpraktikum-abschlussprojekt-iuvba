@@ -1,17 +1,8 @@
 package de.hhu.propra16;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
-import java.lang.reflect.Type;
-import java.util.ArrayList;
-
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
-import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -27,12 +18,17 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.FileChooser;
-import javafx.stage.Stage;
 import javafx.stage.FileChooser.ExtensionFilter;
-import vk.core.api.CompilationUnit;
-import vk.core.api.CompilerFactory;
-import vk.core.api.CompilerResult;
-import vk.core.api.JavaStringCompiler;
+import javafx.stage.Stage;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.lang.reflect.Type;
+import java.util.ArrayList;
+
+import static de.hhu.propra16.TimerBaby.*;
 
 public class FensterController {
 
@@ -198,12 +194,17 @@ public class FensterController {
 
 		subPane.add(textAreaGB, 4, 1, 1, 20);
 
-		Label timeLabel = new Label();
-		timeLabel.setId("timeLabel");
-		timeLabel.setText("Time");
+		Label timeLabel = start();          //Da Klasse TimerBaby importiert wurde: Aufruf von TimerBaby -> runterzählen bis 2:00 min.
+		timeLabel.setId("timeLabelBaby");
+		timeLabel.setText("TimeBaby");
 		timeLabel.setAlignment(Pos.CENTER);
 
-		subPane.add(timeLabel, 1, 1, 3, 1);
+
+        if ((getTime()) == 0){              // Aufruf von der Klasse TimerBaby
+            // Aufruf von changeTextArea();
+        }
+
+		subPane.add(timeLabel, 1, 0, 3, 1);
 
 		// Buttons
 
@@ -274,43 +275,4 @@ public class FensterController {
 		return subStage;
 	}
 
-	public Label start() {
-
-		if (!running) {
-
-			running = true;
-			timeThread = new Thread(new Runnable() {
-
-				@Override
-				public void run() {
-
-					while (running) {
-
-						Platform.runLater(new Runnable() {
-
-							@Override
-							public void run() {
-								timelabel.setText(String.format("%02d:%02d", time/60000, time/1000%60));
-							}
-						});
-
-						try {
-							Thread.sleep(1000);
-						} catch (InterruptedException e) {
-							e.printStackTrace();
-						}
-						time -= 1000;
-					}
-				}
-			});
-			timeThread.setDaemon(true);
-			timeThread.start();
-		}
-		return timelabel;
-	}
-
-	public void end() {
-		running = false;
-		time = 120000;
-	}
 }

@@ -6,12 +6,12 @@ import javafx.scene.control.Label;
 
 public class TimerBaby {
 
-    private Label timelabel = new Label();
-    private Thread timeThread;
-    private boolean running = false;
-    private long time = 120000;
+    private static Label timelabel = new Label();
+    private static Thread timeThread;
+    private static boolean running = false;
+    private static long time = 120000;
 
-    public Label start() {
+    public static Label start() {
 
         if (!running) {
 
@@ -42,7 +42,7 @@ public class TimerBaby {
         time = 120000;
     }
 
-    public long getTime() {
+    public static long getTime() {
         return time;
     }
 }
