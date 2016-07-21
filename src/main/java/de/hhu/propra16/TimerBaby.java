@@ -41,4 +41,8 @@ public class TimerBaby {
         running = false;
         time = 120000;
     }
+
+    public long getTime() {
+        return time;
+    }
 }
