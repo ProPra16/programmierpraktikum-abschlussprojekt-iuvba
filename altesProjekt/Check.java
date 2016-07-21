@@ -11,6 +11,7 @@ public class Check {
 	static boolean KompilierbarUndEinTestFailed;
 	static boolean KompilierbarUndKeinTestFailed;
 	static JavaStringCompiler compiler;
+	static JavaStringCompiler compiler2;
 	
 //	public static void main(String[] args){
 //		checkRED(args[0],args[1],false);
@@ -47,12 +48,19 @@ public class Check {
 	}
 	
 //	compiles and test passes -- refactor??
-	public static boolean check(String NameDerDatei, String file, boolean isTest){
-			int laenge = NameDerDatei.length();
-			NameDerDatei = NameDerDatei.substring(0,laenge-5);
+	public static boolean check( String file, String NameDateiCode){
+			String test = "test";
+			String code = "code";
+			
+			//int laenge = NameDerDatei.length();
+			//NameDerDatei = NameDerDatei.substring(0,laenge-5);
 			//System.out.print(NameDerDatei);
 			//return false;
-			CompilationUnit compilationUnits = new CompilationUnit(NameDerDatei,file,isTest);
+			CompilationUnit compilationUnits = new CompilationUnit(code,file,false); // code wird kompiliert
+			compiler2 = CompilerFactory.getCompiler(compilationUnits);
+			compiler2.compileAndRunTests();
+			
+			CompilationUnit compilationUnits = new CompilationUnit(test,file,true); // test wird kompiliert
 			compiler = CompilerFactory.getCompiler(compilationUnits);
 			compiler.compileAndRunTests();
 
