@@ -57,12 +57,12 @@ public class Check {
 			//System.out.print(NameDerDatei);
 			//return false;
 			CompilationUnit compilationUnits = new CompilationUnit(code,file,false); // code wird kompiliert
-			compiler2 = CompilerFactory.getCompiler(compilationUnits);
-			compiler2.compileAndRunTests();
-			
-			CompilationUnit compilationUnits = new CompilationUnit(test,file,true); // test wird kompiliert
 			compiler = CompilerFactory.getCompiler(compilationUnits);
 			compiler.compileAndRunTests();
+			
+			CompilationUnit compilationUnits = new CompilationUnit(test,file,true); // test wird kompiliert
+			compiler2 = CompilerFactory.getCompiler(compilationUnits);
+			compiler2.compileAndRunTests();
 
 		if(!((CompilerResult) compiler).hasCompileErrors()){ // hasCompilError(): return true if no compile errors
 			KompilierbarUndKeinTestFailed = false;
