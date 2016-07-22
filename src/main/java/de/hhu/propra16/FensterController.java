@@ -29,8 +29,10 @@ import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 
+import static de.hhu.propra16.Chart.*;
 import static de.hhu.propra16.Check.*;
 import static de.hhu.propra16.MenuGUI.*;
+import static de.hhu.propra16.TimeTracking.*;
 import static de.hhu.propra16.TimerBaby.*;
 
 
@@ -245,6 +247,8 @@ public class FensterController {
 				String nameTF = aufgabeArrayList.get(choiceBoxTestFileIndex).Name;
 				String inhaltTextAreaR = textAreaR.getText();
 
+				// funktioniert nicht
+				/*
 				boolean check = checkRED(nameTF, inhaltTextAreaR, true);
 
 				System.out.println(check);
@@ -254,7 +258,10 @@ public class FensterController {
 					textAreaR.setDisable(true);
 					textAreaGB.setDisable(false);
 				}
+				*/
 
+				textAreaR.setDisable(true);
+				textAreaGB.setDisable(false);
 
 			}
 		});
@@ -272,9 +279,9 @@ public class FensterController {
             @Override
             public void handle(ActionEvent e) {
 
-                TimeTracking.endRecordTimeTracking();
+                endRecordTimeTracking();
 
-                TimeTracking.startRecordTimeTracking();
+                startRecordTimeTracking();
                 // das was bei Klick von BACK TO RED passiert
             }
         });
@@ -291,9 +298,9 @@ public class FensterController {
             @Override
             public void handle(ActionEvent e) {
 
-                TimeTracking.endRecordTimeTracking();
+                endRecordTimeTracking();
 
-                TimeTracking.startRecordTimeTracking();
+                startRecordTimeTracking();
                 // das was bei Klick von GO TO RED passiert
             }
         });
@@ -310,14 +317,41 @@ public class FensterController {
             @Override
             public void handle(ActionEvent e) {
 
-                TimeTracking.endRecordTimeTracking();
+                endRecordTimeTracking();
 
-                Chart.chart();      // kann hier auch falsch platziert sein. Aufruf sollte dann dort geschehen wo es benötigt wird
+                chart();      // kann hier auch falsch platziert sein. Aufruf sollte dann dort geschehen wo es benötigt wird
             }
         });
 
+		if (textAreaR.isDisabled() == false) {
+			goToGreen.setDisable(false);
+			backToRed.setDisable(true);
+			goToBlack.setDisable(true);
+			goToRed.setDisable(true);
+		}
+
+
+		/*
+		 * Unterscheidung zwischen Green und Black fehlt.
+		 * Wenn man bei Green ist müssen backToRed & goToBlack klickbar sein
+		 * und goTroGreen nicht klickbar.
+		 * Wenn man bei Black ist müssen backToRed & goToBlack nicht klickbar sein
+		 * und goToGreen klickbar.
+		 */
+
+		// funktioniert komischerweise nicht. Bekommt irgendwie keinen Zugriff auf die Änderungen.
+
+		if (textAreaGB.isDisabled() == false) {
+			goToGreen.setDisable(true);
+			backToRed.setDisable(false);
+			goToRed.setDisable(false);
+			goToBlack.setDisable(false);
+		}
+
+
 		subStage.show();
 	}
+
 
 	public Stage createSubStage(int x, int y, GridPane subPane, String title){
 

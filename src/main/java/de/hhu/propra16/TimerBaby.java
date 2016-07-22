@@ -37,7 +37,7 @@ public class TimerBaby {
         return timelabel;
     }
 
-    public void end() {
+    public static void end() {
         running = false;
         time = 120000;
     }
