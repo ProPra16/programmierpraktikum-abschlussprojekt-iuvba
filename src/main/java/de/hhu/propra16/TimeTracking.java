@@ -2,7 +2,7 @@ package de.hhu.propra16;
 
 import java.util.ArrayList;
 
-import static de.hhu.propra16.UserTimer.getUserTime;
+import static de.hhu.propra16.RoundTime.getRoundTime;
 
 /**
  * Created by paul on 21.07.16.
@@ -12,15 +12,20 @@ public class TimeTracking {
 
 private static ArrayList<Long> timePerRound = new ArrayList<Long>();
 
-    public static void timeTracking (){
+    public static void startRecordTimeTracking(){
 
-        long usedTime = getUserTime();
-
-        timePerRound.add(usedTime);
+        RoundTime.start();
 
     }
+    public static void endRecordTimeTracking(){
 
-    public static ArrayList getTimePerRound(){
+        long usedTime = getRoundTime();
+        timePerRound.add(usedTime);
+
+        RoundTime.end();
+    }
+
+    public static ArrayList getAllTimesPerRound(){
         return timePerRound;
     }
 }

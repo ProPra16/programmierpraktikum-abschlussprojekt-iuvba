@@ -211,11 +211,11 @@ public class FensterController {
 		subPane.add(timeLabel, 1, 0, 3, 1);
 
         if ((getTime()) == 0){              // Aufruf von der Klasse TimerBaby
-            // Aufruf von changeTextArea();
+            // Aufruf von changeTextArea(); sofern checkFunktion true ausgibt.
         }
 
 		// Buttons
-
+        // GO TO GREEN
 		Button goToGreen = new Button();
 		goToGreen.setPrefSize(145.0, 50.0);
 		goToGreen.setId("goToGreen");
@@ -242,7 +242,7 @@ public class FensterController {
 
 			}
 		});
-
+        // BACK TO RED
 		Button backToRed = new Button();
 		backToRed.setPrefSize(145.0, 50.0);
 		backToRed.setId("backToRed");
@@ -250,13 +250,20 @@ public class FensterController {
 
 		subPane.add(backToRed, 1, 5, 3, 2);
 
-		Button goToBlack = new Button();
-		goToBlack.setPrefSize(145.0, 50.0);
-		goToBlack.setId("goToBlack");
-		goToBlack.setText("Go to Black");
 
-		subPane.add(goToBlack, 1, 7, 3, 2);
 
+        backToRed.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent e) {
+
+                TimeTracking.endRecordTimeTracking();
+
+                TimeTracking.startRecordTimeTracking();
+                // das was bei Klick von BACK TO RED passiert
+            }
+        });
+
+        // GO TO RED
 		Button goToRed = new Button();
 		goToRed.setPrefSize(145.0, 50.0);
 		goToRed.setId("goToRed");
@@ -264,11 +271,39 @@ public class FensterController {
 
 		subPane.add(goToRed, 1, 9, 3, 2);
 
+        goToRed.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent e) {
+
+                TimeTracking.endRecordTimeTracking();
+
+                TimeTracking.startRecordTimeTracking();
+                // das was bei Klick von GO TO RED passiert
+            }
+        });
+
+        // GO TO BLACK
+        Button goToBlack = new Button();
+        goToBlack.setPrefSize(145.0, 50.0);
+        goToBlack.setId("goToBlack");
+        goToBlack.setText("Go to Black");
+
+        subPane.add(goToBlack, 1, 7, 3, 2);
+
+        goToBlack.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent e) {
+
+                TimeTracking.endRecordTimeTracking();
+
+                Chart.chart();      // kann hier auch falsch platziert sein. Aufruf sollte dann dort geschehen wo es benötigt wird
+            }
+        });
 
 		subStage.show();
 	}
 
-	public Stage createSubStage (int x, int y, GridPane subPane, String title){
+	public Stage createSubStage(int x, int y, GridPane subPane, String title){
 
 		StackPane subLayout = new StackPane();
 		subLayout.getChildren().add(subPane);

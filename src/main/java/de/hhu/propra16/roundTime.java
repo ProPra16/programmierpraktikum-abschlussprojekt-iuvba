@@ -6,7 +6,7 @@ import javafx.scene.control.Label;
 /**
  * Created by paul on 21.07.16.
  */
-public class UserTimer {
+public class RoundTime {
 
         private static Thread timeThread;
         private static boolean running = false;
@@ -29,6 +29,7 @@ public class UserTimer {
                                 @Override
                                 public void run() {
                                     timelabel.setText(String.format("%02d:%02d", time / 60000, time / 1000 % 60));
+                                    System.out.println(String.format("%02d:%02d", time / 60000, time / 1000 % 60));
                                 }
                             });
 
@@ -55,7 +56,7 @@ public class UserTimer {
 
         }
 
-        public static long getUserTime() {
+        public static long getRoundTime() {
 
             return time;
 
