@@ -30,6 +30,7 @@ import java.util.ArrayList;
 
 import static de.hhu.propra16.TimerBaby.*;
 
+
 public class FensterController {
 
 	@FXML
@@ -75,15 +76,23 @@ public class FensterController {
 		fileChooserTest.getExtensionFilters().addAll(new ExtensionFilter("JSON Files", "*.json"));
 		selectedFile = fileChooserTest.showOpenDialog(subStageFCFile);
 
-		Type type = new TypeToken<ArrayList<Aufgabe>>() {}.getType();
-		try {
-			aufgabeArrayList.addAll(gsonFile.fromJson(new JsonReader(new FileReader(selectedFile)),type));
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		}
-		//aufgabeArrayList.get(0);
+        if (selectedFile == null) {
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Es wurde keine JSON Datei ausgewählt.");
+            alert.showAndWait();
+        }
+        else {
+            Type type = new TypeToken<ArrayList<Aufgabe>>() {}.getType();
+            try {
+                aufgabeArrayList.addAll(gsonFile.fromJson(new JsonReader(new FileReader(selectedFile)),type));
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+            //aufgabeArrayList.get(0);
 
-		ChoosenFile.setText(selectedFile.getName());
+            ChoosenFile.setText(selectedFile.getName());
+        }
+
+
 	}
 	
 	@FXML
@@ -258,7 +267,7 @@ public class FensterController {
 
 		subStage.show();
 	}
-	
+
 	public Stage createSubStage (int x, int y, GridPane subPane, String title){
 
 		StackPane subLayout = new StackPane();
