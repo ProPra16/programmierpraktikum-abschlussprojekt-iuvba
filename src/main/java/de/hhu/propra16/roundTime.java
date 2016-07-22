@@ -3,10 +3,8 @@ package de.hhu.propra16;
 import javafx.application.Platform;
 import javafx.scene.control.Label;
 
-/**
- * Created by paul on 21.07.16.
- */
-public class RoundTime {
+
+class RoundTime {
 
         private static Thread timeThread;
         private static boolean running = false;
