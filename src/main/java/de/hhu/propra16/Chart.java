@@ -23,7 +23,6 @@ public class Chart{
 
 
         Stage stage = new Stage();
-        stage.setResizable(false);
         stage.setTitle("Chart");
         final CategoryAxis xAxis = new CategoryAxis();
         final NumberAxis yAxis = new NumberAxis();
