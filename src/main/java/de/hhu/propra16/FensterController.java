@@ -29,6 +29,7 @@ import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 
+import static de.hhu.propra16.Check.*;
 import static de.hhu.propra16.MenuGUI.*;
 import static de.hhu.propra16.TimerBaby.*;
 
@@ -244,7 +245,7 @@ public class FensterController {
 				String nameTF = aufgabeArrayList.get(choiceBoxTestFileIndex).Name;
 				String inhaltTextAreaR = textAreaR.getText();
 
-				boolean check = Check.checkRED(nameTF, inhaltTextAreaR, true);
+				boolean check = checkRED(nameTF, inhaltTextAreaR, true);
 
 				System.out.println(check);
 				System.out.println(inhaltTextAreaR);
