@@ -8,13 +8,14 @@ import javafx.stage.Stage;
 
 public class MenuGUI extends Application {
 
-	public static void main(String[] args) {
-		launch(args);
-	}
-	
+	public static Stage primaryStage;
+
+
 	@Override
 	public void start(Stage primaryStage) throws Exception {
-		
+
+		this.primaryStage = primaryStage;
+
 		Parent root = FXMLLoader.load(MenuGUI.class.getResource("/LayoutMenu.fxml"));
 		
 		Scene scene = new Scene(root);
@@ -27,5 +28,11 @@ public class MenuGUI extends Application {
 		primaryStage.setResizable(false);
 		primaryStage.show();
 	}
+
+	public static void main(String[] args) {
+
+		launch(args);
+	}
+
 
 }

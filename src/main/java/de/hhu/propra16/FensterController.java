@@ -19,6 +19,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.File;
@@ -28,6 +29,7 @@ import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 
+import static de.hhu.propra16.MenuGUI.*;
 import static de.hhu.propra16.TimerBaby.*;
 
 
@@ -70,11 +72,21 @@ public class FensterController {
 	@FXML
 	protected void btPressedFCFile(ActionEvent event) {
 
-		Stage subStageFCFile = new Stage();
-		FileChooser fileChooserTest = new FileChooser();
-		fileChooserTest.setTitle("Open File");
-		fileChooserTest.getExtensionFilters().addAll(new ExtensionFilter("JSON Files", "*.json"));
-		selectedFile = fileChooserTest.showOpenDialog(subStageFCFile);
+		Stage subStageFileChooser = new Stage();
+
+		/*
+		 * Wenn der File Chooser geöffnet ist soll das Menü "deaktiviert" werden.
+		 * (Wie bei der SubStage wo man die Aufgabe auswählen kann)
+		 * Dort funktioniert es auch, hier allerdings nicht.
+		 */
+
+		subStageFileChooser.initModality(Modality.WINDOW_MODAL);
+		subStageFileChooser.initOwner(primaryStage);
+
+		FileChooser fileChooser = new FileChooser();
+		fileChooser.setTitle("Open File");
+		fileChooser.getExtensionFilters().addAll(new ExtensionFilter("JSON Files", "*.json"));
+		selectedFile = fileChooser.showOpenDialog(subStageFileChooser);
 
         if (selectedFile == null) {
             Alert alert = new Alert(Alert.AlertType.ERROR, "Es wurde keine JSON Datei ausgewählt.");
@@ -108,6 +120,9 @@ public class FensterController {
 			subPaneChoiceBox.setVgap(10.0);
 			subPaneChoiceBox.setPadding(new Insets(25, 25, 25, 25));
 			Stage subStageChoiceBox = createSubStage(200, 100, subPaneChoiceBox, "Folder Name");
+
+			subStageChoiceBox.initModality(Modality.WINDOW_MODAL);
+			subStageChoiceBox.initOwner(primaryStage);
 
 			String[] aufgabenNamen = new String[aufgabeArrayList.size()/2];
 
