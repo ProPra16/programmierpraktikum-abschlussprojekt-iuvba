@@ -11,7 +11,7 @@ public class TimerBaby {
     private static boolean running = false;
     private static long time = 120000;
 
-    public static Label start() {
+    public static Label startTimer() {
 
         if (!running) {
 
@@ -37,7 +37,7 @@ public class TimerBaby {
         return timelabel;
     }
 
-    public static void end() {
+    public static void endTimer() {
 
         running = false;
         time = 120000;

@@ -13,10 +13,14 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Modality;
@@ -35,7 +39,7 @@ import static de.hhu.propra16.TimeTracking.endRecordTimeTracking;
 import static de.hhu.propra16.TimeTracking.startRecordTimeTracking;
 import static de.hhu.propra16.TimerBaby.*;
 import static de.hhu.propra16.TimerBaby.getTime;
-import static de.hhu.propra16.TimerBaby.start;
+import static de.hhu.propra16.TimerBaby.startTimer;
 
 
 public class FensterController {
@@ -189,22 +193,21 @@ public class FensterController {
 		Stage subStage = createSubStage(1150, 600, subPane, "Work");
 		// subStage.setFullScreen(true);
 
-		// Beschreibungs Label
-
+		// Label Beschreibung Test
 		Label beschreibungTest = new Label();
 		beschreibungTest.setId("beschreibungTest");
 		beschreibungTest.setText(aufgabeArrayList.get(choiceBoxTestFileIndex).Beschreibung);
 
 		subPane.add(beschreibungTest, 0, 0, 1, 1);
 
+		// Label Beschreibung Aufgabe
 		Label beschreibung = new Label();
 		beschreibung.setId("beschreibung");
 		beschreibung.setText(aufgabeArrayList.get(choiceBoxFileIndex).Beschreibung);
 
 		subPane.add(beschreibung, 4, 0, 1, 1);
 
-		// TextArea
-
+		// TextArea Red
 		TextArea textAreaR = new TextArea();
 		textAreaR.setId("textAreaR");
 		textAreaR.setPrefSize(450.0, 600.0);
@@ -212,8 +215,7 @@ public class FensterController {
 
 		textAreaR.setDisable(false);
 
-		subPane.add(textAreaR, 0, 1, 1, 20);
-
+		// TextArea Green & Black
 		TextArea textAreaGB = new TextArea();
 		textAreaGB.setId("textAreaGB");
 		textAreaGB.setPrefSize(450.0, 600.0);
@@ -221,12 +223,32 @@ public class FensterController {
 
 		textAreaGB.setDisable(true);
 
-		subPane.add(textAreaGB, 4, 1, 1, 20);
+		// VBox Red
+		VBox vBoxRed = new VBox();
+		vBoxRed.setPadding(new Insets(10.0));
+		vBoxRed.setPrefSize(460.0, 610.0);
+		vBoxRed.setStyle("-fx-background-color: red;");
 
-		Label timeLabel = start();          //Da Klasse TimerBaby importiert wurde: Aufruf von TimerBaby -> runterzählen bis 2:00 min.
+		vBoxRed.getChildren().addAll(textAreaR);
+
+		subPane.add(vBoxRed, 0, 1, 1, 20);
+
+		// VBox Green & Black
+		VBox vBoxGB = new VBox();
+		vBoxGB.setPadding(new Insets(10.0));
+		vBoxGB.setPrefSize(460.0, 610.0);
+		vBoxGB.setStyle("-fx-background-color: lightgrey;");
+
+		vBoxGB.getChildren().addAll(textAreaGB);
+
+		subPane.add(vBoxGB, 4, 1, 1, 20);
+
+		// Label Timer
+		Label timeLabel = startTimer();          //Da Klasse TimerBaby importiert wurde: Aufruf von TimerBaby -> runterzählen bis 2:00 min.
 		timeLabel.setId("timeLabelBaby");
 		timeLabel.setText("TimeBaby");
 		timeLabel.setAlignment(Pos.CENTER);
+		timeLabel.setPrefSize(145.0, 25.0);
 
 		subPane.add(timeLabel, 1, 0, 3, 1);
 
@@ -294,6 +316,9 @@ public class FensterController {
                 backToRed.setDisable(false);
                 goToRed.setDisable(true);
                 goToBlack.setDisable(false);
+
+				vBoxRed.setStyle("-fx-background-color: lightgrey");
+				vBoxGB.setStyle("-fx-background-color: green");
 			}
 		});
 
@@ -315,6 +340,9 @@ public class FensterController {
                 goToBlack.setDisable(true);
                 goToRed.setDisable(true);
                 // das was bei Klick von BACK TO RED passiert
+
+				vBoxRed.setStyle("-fx-background-color: red");
+				vBoxGB.setStyle("-fx-background-color: lightgrey");
             }
         });
 
@@ -331,7 +359,10 @@ public class FensterController {
                 goToBlack.setDisable(true);
                 goToRed.setDisable(false);
 
-				end();
+				vBoxRed.setStyle("-fx-background-color: lightgrey");
+				vBoxGB.setStyle("-fx-background-color: black");
+
+				endTimer();
 				timerOff();
 
                 chart();      // kann hier auch falsch platziert sein. Aufruf sollte dann dort geschehen wo es benötigt wird
@@ -355,7 +386,10 @@ public class FensterController {
 				goToRed.setDisable(true);
 				// das was bei Klick von GO TO RED passiert
 
-				start();
+				vBoxRed.setStyle("-fx-background-color: red");
+				vBoxGB.setStyle("-fx-background-color: lightgrey");
+
+				startTimer();
 			}
 		});
 
