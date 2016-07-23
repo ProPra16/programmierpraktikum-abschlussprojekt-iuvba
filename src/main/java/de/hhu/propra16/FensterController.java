@@ -33,6 +33,7 @@ import static de.hhu.propra16.Chart.chart;
 import static de.hhu.propra16.MenuGUI.primaryStage;
 import static de.hhu.propra16.TimeTracking.endRecordTimeTracking;
 import static de.hhu.propra16.TimeTracking.startRecordTimeTracking;
+import static de.hhu.propra16.TimerBaby.*;
 import static de.hhu.propra16.TimerBaby.getTime;
 import static de.hhu.propra16.TimerBaby.start;
 
@@ -63,8 +64,6 @@ public class FensterController {
 	private Thread timeThread;
 	private boolean running = false;
 	private long time = 120000;
-
-	private boolean isRefactoring = false;
 
 	// Testet, ob etwas kompilierbar ist.
 	/*
@@ -252,14 +251,6 @@ public class FensterController {
 
         subPane.add(backToRed, 1, 5, 3, 2);
 
-        // GO TO RED
-        Button goToRed = new Button();
-        goToRed.setPrefSize(145.0, 50.0);
-        goToRed.setId("goToRed");
-        goToRed.setText("Go to Red");
-
-        subPane.add(goToRed, 1, 9, 3, 2);
-
         // GO TO BLACK
         Button goToBlack = new Button();
         goToBlack.setPrefSize(145.0, 50.0);
@@ -267,6 +258,14 @@ public class FensterController {
         goToBlack.setText("Go to Black");
 
         subPane.add(goToBlack, 1, 7, 3, 2);
+
+		// GO TO RED
+		Button goToRed = new Button();
+		goToRed.setPrefSize(145.0, 50.0);
+		goToRed.setId("goToRed");
+		goToRed.setText("Go to Red");
+
+		subPane.add(goToRed, 1, 9, 3, 2);
 
 
         goToGreen.setOnAction(new EventHandler<ActionEvent>() {
@@ -295,11 +294,6 @@ public class FensterController {
                 backToRed.setDisable(false);
                 goToRed.setDisable(true);
                 goToBlack.setDisable(false);
-
-				isRefactoring = false;
-
-				System.out.println(isRefactoring);
-
 			}
 		});
 
@@ -324,28 +318,6 @@ public class FensterController {
             }
         });
 
-
-        goToRed.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent e) {
-
-                endRecordTimeTracking();
-
-                startRecordTimeTracking();
-
-                textAreaR.setDisable(false);
-                textAreaGB.setDisable(true);
-
-                goToGreen.setDisable(false);
-                backToRed.setDisable(true);
-                goToBlack.setDisable(true);
-                goToRed.setDisable(true);
-                // das was bei Klick von GO TO RED passiert
-            }
-        });
-
-
-
         goToBlack.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent e) {
@@ -359,14 +331,33 @@ public class FensterController {
                 goToBlack.setDisable(true);
                 goToRed.setDisable(false);
 
-				isRefactoring = true;
-
-				System.out.println(isRefactoring);
+				end();
+				timerOff();
 
                 chart();      // kann hier auch falsch platziert sein. Aufruf sollte dann dort geschehen wo es benötigt wird
             }
         });
 
+		goToRed.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent e) {
+
+				endRecordTimeTracking();
+
+				startRecordTimeTracking();
+
+				textAreaR.setDisable(false);
+				textAreaGB.setDisable(true);
+
+				goToGreen.setDisable(false);
+				backToRed.setDisable(true);
+				goToBlack.setDisable(true);
+				goToRed.setDisable(true);
+				// das was bei Klick von GO TO RED passiert
+
+				start();
+			}
+		});
 
 		// Am Anfang ist man immer in Rot, daher nur goToGreen klickbar.
 
@@ -374,21 +365,6 @@ public class FensterController {
 		backToRed.setDisable(true);
 		goToBlack.setDisable(true);
 		goToRed.setDisable(true);
-
-
-
-		/*
-		 * Unterscheidung zwischen Green und Black fehlt.
-		 * Wenn man bei Green ist müssen backToRed & goToBlack klickbar sein
-		 * und goTroGreen nicht klickbar.
-		 * Wenn man bei Black ist müssen backToRed & goToBlack nicht klickbar sein
-		 * und goToGreen klickbar.
-		 */
-
-
-
-
-
 
 		subStage.show();
 	}

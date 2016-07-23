@@ -38,11 +38,19 @@ public class TimerBaby {
     }
 
     public static void end() {
+
         running = false;
         time = 120000;
     }
 
     public static long getTime() {
+
         return time;
+    }
+
+    public static Label timerOff() {
+
+        timelabel.setText("TIMER OFF");
+        return timelabel;
     }
 }
