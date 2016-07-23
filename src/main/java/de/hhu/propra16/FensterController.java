@@ -29,11 +29,12 @@ import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 
-import static de.hhu.propra16.Chart.*;
-import static de.hhu.propra16.Check.*;
-import static de.hhu.propra16.MenuGUI.*;
-import static de.hhu.propra16.TimeTracking.*;
-import static de.hhu.propra16.TimerBaby.*;
+import static de.hhu.propra16.Chart.chart;
+import static de.hhu.propra16.MenuGUI.primaryStage;
+import static de.hhu.propra16.TimeTracking.endRecordTimeTracking;
+import static de.hhu.propra16.TimeTracking.startRecordTimeTracking;
+import static de.hhu.propra16.TimerBaby.getTime;
+import static de.hhu.propra16.TimerBaby.start;
 
 
 public class FensterController {
@@ -241,7 +242,32 @@ public class FensterController {
 
 		subPane.add(goToGreen, 1, 3, 3, 2);
 
-		goToGreen.setOnAction(new EventHandler<ActionEvent>() {
+        // BACK TO RED
+        Button backToRed = new Button();
+        backToRed.setPrefSize(145.0, 50.0);
+        backToRed.setId("backToRed");
+        backToRed.setText("Back to Red");
+
+        subPane.add(backToRed, 1, 5, 3, 2);
+
+        // GO TO RED
+        Button goToRed = new Button();
+        goToRed.setPrefSize(145.0, 50.0);
+        goToRed.setId("goToRed");
+        goToRed.setText("Go to Red");
+
+        subPane.add(goToRed, 1, 9, 3, 2);
+
+        // GO TO BLACK
+        Button goToBlack = new Button();
+        goToBlack.setPrefSize(145.0, 50.0);
+        goToBlack.setId("goToBlack");
+        goToBlack.setText("Go to Black");
+
+        subPane.add(goToBlack, 1, 7, 3, 2);
+
+
+        goToGreen.setOnAction(new EventHandler<ActionEvent>() {
 			@Override public void handle(ActionEvent e) {
 
 				String nameTF = aufgabeArrayList.get(choiceBoxTestFileIndex).Name;
@@ -263,15 +289,13 @@ public class FensterController {
 				textAreaR.setDisable(true);
 				textAreaGB.setDisable(false);
 
+                goToGreen.setDisable(true);
+                backToRed.setDisable(false);
+                goToRed.setDisable(false);
+                goToBlack.setDisable(false);
+
 			}
 		});
-        // BACK TO RED
-		Button backToRed = new Button();
-		backToRed.setPrefSize(145.0, 50.0);
-		backToRed.setId("backToRed");
-		backToRed.setText("Back to Red");
-
-		subPane.add(backToRed, 1, 5, 3, 2);
 
 
 
@@ -282,17 +306,18 @@ public class FensterController {
                 endRecordTimeTracking();
 
                 startRecordTimeTracking();
+
+                textAreaR.setDisable(false);
+                textAreaGB.setDisable(true);
+
+                goToGreen.setDisable(false);
+                backToRed.setDisable(true);
+                goToBlack.setDisable(true);
+                goToRed.setDisable(true);
                 // das was bei Klick von BACK TO RED passiert
             }
         });
 
-        // GO TO RED
-		Button goToRed = new Button();
-		goToRed.setPrefSize(145.0, 50.0);
-		goToRed.setId("goToRed");
-		goToRed.setText("Go to Red");
-
-		subPane.add(goToRed, 1, 9, 3, 2);
 
         goToRed.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -301,34 +326,40 @@ public class FensterController {
                 endRecordTimeTracking();
 
                 startRecordTimeTracking();
+
+                textAreaR.setDisable(false);
+                textAreaGB.setDisable(true);
+
+                goToGreen.setDisable(false);
+                backToRed.setDisable(true);
+                goToBlack.setDisable(true);
+                goToRed.setDisable(true);
                 // das was bei Klick von GO TO RED passiert
             }
         });
 
-        // GO TO BLACK
-        Button goToBlack = new Button();
-        goToBlack.setPrefSize(145.0, 50.0);
-        goToBlack.setId("goToBlack");
-        goToBlack.setText("Go to Black");
 
-        subPane.add(goToBlack, 1, 7, 3, 2);
 
         goToBlack.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent e) {
 
                 endRecordTimeTracking();
+                textAreaR.setDisable(true);
+                textAreaGB.setDisable(false);
+
+                goToGreen.setDisable(false);
+                backToRed.setDisable(true);
+                goToBlack.setDisable(true);
+                goToRed.setDisable(true);
 
                 chart();      // kann hier auch falsch platziert sein. Aufruf sollte dann dort geschehen wo es benötigt wird
             }
         });
 
-		if (textAreaR.isDisabled() == false) {
-			goToGreen.setDisable(false);
-			backToRed.setDisable(true);
-			goToBlack.setDisable(true);
-			goToRed.setDisable(true);
-		}
+
+
+
 
 
 		/*
@@ -339,14 +370,9 @@ public class FensterController {
 		 * und goToGreen klickbar.
 		 */
 
-		// funktioniert komischerweise nicht. Bekommt irgendwie keinen Zugriff auf die Änderungen.
 
-		if (textAreaGB.isDisabled() == false) {
-			goToGreen.setDisable(true);
-			backToRed.setDisable(false);
-			goToRed.setDisable(false);
-			goToBlack.setDisable(false);
-		}
+
+
 
 
 		subStage.show();
