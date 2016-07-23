@@ -358,7 +358,12 @@ public class FensterController {
         });
 
 
+		// Am Anfang ist man immer in Rot, daher nur goToGreen klickbar.
 
+		goToGreen.setDisable(false);
+		backToRed.setDisable(true);
+		goToBlack.setDisable(true);
+		goToRed.setDisable(true);
 
 
 
