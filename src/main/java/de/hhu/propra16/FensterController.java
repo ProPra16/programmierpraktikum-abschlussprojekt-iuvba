@@ -64,6 +64,8 @@ public class FensterController {
 	private boolean running = false;
 	private long time = 120000;
 
+	private boolean isRefactoring = false;
+
 	// Testet, ob etwas kompilierbar ist.
 	/*
 	CompilationUnit compile = new CompilationUnit("Test", "Das ist ein Test.", false);
@@ -291,8 +293,12 @@ public class FensterController {
 
                 goToGreen.setDisable(true);
                 backToRed.setDisable(false);
-                goToRed.setDisable(false);
+                goToRed.setDisable(true);
                 goToBlack.setDisable(false);
+
+				isRefactoring = false;
+
+				System.out.println(isRefactoring);
 
 			}
 		});
@@ -348,10 +354,14 @@ public class FensterController {
                 textAreaR.setDisable(true);
                 textAreaGB.setDisable(false);
 
-                goToGreen.setDisable(false);
+                goToGreen.setDisable(true);
                 backToRed.setDisable(true);
                 goToBlack.setDisable(true);
-                goToRed.setDisable(true);
+                goToRed.setDisable(false);
+
+				isRefactoring = true;
+
+				System.out.println(isRefactoring);
 
                 chart();      // kann hier auch falsch platziert sein. Aufruf sollte dann dort geschehen wo es benötigt wird
             }
