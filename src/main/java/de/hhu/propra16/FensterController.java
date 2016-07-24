@@ -23,6 +23,7 @@ import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
+import vk.core.api.*;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -289,6 +290,12 @@ public class FensterController {
 
 		subPane.add(goToRed, 1, 9, 3, 2);
 
+		String nameTestFile = aufgabeArrayList.get(choiceBoxTestFileIndex).Name;
+		String inhaltTextAreaR = textAreaR.getText();
+
+		String nameFile = aufgabeArrayList.get(choiceBoxFileIndex).Name;
+		String inhaltTextAreaGB = textAreaGB.getText();
+
 
         goToGreen.setOnAction(new EventHandler<ActionEvent>() {
 			@Override public void handle(ActionEvent e) {
@@ -301,12 +308,11 @@ public class FensterController {
                     TimerGreen.continueGreenTime();
                 }
 
-				String nameTF = aufgabeArrayList.get(choiceBoxTestFileIndex).Name;
-				String inhaltTextAreaR = textAreaR.getText();
+
 
 				// funktioniert nicht
 				/*
-				boolean check = checkRED(nameTF, inhaltTextAreaR, true);
+				boolean check = checkRED(nameTestFile, inhaltTextAreaR, true);
 
 				System.out.println(check);
 				System.out.println(inhaltTextAreaR);
@@ -317,24 +323,36 @@ public class FensterController {
 				}
 				*/
 
-				textAreaR.setDisable(true);
-				textAreaGB.setDisable(false);
+				CompilationUnit cTest = new CompilationUnit(nameTestFile, inhaltTextAreaR, false);
+				JavaStringCompiler scTest = CompilerFactory.getCompiler(cTest);
+				scTest.compileAndRunTests();
+				CompilerResult crTest = scTest.getCompilerResult();
 
-                goToGreen.setDisable(true);
-                backToRed.setDisable(false);
-                goToRed.setDisable(true);
-                goToBlack.setDisable(false);
-
-				vBoxRed.setStyle("-fx-background-color: lightgrey");
-				vBoxGB.setStyle("-fx-background-color: green");
-
-				textAreaGB.setText(textAreaGB.getText());
+				// TestResult tr = getNumberOfFailedTests();
 
 
+				if (crTest.hasCompileErrors() == false) {
+
+					textAreaR.setDisable(true);
+					textAreaGB.setDisable(false);
+
+					goToGreen.setDisable(true);
+					backToRed.setDisable(false);
+					goToRed.setDisable(true);
+					goToBlack.setDisable(false);
+
+					vBoxRed.setStyle("-fx-background-color: lightgrey");
+					vBoxGB.setStyle("-fx-background-color: green");
+
+					textAreaGB.setText(textAreaGB.getText());
+				}
+				else {
+					Alert alert = new Alert(Alert.AlertType.ERROR, "Test-Datei kompiliert nicht");
+					alert.showAndWait();
+				}
+				// Weiterer Alert wenn die Anzahl der fehlschlagenden Tests ungleich 1.
 			}
 		});
-
-
 
         backToRed.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -364,21 +382,35 @@ public class FensterController {
                 endRecordGreenTime();
                 endRecordRedTime();
 
-                textAreaR.setDisable(true);
-                textAreaGB.setDisable(false);
+				CompilationUnit c = new CompilationUnit(nameTestFile, inhaltTextAreaR, false);
+				JavaStringCompiler sc = CompilerFactory.getCompiler(c);
+				sc.compileAndRunTests();
+				CompilerResult cr = sc.getCompilerResult();
 
-                goToGreen.setDisable(true);
-                backToRed.setDisable(true);
-                goToBlack.setDisable(true);
-                goToRed.setDisable(false);
+				// Und die Bedingung , dass Anzahl der fehlschlagenden Test gleich 0 ist.
+				if (cr.hasCompileErrors() == false) {
 
-				vBoxRed.setStyle("-fx-background-color: lightgrey");
-				vBoxGB.setStyle("-fx-background-color: black");
+					textAreaR.setDisable(true);
+					textAreaGB.setDisable(false);
 
-				endTimer();
-				timerOff();
+					goToGreen.setDisable(true);
+					backToRed.setDisable(true);
+					goToBlack.setDisable(true);
+					goToRed.setDisable(false);
 
-				textAreaGB.setText(textAreaGB.getText());
+					vBoxRed.setStyle("-fx-background-color: lightgrey");
+					vBoxGB.setStyle("-fx-background-color: black");
+
+					endTimer();
+					timerOff();
+
+					textAreaGB.setText(textAreaGB.getText());
+				}
+				else {
+					Alert alert = new Alert(Alert.AlertType.ERROR, "Datei kompiliert nicht");
+					alert.showAndWait();
+				}
+
             }
         });
 
@@ -391,22 +423,35 @@ public class FensterController {
                 TimerRed.start();
                 TimerRound.start();
 
+				CompilationUnit c = new CompilationUnit(nameTestFile, inhaltTextAreaR, false);
+				JavaStringCompiler sc = CompilerFactory.getCompiler(c);
+				sc.compileAndRunTests();
+				CompilerResult cr = sc.getCompilerResult();
 
-				textAreaR.setDisable(false);
-				textAreaGB.setDisable(true);
+				// Und die Bedingung , dass Anzahl der fehlschlagenden Test gleich 0 ist.
+				if (cr.hasCompileErrors() == false) {
 
-				goToGreen.setDisable(false);
-				backToRed.setDisable(true);
-				goToBlack.setDisable(true);
-				goToRed.setDisable(true);
-				// das was bei Klick von GO TO RED passiert
+					textAreaR.setDisable(false);
+					textAreaGB.setDisable(true);
 
-				vBoxRed.setStyle("-fx-background-color: red");
-				vBoxGB.setStyle("-fx-background-color: lightgrey");
+					goToGreen.setDisable(false);
+					backToRed.setDisable(true);
+					goToBlack.setDisable(true);
+					goToRed.setDisable(true);
+					// das was bei Klick von GO TO RED passiert
 
-				startTimer();
+					vBoxRed.setStyle("-fx-background-color: red");
+					vBoxGB.setStyle("-fx-background-color: lightgrey");
 
-				textAreaR.setText(textAreaR.getText());
+					startTimer();
+
+					textAreaR.setText(textAreaR.getText());
+				}
+				else {
+					Alert alert = new Alert(Alert.AlertType.ERROR, "Datei kompiliert nicht");
+					alert.showAndWait();
+				}
+
 			}
 		});
 
