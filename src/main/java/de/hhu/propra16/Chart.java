@@ -23,9 +23,9 @@ public class Chart{
 
 
         timePerRound = TimeTracking.getAllTimesPerRound();
-        timeInBlack = TimeTracking.getAllTimesInBlack();
         timeInGreen = TimeTracking.getAllTimesInGreen();
         timeInRed = TimeTracking.getAllTimesInRed();
+        timeInBlack = TimeTracking.getAllTimesInBlack();
 
 
 
@@ -37,7 +37,7 @@ public class Chart{
                 new BarChart<String,Number>(xAxis,yAxis);
         bc.setTitle("Runden");
 
-        yAxis.setLabel("Zeit (ms)");
+        yAxis.setLabel("Zeit (in s)");
 
         XYChart.Series bar1 = new XYChart.Series();
         XYChart.Series bar2 = new XYChart.Series();
@@ -45,22 +45,24 @@ public class Chart{
         XYChart.Series bar4 = new XYChart.Series();
 
 
-        for (int i = 1; i< timePerRound.size(); i++) {          // hier wird bei 1 angefangen, da die erste Stelle in der Liste durch TimeTracking mit 0 befüllt wird.
+
+        for (int i = 0; i< timePerRound.size(); i++) {          // hier wird bei 1 angefangen, da die erste Stelle in der Liste durch TimeTracking mit 0 befüllt wird.
             bar1.setName("Rundendauer");
-            bar1.getData().add(new XYChart.Data("Runde " + i + " ins", timePerRound.get(i)));
+            bar1.getData().add(new XYChart.Data("Runde " + (i+1), timePerRound.get(i)));
         }
-        for (int i = 1; i< timeInGreen.size(); i++) {
-            bar2.setName("in Grün");
-            bar2.getData().add(new XYChart.Data("Grün: " + i, timeInGreen.get(i)));
+        for (int i = 0; i< timeInGreen.size()-1; i++) {
+            bar2.setName("passing test");
+            bar2.getData().add(new XYChart.Data("Runde: " + (i+1), timeInGreen.get(i)));
         }
-        for (int i = 1; i< timeInBlack.size(); i++) {
-            bar3.setName("in Schwarz");
-            bar3.getData().add(new XYChart.Data("Schwarz: " + i, timeInBlack.get(i)));
+        for (int i = 0; i< timeInRed.size()-1; i++) {
+            bar3.setName("writing failure test");
+            bar3.getData().add(new XYChart.Data("Runde: " + (i+1), timeInRed.get(i)));
         }
-        for (int i = 1; i< timeInRed.size(); i++) {
-            bar4.setName("in Red");
-            bar4.getData().add(new XYChart.Data("Rot: " + i, timeInRed.get(i)));
+        for (int i = 0; i< timeInBlack.size(); i++) {
+            bar4.setName("rectoring");
+            bar4.getData().add(new XYChart.Data("Runde: " + (i+1), timeInBlack.get(i)));
         }
+
 
         Scene scene  = new Scene(bc,800,600);
         bc.getData().add(bar1);

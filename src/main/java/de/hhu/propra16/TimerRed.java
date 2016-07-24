@@ -1,51 +1,46 @@
 package de.hhu.propra16;
 
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.scene.control.Label;
+import javafx.util.Duration;
 
 /**
  * Created by paul on 24.07.16.
  */
 class TimerRed {
-    private static Thread timeThread;
+    private static Timeline timer;
     private static boolean running = false;
-    private static long time = 0;
+    private static long time;
     private static Label timelabel = new Label();
 
 
     public static Label start() {
 
-        if (!running) {
-
-            running = true;
-
-            timeThread = new Thread(new Runnable() {
+            timer = new Timeline(new KeyFrame(Duration.seconds(1), new EventHandler<ActionEvent>() {
 
                 @Override
-                public void run() {
-                    while (running) {
+                public void handle(ActionEvent event) {
 
-                        timelabel.setText(String.format("%02d:%02d", time / 60000, time / 1000 % 60));
-                        System.out.println(String.format("Red" + "%02d:%02d", time / 60000, time / 1000 % 60));
-
-
-                        try {
-                            Thread.sleep(1000);
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
-                        time += 1000;
-                    }
+                        time++;
+                    timelabel.setText(String.format("%02d:%02d", time/60, time));
+                    System.out.println(String.format("Red: " + "%02d:%02d", time/60, time));
                 }
-            });
-            timeThread.setDaemon(true);
-            timeThread.start();
+            }));
+        if (!running) {
+            running = true;
+            timer.setCycleCount(Timeline.INDEFINITE);
+            timer.play();
         }
         return timelabel;
+
     }
 
 
     public static void end() {
-        running = false;
+        timer.stop();
         time = 0;
     }
 
@@ -53,5 +48,13 @@ class TimerRed {
 
         return time;
 
+    }
+    public static void pauseRedTime(){
+        timer.pause();
+    }
+
+    public static void continueRedTime(){
+        timer.jumpTo(Duration.seconds(time));
+        timer.play();
     }
 }

@@ -1,56 +1,56 @@
 package de.hhu.propra16;
 
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.scene.control.Label;
+import javafx.util.Duration;
+
 
 
 class TimerRound {
 
-        private static Thread timeThread;
-        private static boolean running = false;
+        private static Timeline timer;
         private static long time = 0;
         private static Label timelabel = new Label();
 
 
         public static Label start() {
 
-            if (!running) {
+            timer = new Timeline(new KeyFrame(Duration.seconds(1), new EventHandler<ActionEvent>() {
 
-                running = true;
+                @Override
+                public void handle(ActionEvent event) {
 
-                    timeThread = new Thread(new Runnable() {
+                    time++;
+                    timelabel.setText(String.format("%02d:%02d", time/60, time));
+                    System.out.println(String.format("Round: " + "%02d:%02d", time/60, time));
+                }
+            }));
 
-                            @Override
-                                 public void run() {
-                                    while (running) {
-
-                            timelabel.setText(String.format("%02d:%02d", time / 60000, time / 1000 % 60));
-                            System.out.println(String.format("Runde" + "%02d:%02d", time / 60000, time / 1000 % 60));
-
-
-                            try {
-                                Thread.sleep(1000);
-                            } catch (InterruptedException e) {
-                                e.printStackTrace();
-                            }
-                                time += 1000;
-                            }
-                        }
-                    });
-                    timeThread.setDaemon(true);
-                    timeThread.start();
-            }
+                timer.setCycleCount(Timeline.INDEFINITE);
+                timer.play();
             return timelabel;
         }
 
 
         public static void end() {
-            running = false;
+            timer.stop();
             time = 0;
         }
 
         public static long getRoundTime() {
-
             return time;
-
         }
+    /*
+        public static void pauseRoundTime(){
+            timer.pause();
+        }
+
+        public static void continueRoundTime(){
+            timer.jumpTo(time);
+            timer.play();
+        }
+        */
 }

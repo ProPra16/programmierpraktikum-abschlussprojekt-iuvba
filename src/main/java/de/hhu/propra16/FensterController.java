@@ -63,6 +63,7 @@ public class FensterController {
 	private Thread timeThread;
 	private boolean running = false;
 	private long time = 120000;
+    private int a = 0;
 
 	// Testet, ob etwas kompilierbar ist.
 	/*
@@ -165,8 +166,6 @@ public class FensterController {
 								e.printStackTrace();
 							}
 						}
-                    startRecordRedTime();
-                    startRecordRoundTime();
 				}
 			});
 			subStageChoiceBox.show();
@@ -180,6 +179,10 @@ public class FensterController {
 	}
 
 	private void open() throws IOException {
+
+        TimerRed.start();
+        TimerRound.start();
+
 
 		GridPane subPane = new GridPane();
 		subPane.setAlignment(Pos.TOP_LEFT);
@@ -289,8 +292,15 @@ public class FensterController {
 
         goToGreen.setOnAction(new EventHandler<ActionEvent>() {
 			@Override public void handle(ActionEvent e) {
-                endRecordRedTime();
-                startRecordGreenTime();
+                TimerRed.pauseRedTime();
+
+                if (a == 0){
+                    TimerGreen.start();
+                }
+                else{
+                    TimerGreen.continueGreenTime();
+                }
+
 				String nameTF = aufgabeArrayList.get(choiceBoxTestFileIndex).Name;
 				String inhaltTextAreaR = textAreaR.getText();
 
@@ -329,10 +339,9 @@ public class FensterController {
         backToRed.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent e) {
-                endRecordGreenTime();
-                endRecordRoundTime();
-                startRecordRedTime();
-                startRecordRoundTime();
+                a = 1;
+                TimerGreen.pauseGreenTime();
+                TimerRed.continueRedTime();
 
                 textAreaR.setDisable(false);
                 textAreaGB.setDisable(true);
@@ -351,9 +360,10 @@ public class FensterController {
         goToBlack.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent e) {
+                TimerBlack.start();
                 endRecordGreenTime();
-                endRecordRoundTime();
-                startRecordBlackTime();
+                endRecordRedTime();
+
                 textAreaR.setDisable(true);
                 textAreaGB.setDisable(false);
 
@@ -368,11 +378,6 @@ public class FensterController {
 				endTimer();
 				timerOff();
 
-
-
-
-				timerOff();
-
 				textAreaGB.setText(textAreaGB.getText());
             }
         });
@@ -380,10 +385,12 @@ public class FensterController {
 		goToRed.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent e) {
+                a = 0;
                 endRecordBlackTime();
-				endRecordRoundTime();
-                startRecordRedTime();
-				startRecordRoundTime();
+                endRecordRoundTime();
+                TimerRed.start();
+                TimerRound.start();
+
 
 				textAreaR.setDisable(false);
 				textAreaGB.setDisable(true);
@@ -414,7 +421,10 @@ public class FensterController {
         subStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
             @Override
             public void handle(WindowEvent event) {
-                endAllTimer();
+                endRecordBlackTime();
+                endRecordGreenTime();
+                endRecordRedTime();
+                endRecordRoundTime();
                 chart();      // kann hier auch falsch platziert sein. Aufruf sollte dann dort geschehen wo es benötigt wird
             }
         });

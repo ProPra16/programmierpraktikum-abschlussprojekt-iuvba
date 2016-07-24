@@ -15,29 +15,9 @@ public class TimeTracking {
 
     private static ArrayList<Long> timePerRound = new ArrayList<Long>();
     private static ArrayList<Long> timeInGreen = new ArrayList<Long>();
-    private static ArrayList<Long> timeInBlack = new ArrayList<Long>();
     private static ArrayList<Long> timeInRed = new ArrayList<Long>();
+    private static ArrayList<Long> timeInBlack = new ArrayList<Long>();
 
-    public static void startRecordRoundTime() {
-
-        TimerRound.start();
-
-    }
-    public static void startRecordGreenTime() {
-
-        TimerGreen.start();
-
-    }
-    public static void startRecordBlackTime() {
-
-        TimerBlack.start();
-
-    }
-    public static void startRecordRedTime() {
-
-        TimerRed.start();
-
-    }
 
     public static void endRecordRoundTime() {
 
@@ -55,6 +35,13 @@ public class TimeTracking {
         TimerGreen.end();
     }
 
+    public static void endRecordRedTime() {
+
+        long usedTime = getRedTime();
+        timeInRed.add(usedTime);
+
+        TimerRed.end();
+    }
     public static void endRecordBlackTime() {
 
         long usedTime = getBlackTime();
@@ -63,19 +50,6 @@ public class TimeTracking {
         TimerBlack.end();
     }
 
-    public static void endRecordRedTime() {
-
-        long usedTime = getRedTime();
-        timeInRed.add(usedTime);
-
-        TimerRed.end();
-    }
-    public static void endAllTimer(){
-        TimerBlack.end();
-        TimerRed.end();
-        TimerGreen.end();
-        TimerRound.end();
-    }
 
     public static ArrayList getAllTimesPerRound() {
         return timePerRound;
@@ -85,7 +59,7 @@ public class TimeTracking {
         return timeInGreen;
     }
 
-    public static ArrayList getAllTimesInBlack()  { return timeInBlack; }
-
     public static ArrayList getAllTimesInRed()  { return timeInRed; }
+
+    public static ArrayList getAllTimesInBlack()  { return timeInBlack; }
 }
