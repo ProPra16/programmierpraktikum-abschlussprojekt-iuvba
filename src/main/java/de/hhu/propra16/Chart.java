@@ -23,8 +23,8 @@ public class Chart{
 
 
         timePerRound = TimeTracking.getAllTimesPerRound();
-        timeInGreen = TimeTracking.getAllTimesInGreen();
         timeInRed = TimeTracking.getAllTimesInRed();
+        timeInGreen = TimeTracking.getAllTimesInGreen();
         timeInBlack = TimeTracking.getAllTimesInBlack();
 
 
@@ -50,16 +50,16 @@ public class Chart{
             bar1.setName("Rundendauer");
             bar1.getData().add(new XYChart.Data("Runde " + (i+1), timePerRound.get(i)));
         }
-        for (int i = 0; i< timeInGreen.size()-1; i++) {
-            bar2.setName("passing test");
-            bar2.getData().add(new XYChart.Data("Runde: " + (i+1), timeInGreen.get(i)));
-        }
         for (int i = 0; i< timeInRed.size()-1; i++) {
-            bar3.setName("writing failure test");
-            bar3.getData().add(new XYChart.Data("Runde: " + (i+1), timeInRed.get(i)));
+            bar2.setName("writing failure test");
+            bar2.getData().add(new XYChart.Data("Runde: " + (i+1), timeInRed.get(i)));
+        }
+        for (int i = 0; i< timeInGreen.size()-1; i++) {
+            bar3.setName("passing test");
+            bar3.getData().add(new XYChart.Data("Runde: " + (i+1), timeInGreen.get(i)));
         }
         for (int i = 0; i< timeInBlack.size(); i++) {
-            bar4.setName("rectoring");
+            bar4.setName("refactoring");
             bar4.getData().add(new XYChart.Data("Runde: " + (i+1), timeInBlack.get(i)));
         }
 
