@@ -291,11 +291,8 @@ public class FensterController {
 		subPane.add(goToRed, 1, 9, 3, 2);
 
 		String nameTestFile = aufgabeArrayList.get(choiceBoxTestFileIndex).Name;
-		String inhaltTextAreaR = textAreaR.getText();
 
 		String nameFile = aufgabeArrayList.get(choiceBoxFileIndex).Name;
-		String inhaltTextAreaGB = textAreaGB.getText();
-
 
         goToGreen.setOnAction(new EventHandler<ActionEvent>() {
 			@Override public void handle(ActionEvent e) {
@@ -323,13 +320,12 @@ public class FensterController {
 				}
 				*/
 
-				CompilationUnit cTest = new CompilationUnit(nameTestFile, inhaltTextAreaR, false);
+				CompilationUnit cTest = new CompilationUnit(nameTestFile, textAreaR.getText(), false);
 				JavaStringCompiler scTest = CompilerFactory.getCompiler(cTest);
 				scTest.compileAndRunTests();
 				CompilerResult crTest = scTest.getCompilerResult();
 
-				// TestResult tr = getNumberOfFailedTests();
-
+				// TestResult tr = scTest.getNumberOfFailedTests();
 
 				if (crTest.hasCompileErrors() == false) {
 
@@ -382,7 +378,7 @@ public class FensterController {
                 endRecordGreenTime();
                 endRecordRedTime();
 
-				CompilationUnit c = new CompilationUnit(nameTestFile, inhaltTextAreaR, false);
+				CompilationUnit c = new CompilationUnit(nameFile, textAreaGB.getText(), false);
 				JavaStringCompiler sc = CompilerFactory.getCompiler(c);
 				sc.compileAndRunTests();
 				CompilerResult cr = sc.getCompilerResult();
@@ -423,7 +419,7 @@ public class FensterController {
                 TimerRed.start();
                 TimerRound.start();
 
-				CompilationUnit c = new CompilationUnit(nameTestFile, inhaltTextAreaR, false);
+				CompilationUnit c = new CompilationUnit(nameFile, textAreaGB.getText(), false);
 				JavaStringCompiler sc = CompilerFactory.getCompiler(c);
 				sc.compileAndRunTests();
 				CompilerResult cr = sc.getCompilerResult();
