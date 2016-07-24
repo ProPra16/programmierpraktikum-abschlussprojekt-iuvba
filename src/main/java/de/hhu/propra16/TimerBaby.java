@@ -50,6 +50,7 @@ public class TimerBaby {
 
     public static Label timerOff() {
 
+        endTimer();
         timelabel.setText("TIMER OFF");
         return timelabel;
     }

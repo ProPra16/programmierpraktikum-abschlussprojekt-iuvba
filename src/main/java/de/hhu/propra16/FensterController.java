@@ -319,6 +319,10 @@ public class FensterController {
 
 				vBoxRed.setStyle("-fx-background-color: lightgrey");
 				vBoxGB.setStyle("-fx-background-color: green");
+
+				textAreaGB.setText(textAreaGB.getText());
+
+
 			}
 		});
 
@@ -362,10 +366,11 @@ public class FensterController {
 				vBoxRed.setStyle("-fx-background-color: lightgrey");
 				vBoxGB.setStyle("-fx-background-color: black");
 
-				endTimer();
+                chart();      // kann hier auch falsch platziert sein. Aufruf sollte dann dort geschehen wo es benötigt wird
+
 				timerOff();
 
-                chart();      // kann hier auch falsch platziert sein. Aufruf sollte dann dort geschehen wo es benötigt wird
+				textAreaGB.setText(textAreaGB.getText());
             }
         });
 
@@ -390,6 +395,8 @@ public class FensterController {
 				vBoxGB.setStyle("-fx-background-color: lightgrey");
 
 				startTimer();
+
+				textAreaR.setText(textAreaR.getText());
 			}
 		});
 
