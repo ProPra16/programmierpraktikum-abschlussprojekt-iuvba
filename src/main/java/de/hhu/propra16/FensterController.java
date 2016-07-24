@@ -65,6 +65,7 @@ public class FensterController {
 	private boolean running = false;
 	private long time = 120000;
     private int a = 0;
+    private int b = 0;
 
 	// Testet, ob etwas kompilierbar ist.
 	/*
@@ -375,6 +376,7 @@ public class FensterController {
             @Override
             public void handle(ActionEvent e) {
                 TimerBlack.start();
+                b = 1;
                 endRecordGreenTime();
                 endRecordRedTime();
 
@@ -415,6 +417,7 @@ public class FensterController {
 			public void handle(ActionEvent e) {
                 a = 0;
                 endRecordBlackTime();
+                b = 0;
                 endRecordRoundTime();
                 TimerRed.start();
                 TimerRound.start();
@@ -462,8 +465,12 @@ public class FensterController {
         subStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
             @Override
             public void handle(WindowEvent event) {
-                endRecordBlackTime();
-                endRecordGreenTime();
+                if (b == 1) {
+                    endRecordBlackTime();
+                }
+                if (a == 1){
+                    endRecordGreenTime();
+                }
                 endRecordRedTime();
                 endRecordRoundTime();
                 chart();      // kann hier auch falsch platziert sein. Aufruf sollte dann dort geschehen wo es benötigt wird
