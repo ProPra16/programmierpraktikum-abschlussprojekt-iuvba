@@ -1,10 +1,9 @@
 package de.hhu.propra16;
 
 import vk.core.api.CompilationUnit;
-import vk.core.api.CompilerFactory;
 import vk.core.api.JavaStringCompiler;
-import vk.core.api.TestFailure;
-import java.util.Collection;
+
+import static vk.core.api.CompilerFactory.getCompiler;
 
 public class Compile {
 
@@ -22,12 +21,40 @@ public class Compile {
     }
 
     public void setAcceptanceTest(String acceptanceTestName, String acceptanceTestCode) {
-        test2 = new CompilationUnit(acceptanceTestName, acceptanceTestCode, true);
+        test2 = new CompilationUnit(acceptanceTestName,acceptanceTestCode, true);
     }
 
+
+
+
     public void compileCodeAndTestTests() {
+        if (code == null && test == null && test2 == null)
+            getCompiler(code, test, test2).compileAndRunTests();
+
+        else if (code == null && test == null)
+            getCompiler(code, test).compileAndRunTests();
+
+        else if (code == null && test2 == null)
+            getCompiler(code, test2).compileAndRunTests();
+
+        else if (test == null && test2 == null)
+            getCompiler(test, test2).compileAndRunTests();
+
+        else if (code == null)
+            getCompiler(code).compileAndRunTests();
+
+        else if (test == null)
+            getCompiler(test).compileAndRunTests();
+
+        else if (test2 == null)
+            getCompiler(test2).compileAndRunTests();
+
+
+    }
+
+    /*public void compileCodeAndTestTests() {
         if(code == null && test == null && test2 == null)
-            compiler = CompilerFactory.getCompiler(code, test, test2);
+            compiler = CompilerFactory.getCompiler(code, test, test2));
         else if(code == null && test == null)
             compiler = CompilerFactory.getCompiler(code, test);
         else if(code == null && test2 == null)
@@ -41,7 +68,9 @@ public class Compile {
         else if(test2 == null)
             compiler = CompilerFactory.getCompiler(test2);
 
+
         compiler.compileAndRunTests();
+
     }
 
     public boolean compilationErrors() {
@@ -72,5 +101,5 @@ public class Compile {
         return compiler.getTestResult().getNumberOfSuccessfulTests();
     }
 
-
+*/
 }
