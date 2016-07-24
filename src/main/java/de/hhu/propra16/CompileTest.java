@@ -20,10 +20,10 @@ public class CompileTest {
         compiler.setTest("CodeTest", test);
         compiler.setAcceptanceTest("AcceptanceTest", "acceptanceTest is missing here");
         compiler.compileCodeAndTestTests();
-
- //       assertEquals(false,compiler.compilationErrors());
- //       assertEquals(true,compiler.numberOfTestsFailed());
-
+        /*
+        *       assertEquals(false,compiler.compilationErrors());
+        *       assertEquals(true,compiler.numberOfTestsFailed());
+        */
     }
 
 }

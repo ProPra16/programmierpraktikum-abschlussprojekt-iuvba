@@ -13,9 +13,6 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
@@ -25,6 +22,7 @@ import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -35,11 +33,8 @@ import java.util.ArrayList;
 
 import static de.hhu.propra16.Chart.chart;
 import static de.hhu.propra16.MenuGUI.primaryStage;
-import static de.hhu.propra16.TimeTracking.endRecordTimeTracking;
-import static de.hhu.propra16.TimeTracking.startRecordTimeTracking;
+import static de.hhu.propra16.TimeTracking.*;
 import static de.hhu.propra16.TimerBaby.*;
-import static de.hhu.propra16.TimerBaby.getTime;
-import static de.hhu.propra16.TimerBaby.startTimer;
 
 
 public class FensterController {
@@ -170,6 +165,8 @@ public class FensterController {
 								e.printStackTrace();
 							}
 						}
+                    startRecordRedTime();
+                    startRecordRoundTime();
 				}
 			});
 			subStageChoiceBox.show();
@@ -292,7 +289,8 @@ public class FensterController {
 
         goToGreen.setOnAction(new EventHandler<ActionEvent>() {
 			@Override public void handle(ActionEvent e) {
-
+                endRecordRedTime();
+                startRecordGreenTime();
 				String nameTF = aufgabeArrayList.get(choiceBoxTestFileIndex).Name;
 				String inhaltTextAreaR = textAreaR.getText();
 
@@ -331,10 +329,10 @@ public class FensterController {
         backToRed.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent e) {
-
-                endRecordTimeTracking();
-
-                startRecordTimeTracking();
+                endRecordGreenTime();
+                endRecordRoundTime();
+                startRecordRedTime();
+                startRecordRoundTime();
 
                 textAreaR.setDisable(false);
                 textAreaGB.setDisable(true);
@@ -353,8 +351,9 @@ public class FensterController {
         goToBlack.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent e) {
-
-                endRecordTimeTracking();
+                endRecordGreenTime();
+                endRecordRoundTime();
+                startRecordBlackTime();
                 textAreaR.setDisable(true);
                 textAreaGB.setDisable(false);
 
@@ -366,7 +365,11 @@ public class FensterController {
 				vBoxRed.setStyle("-fx-background-color: lightgrey");
 				vBoxGB.setStyle("-fx-background-color: black");
 
-                chart();      // kann hier auch falsch platziert sein. Aufruf sollte dann dort geschehen wo es benötigt wird
+				endTimer();
+				timerOff();
+
+
+
 
 				timerOff();
 
@@ -377,10 +380,10 @@ public class FensterController {
 		goToRed.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent e) {
-
-				endRecordTimeTracking();
-
-				startRecordTimeTracking();
+                endRecordBlackTime();
+				endRecordRoundTime();
+                startRecordRedTime();
+				startRecordRoundTime();
 
 				textAreaR.setDisable(false);
 				textAreaGB.setDisable(true);
@@ -408,6 +411,15 @@ public class FensterController {
 		goToRed.setDisable(true);
 
 		subStage.show();
+        subStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+            @Override
+            public void handle(WindowEvent event) {
+                endAllTimer();
+                chart();      // kann hier auch falsch platziert sein. Aufruf sollte dann dort geschehen wo es benötigt wird
+            }
+        });
+
+
 	}
 
 

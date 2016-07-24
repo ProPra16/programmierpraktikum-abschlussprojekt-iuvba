@@ -3,7 +3,7 @@ package de.hhu.propra16;
 import javafx.scene.control.Label;
 
 
-class RoundTime{
+class TimerRound {
 
         private static Thread timeThread;
         private static boolean running = false;
@@ -24,7 +24,7 @@ class RoundTime{
                                     while (running) {
 
                             timelabel.setText(String.format("%02d:%02d", time / 60000, time / 1000 % 60));
-                            System.out.println(String.format("%02d:%02d", time / 60000, time / 1000 % 60));
+                            System.out.println(String.format("Runde" + "%02d:%02d", time / 60000, time / 1000 % 60));
 
 
                             try {

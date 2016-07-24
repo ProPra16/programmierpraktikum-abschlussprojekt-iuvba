@@ -15,11 +15,18 @@ import java.util.ArrayList;
 public class Chart{
 
     private static ArrayList<Long> timePerRound = new ArrayList<Long>();
+    private static ArrayList<Long> timeInGreen = new ArrayList<Long>();
+    private static ArrayList<Long> timeInBlack = new ArrayList<Long>();
+    private static ArrayList<Long> timeInRed = new ArrayList<Long>();
 
     public static void chart() {
 
 
         timePerRound = TimeTracking.getAllTimesPerRound();
+        timeInBlack = TimeTracking.getAllTimesInBlack();
+        timeInGreen = TimeTracking.getAllTimesInGreen();
+        timeInRed = TimeTracking.getAllTimesInRed();
+
 
 
         Stage stage = new Stage();
@@ -32,16 +39,34 @@ public class Chart{
 
         yAxis.setLabel("Zeit (ms)");
 
-        XYChart.Series bar = new XYChart.Series();
+        XYChart.Series bar1 = new XYChart.Series();
+        XYChart.Series bar2 = new XYChart.Series();
+        XYChart.Series bar3 = new XYChart.Series();
+        XYChart.Series bar4 = new XYChart.Series();
 
 
         for (int i = 1; i< timePerRound.size(); i++) {          // hier wird bei 1 angefangen, da die erste Stelle in der Liste durch TimeTracking mit 0 befüllt wird.
-            bar.setName("Runden");
-            bar.getData().add(new XYChart.Data("Runde: " + i, timePerRound.get(i)));
+            bar1.setName("Rundendauer");
+            bar1.getData().add(new XYChart.Data("Runde " + i + " ins", timePerRound.get(i)));
+        }
+        for (int i = 1; i< timeInGreen.size(); i++) {
+            bar2.setName("in Grün");
+            bar2.getData().add(new XYChart.Data("Grün: " + i, timeInGreen.get(i)));
+        }
+        for (int i = 1; i< timeInBlack.size(); i++) {
+            bar3.setName("in Schwarz");
+            bar3.getData().add(new XYChart.Data("Schwarz: " + i, timeInBlack.get(i)));
+        }
+        for (int i = 1; i< timeInRed.size(); i++) {
+            bar4.setName("in Red");
+            bar4.getData().add(new XYChart.Data("Rot: " + i, timeInRed.get(i)));
         }
 
         Scene scene  = new Scene(bc,800,600);
-        bc.getData().add(bar);
+        bc.getData().add(bar1);
+        bc.getData().add(bar2);
+        bc.getData().add(bar3);
+        bc.getData().add(bar4);
         stage.setScene(scene);
         stage.show();
     }
