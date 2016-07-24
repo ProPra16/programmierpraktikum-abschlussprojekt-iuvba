@@ -326,9 +326,13 @@ public class FensterController {
 				scTest.compileAndRunTests();
 				CompilerResult crTest = scTest.getCompilerResult();
 
-				// TestResult tr = scTest.getNumberOfFailedTests();
+				TestResult tr = scTest.getTestResult();
+				int numberOfFailedTests = tr.getNumberOfFailedTests();
 
-				if (crTest.hasCompileErrors() == false) {
+				System.out.println("Anzahl fehlgeschlagener Tests: " + numberOfFailedTests);
+
+
+				if ((crTest.hasCompileErrors() == false)) {
 
 					textAreaR.setDisable(true);
 					textAreaGB.setDisable(false);
