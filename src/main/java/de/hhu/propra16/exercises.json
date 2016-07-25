@@ -39,7 +39,7 @@
   {
 	"Name":"FlächeninhaltTest",
 	"Beschreibung":"Test von Flächeninhalt",
-	"ClassName":"FlaecheninhatTest",
+	"ClassName":"FlächeninhatTest",
 	"Inhalt":"import static org.junit.Assert.*;\nimport org.junit.Test;\n\npublic class FlaecheninhaltTest {\n\n}"
   },
   {

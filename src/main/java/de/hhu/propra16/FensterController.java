@@ -79,6 +79,8 @@ public class FensterController {
 	private String nameTestFile;
 	private String nameFile;
 
+	private String oldTextInTextAreaGB;
+
     @FXML
 	protected void btPressedFCFile(ActionEvent event) {
 
@@ -290,14 +292,16 @@ public class FensterController {
         goToGreen.setOnAction(new EventHandler<ActionEvent>() {
 			@Override public void handle(ActionEvent e) {
 
+				oldTextInTextAreaGB = textAreaGB.getText();
+
 				TimerBaby.endTimer();
                 TimerBaby.start();
 
 				CompilationUnit cTest = new CompilationUnit(nameTestFile, textAreaR.getText(), true);
 				CompilationUnit cCode = new CompilationUnit(nameFile, textAreaGB.getText(), false);
 				JavaStringCompiler scTest = CompilerFactory.getCompiler(cCode, cTest);
-                scTest.compileAndRunTests();
-                CompilerResult crTest = scTest.getCompilerResult();
+				scTest.compileAndRunTests();
+				CompilerResult cr = scTest.getCompilerResult();
 
                 tr = scTest.getTestResult();
 
@@ -335,7 +339,7 @@ public class FensterController {
 				//System.out.println("Anzahl erfolgreicher Tests: " + numberOfSuccessfulTests);
 
 
-				if (crTest.hasCompileErrors() == true && tr.getNumberOfFailedTests() == 1) {
+				if (cr.hasCompileErrors() == true && tr.getNumberOfFailedTests() == 1) {
 
 					if (a == 0){
 						TimerGreen.start();
@@ -359,7 +363,7 @@ public class FensterController {
 
 					textAreaGB.setText(textAreaGB.getText());
 				}
-				else if (crTest.hasCompileErrors() == true) {
+				else if (cr.hasCompileErrors() == true) {
 					Alert alert = new Alert(Alert.AlertType.ERROR, "Test-Datei kompiliert nicht!");
 					alert.showAndWait();
 				}
@@ -373,7 +377,10 @@ public class FensterController {
         backToRed.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent e) {
-                TimerBaby.endTimer();
+
+				textAreaGB.setText(oldTextInTextAreaGB);
+
+				TimerBaby.endTimer();
                 TimerBaby.start();
                 if (a == 1){
 					TimerGreen.pauseGreenTime();
