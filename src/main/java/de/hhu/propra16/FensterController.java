@@ -300,6 +300,7 @@ public class FensterController {
                 CompilerResult crTest = scTest.getCompilerResult();
 
                 tr = scTest.getTestResult();
+
                 tf = tr.getTestFailures();
 
                 List<TestFailure> list = new ArrayList<TestFailure>(tf);
@@ -358,7 +359,7 @@ public class FensterController {
 
 					textAreaGB.setText(textAreaGB.getText());
 				}
-				else if (cr.hasCompileErrors() == true) {
+				else if (crTest.hasCompileErrors() == true) {
 					Alert alert = new Alert(Alert.AlertType.ERROR, "Test-Datei kompiliert nicht!");
 					alert.showAndWait();
 				}
