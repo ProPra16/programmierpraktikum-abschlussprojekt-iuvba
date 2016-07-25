@@ -31,11 +31,14 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 import static de.hhu.propra16.Chart.chart;
 import static de.hhu.propra16.MenuGUI.primaryStage;
 import static de.hhu.propra16.TimeTracking.*;
-import static de.hhu.propra16.TimerBaby.*;
+import static de.hhu.propra16.TimerBaby.endTimer;
+import static de.hhu.propra16.TimerBaby.timerOff;
 
 
 public class FensterController {
@@ -304,6 +307,10 @@ public class FensterController {
 				scTest.compileAndRunTests();
 				CompilerResult crTest = scTest.getCompilerResult();
 				tr = scTest.getTestResult();
+                Collection<TestFailure> tf = tr.getTestFailures();
+                List list = new ArrayList(tf);
+                TestFailure tff = (TestFailure) list.get(1);
+                tff.getMessage();
 
 				try {
 					numberOfFailedTests = tr.getNumberOfFailedTests();
