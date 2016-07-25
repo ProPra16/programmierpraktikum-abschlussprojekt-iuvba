@@ -32,6 +32,7 @@ import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import static de.hhu.propra16.Chart.chart;
 import static de.hhu.propra16.MenuGUI.primaryStage;
@@ -292,25 +293,45 @@ public class FensterController {
 				CompilationUnit cTest = new CompilationUnit(nameTestFile, textAreaR.getText(), true);
 				CompilationUnit cCode = new CompilationUnit(nameFile, textAreaGB.getText(), false);
 				JavaStringCompiler scTest = CompilerFactory.getCompiler(cCode, cTest);
-				scTest.compileAndRunTests();
-				CompilerResult crTest = scTest.getCompilerResult();
-				tr = scTest.getTestResult();
+                scTest.compileAndRunTests();
+                CompilerResult crTest = scTest.getCompilerResult();
+
+                tr = scTest.getTestResult();
                 tf = tr.getTestFailures();
+
+                List<TestFailure> list = new ArrayList<TestFailure>(tf);
+
+                TestFailure elem;
+
+                for (int i = 0; i<list.size(); i++){
+                    elem = list.get(i);
+                    System.out.println(elem.getMessage());
+                }
+
+
+
+                Collection failures = tf;
+
+               // for(TestFailure failure : failures) {
+                    //failure.getMessage();
+
+                //}
 
 
 				try {
 					numberOfFailedTests = tr.getNumberOfFailedTests();
 				} catch (NullPointerException npe) {
-					Alert alert = new Alert(Alert.AlertType.ERROR, "Es wurde kein Test geschrieben!");
+
+					Alert alert = new Alert(Alert.AlertType.ERROR, "Es wurde keine fehlschlagenden Tests geschrieben!");
 					alert.showAndWait();
 				}
 
 				//numberOfSuccessfulTests = tr.getNumberOfSuccessfulTests();
-				System.out.println("Anzahl fehlgeschlagener Tests: " + numberOfFailedTests);
+				System.out.println("Anzahl fehlgeschlagener Tests: " + tr.getNumberOfFailedTests());
 				//System.out.println("Anzahl erfolgreicher Tests: " + numberOfSuccessfulTests);
 
 
-				if (crTest.hasCompileErrors() == false && numberOfFailedTests == 1) {
+				if (crTest.hasCompileErrors() == true && tr.getNumberOfFailedTests() == 1) {
 
 					if (a == 0){
 						TimerGreen.start();
