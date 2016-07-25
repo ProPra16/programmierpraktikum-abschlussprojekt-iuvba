@@ -69,8 +69,8 @@ public class FensterController {
     private int b = 0;
 
 	private TestResult tr;
-	private int numberOfFailedTests;
-	private int numberOfSuccessfulTests;
+	private int numberOfFailedTests = 0;
+	private int numberOfSuccessfulTests = 0;
 
 	@FXML
 	protected void btPressedFCFile(ActionEvent event) {
@@ -112,7 +112,6 @@ public class FensterController {
 	
 	@FXML
 	protected void btPressedWeiter(ActionEvent event) throws IOException {
-		
 		
 		if (selectedFile != null) {
 
@@ -296,29 +295,39 @@ public class FensterController {
 			@Override public void handle(ActionEvent e) {
                 TimerBaby.endTimer();
                 TimerBaby.start();
-                TimerRed.pauseRedTime();
 
-                if (a == 0){
-                    TimerGreen.start();
-                    a = 1;
-                }
-                else{
-                    TimerGreen.continueGreenTime();
-                }
+
+
 
 				CompilationUnit cTest = new CompilationUnit(nameTestFile, textAreaR.getText(), true);
 				JavaStringCompiler scTest = CompilerFactory.getCompiler(cTest);
 				scTest.compileAndRunTests();
 				CompilerResult crTest = scTest.getCompilerResult();
 				tr = scTest.getTestResult();
-				numberOfFailedTests = tr.getNumberOfFailedTests();
-				numberOfSuccessfulTests = tr.getNumberOfSuccessfulTests();
+
+				try {
+					numberOfFailedTests = tr.getNumberOfFailedTests();
+				} catch (NullPointerException npe) {
+					Alert alert = new Alert(Alert.AlertType.ERROR, "Es wurde kein Test geschrieben!");
+					alert.showAndWait();
+				}
+
+				//numberOfSuccessfulTests = tr.getNumberOfSuccessfulTests();
 				System.out.println("Anzahl fehlgeschlagener Tests: " + numberOfFailedTests);
-				System.out.println("Anzahl erfolgreicher Tests: " + numberOfSuccessfulTests);
+				//System.out.println("Anzahl erfolgreicher Tests: " + numberOfSuccessfulTests);
 
 
 				if (crTest.hasCompileErrors() == false && numberOfFailedTests == 1) {
 
+					if (a == 0){
+						TimerGreen.start();
+						a = 1;
+					}
+					else{
+						TimerGreen.continueGreenTime();
+					}
+
+					TimerRed.pauseRedTime();
 					textAreaR.setDisable(true);
 					textAreaGB.setDisable(false);
 
@@ -348,7 +357,9 @@ public class FensterController {
             public void handle(ActionEvent e) {
                 TimerBaby.endTimer();
                 TimerBaby.start();
-                TimerGreen.pauseGreenTime();
+                if (a == 1){
+					TimerGreen.pauseGreenTime();
+				}
                 TimerRed.continueRedTime();
 
                 textAreaR.setDisable(false);
@@ -368,12 +379,7 @@ public class FensterController {
         goToBlack.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent e) {
-                TimerBlack.start();
-                b = 1;
-                TimerRed.continueRedTime();
-                endRecordRedTime();
-                TimerGreen.continueGreenTime();
-                endRecordGreenTime();
+
 
 
 				CompilationUnit c = new CompilationUnit(nameFile, textAreaGB.getText(), false);
@@ -383,6 +389,13 @@ public class FensterController {
 
 
 				if (cr.hasCompileErrors() == false && numberOfFailedTests == 0) {
+
+					TimerBlack.start();
+					b = 1;
+					TimerRed.continueRedTime();
+					endRecordRedTime();
+					TimerGreen.continueGreenTime();
+					endRecordGreenTime();
 
 					textAreaR.setDisable(true);
 					textAreaGB.setDisable(false);
@@ -415,12 +428,7 @@ public class FensterController {
 		goToRed.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent e) {
-                a = 0;
-                endRecordBlackTime();
-                b = 0;
-                endRecordRoundTime();
-                TimerRed.start();
-                TimerRound.start();
+
 
 				CompilationUnit c = new CompilationUnit(nameFile, textAreaGB.getText(), false);
 				JavaStringCompiler sc = CompilerFactory.getCompiler(c);
@@ -429,6 +437,13 @@ public class FensterController {
 
 
 				if (cr.hasCompileErrors() == false && numberOfFailedTests == 0) {
+
+					a = 0;
+					endRecordBlackTime();
+					b = 0;
+					endRecordRoundTime();
+					TimerRed.start();
+					TimerRound.start();
 
 					textAreaR.setDisable(false);
 					textAreaGB.setDisable(true);
