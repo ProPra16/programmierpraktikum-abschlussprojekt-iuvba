@@ -18,12 +18,22 @@ public class TimerBaby {
 
         public static Label start() {
 
+            String oldText = FensterController.getOldText();
+
             running = true;
 
             timer = new Timeline(new KeyFrame(Duration.millis(1000), new EventHandler<ActionEvent>() {
 
                 @Override
                 public void handle(ActionEvent event) {
+
+                    if (time <= 0) {
+                        endTimer();
+                        FensterController.setOldText(oldText);
+                        String oldText = FensterController.getOldText();
+
+                        //FensterController.changeTextArea();
+                    }
 
                     time -= 1000;
                     timelabel.setText(String.format("%02d:%02d", time / 60000, time / 1000 % 60));
