@@ -2,24 +2,28 @@
   {
     "Name":"HelloWorld",
     "Beschreibung":"Print Hello World",
+    "Babysteps": "on",
     "ClassName":"HelloWorld",
     "Inhalt":"public class HelloWorld {\n\tpublic static void main (String[] args) {\n\n\t}\n}"
   },
   {
     "Name":"Addieren",
     "Beschreibung":"Print 1+1",
+    "Babysteps": "on",
     "ClassName":"Addieren",
     "Inhalt":"public class Addieren {\n\tpublic static void main (String[] args) {\n\n\t}\n}"
   },
   {
 	"Name":"FlächeninhaltRechteck",
 	"Beschreibung":"Berechnung Flächeninhalt: a*b",
+    "Babysteps": "on",
 	"ClassName":"FlächeninhaltRechteck",
 	"Inhalt":"public class Flächeninhalt {\n\tpublic static void main (String[] args) {\n\n\t}\n}"
   },
   {
 	"Name":"FizzBuzz",
 	"Beschreibung":"Vielfaches von 4 wird FIZZ ausgegeben,Vielfaches von 6 wird BUZZ ausgegeben",
+    "Babysteps": "off",
 	"ClassName":"FizzBuzz",
 	"Inhalt":"public class FizzBuzz {\n\tpublic static void main (String[] args) {\n\n\t}\n}"
   },
@@ -33,18 +37,21 @@
   {
     "Name":"AddierenTest",
     "Beschreibung":"Test A2",
+    "Babysteps": "on",
     "ClassName":"AddierenTest",
     "Inhalt":"import static org.junit.Assert.*;\nimport org.junit.Test;\n\npublic class A2Test {\n\n}"
   },
   {
 	"Name":"FlächeninhaltTest",
 	"Beschreibung":"Test von Flächeninhalt",
+    "Babysteps": "on",
 	"ClassName":"FlächeninhatTest",
 	"Inhalt":"import static org.junit.Assert.*;\nimport org.junit.Test;\n\npublic class FlaecheninhaltTest {\n\n}"
   },
   {
 	"Name":"FizzBuzzTest",
 	"Beschreibung":"Test von FizzBuzz",
+    "Babysteps": "off",
 	"ClassName":"FizzBuzzTest",
 	"Inhalt":"import static org.junit.Assert.*;\nimport org.junit.Test;\n\npublic class FizzBuzzTest {\n\n}"
   }

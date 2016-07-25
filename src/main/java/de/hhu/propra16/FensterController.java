@@ -32,7 +32,6 @@ import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 
 import static de.hhu.propra16.Chart.chart;
 import static de.hhu.propra16.MenuGUI.primaryStage;
@@ -70,15 +69,15 @@ public class FensterController {
 	private long time = 120000;
     private int a = 0;
     private int b = 0;
-
+    private String babysteps;
 	private TestResult tr;
 	private int numberOfFailedTests = 0;
 	private int numberOfSuccessfulTests = 0;
     private Collection<TestFailure> tf;
-
+    private boolean baby = false;
 	private String nameTestFile;
 	private String nameFile;
-
+    private Label timeLabel;
 	private String oldTextInTextAreaGB;
 
     @FXML
@@ -117,7 +116,7 @@ public class FensterController {
 			subPaneChoiceBox.setHgap(25.0);
 			subPaneChoiceBox.setVgap(10.0);
 			subPaneChoiceBox.setPadding(new Insets(25, 25, 25, 25));
-			Stage subStageChoiceBox = createSubStage(200, 100, subPaneChoiceBox, "Excercise Name");
+			Stage subStageChoiceBox = createSubStage(300, 200, subPaneChoiceBox, "Excercise Name");
 
 			subStageChoiceBox.initModality(Modality.WINDOW_MODAL);
 			subStageChoiceBox.initOwner(primaryStage);
@@ -144,8 +143,31 @@ public class FensterController {
 			startWorking.setId("startWorking");
 			startWorking.setText("Start Working");
 
+            Button babyOnOff = new Button();
+            babyOnOff.setPrefSize(150.0, 50.0);
+            babyOnOff.setId("baby");
+            babyOnOff.setText("Set Babysteps ON");
+
+            Label babyCheck = new Label();
+            babyCheck.setText("BABYSTEPS ON");
+            babyCheck.setVisible(false);
+
+            babyOnOff.addEventFilter(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+
+                @Override
+                public void handle(MouseEvent event) {
+                    if (event.getButton() == MouseButton.PRIMARY) {
+
+                        baby = true;
+                        babyCheck.setVisible(true);
+                    }
+                }
+            });
+            subPaneChoiceBox.add(babyOnOff, 0, 1);
 			subPaneChoiceBox.add(choiceBox, 0, 0);
-			subPaneChoiceBox.add(startWorking, 0, 1);
+			subPaneChoiceBox.add(startWorking, 0, 3);
+			subPaneChoiceBox.add(babyCheck, 0, 2);
+
 
 			startWorking.addEventFilter(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
 
@@ -216,9 +238,7 @@ public class FensterController {
 
 		textAreaGB.setDisable(true);
 
-        if ((TimerBaby.checkTime()) == false){              // Aufruf von der Klasse TimerBaby
-            changeTextArea();
-        }
+
 
 		// VBox Red
 		VBox vBoxRed = new VBox();
@@ -241,13 +261,14 @@ public class FensterController {
 		subPane.add(vBoxGB, 4, 1, 1, 20);
 
 		// Label Timer
-		Label timeLabel = TimerBaby.start(); //Da Klasse TimerBaby importiert wurde: Aufruf von TimerBaby -> runterzählen bis 2:00 min.
+        if (baby = true) {
+            timeLabel = TimerBaby.start(); //Da Klasse TimerBaby importiert wurde: Aufruf von TimerBaby -> runterzählen bis 2:00 min.
+        }
+            timeLabel.setId("timeLabelBaby");
+            timeLabel.setAlignment(Pos.CENTER);
+            timeLabel.setPrefSize(145.0, 25.0);
 
-		timeLabel.setId("timeLabelBaby");
-		timeLabel.setAlignment(Pos.CENTER);
-		timeLabel.setPrefSize(145.0, 25.0);
-
-		subPane.add(timeLabel, 1, 0, 3, 1);
+            subPane.add(timeLabel, 1, 0, 3, 1);
 
 
 		// Buttons
@@ -287,23 +308,32 @@ public class FensterController {
 
 		nameFile = aufgabeArrayList.get(choiceBoxFileIndex).Name;
 
+
+
         goToGreen.setOnAction(new EventHandler<ActionEvent>() {
 			@Override public void handle(ActionEvent e) {
 
 				oldTextInTextAreaGB = textAreaGB.getText();
-
-				TimerBaby.endTimer();
-                TimerBaby.start();
+                if (baby = true) {
+                    TimerBaby.endTimer();
+                    TimerBaby.start();
+                }
+                System.out.println(nameTestFile);
+                System.out.println(textAreaR.getText());
 
 				CompilationUnit cTest = new CompilationUnit(nameTestFile, textAreaR.getText(), true);
 				CompilationUnit cCode = new CompilationUnit(nameFile, textAreaGB.getText(), false);
-				JavaStringCompiler scTest = CompilerFactory.getCompiler(cCode, cTest);
-				scTest.compileAndRunTests();
+				JavaStringCompiler scTest = CompilerFactory.getCompiler(cTest, cCode);
+				try {
+                    scTest.compileAndRunTests();
+                } catch(NullPointerException npe){
+
+                }
 				CompilerResult cr = scTest.getCompilerResult();
 
                 tr = scTest.getTestResult();
 
-                tf = tr.getTestFailures();
+               /* tf = tr.getTestFailures();
 
                 List<TestFailure> list = new ArrayList<TestFailure>(tf);
 
@@ -318,10 +348,9 @@ public class FensterController {
 
                 Collection failures = tf;
 
-               // for(TestFailure failure : failures) {
-                    //failure.getMessage();
-
-                //}
+               for(TestFailure failure : failures) {
+                    failure.getMessage();
+               }
 
 
 				try {
@@ -330,14 +359,14 @@ public class FensterController {
 
 					Alert alert = new Alert(Alert.AlertType.ERROR, "Es wurde keine fehlschlagenden Tests geschrieben!");
 					alert.showAndWait();
-				}
+				}*/
 
 				//numberOfSuccessfulTests = tr.getNumberOfSuccessfulTests();
-				System.out.println("Anzahl fehlgeschlagener Tests: " + tr.getNumberOfFailedTests());
+				//System.out.println("Anzahl fehlgeschlagener Tests: " + tr.getNumberOfFailedTests());
 				//System.out.println("Anzahl erfolgreicher Tests: " + numberOfSuccessfulTests);
 
 
-				if (cr.hasCompileErrors() == true && tr.getNumberOfFailedTests() == 1) {
+				if (cr.hasCompileErrors() == true /*&& tr.getNumberOfFailedTests() == 1*/) {
 
 					if (a == 0){
 						TimerGreen.start();
@@ -406,7 +435,7 @@ public class FensterController {
 
 				CompilationUnit cTest = new CompilationUnit(nameTestFile, textAreaR.getText(), true);
 				CompilationUnit cCode = new CompilationUnit(nameFile, textAreaGB.getText(), false);
-				JavaStringCompiler scTest = CompilerFactory.getCompiler(cCode, cTest);
+				JavaStringCompiler scTest = CompilerFactory.getCompiler(cTest, cCode);
 				scTest.compileAndRunTests();
 				CompilerResult cr = scTest.getCompilerResult();
 
