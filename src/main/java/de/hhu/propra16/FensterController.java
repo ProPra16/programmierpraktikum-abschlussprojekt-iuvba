@@ -59,8 +59,9 @@ public class FensterController {
 
 	private int choiceBoxFileIndex = 0;
 	private int choiceBoxTestFileIndex = 0;
-
-	private Label timelabel = new Label();
+    private TextArea textAreaGB;
+    private TextArea textAreaR;
+    private Label timelabel = new Label();
 	private Thread timeThread;
 	private boolean running = false;
 	private long time = 120000;
@@ -205,7 +206,7 @@ public class FensterController {
 		subPane.add(beschreibung, 4, 0, 1, 1);
 
 		// TextArea Red
-		TextArea textAreaR = new TextArea();
+		textAreaR = new TextArea();
 		textAreaR.setId("textAreaR");
 		textAreaR.setPrefSize(450.0, 600.0);
 		textAreaR.setText(aufgabeArrayList.get(choiceBoxTestFileIndex).Inhalt);
@@ -213,12 +214,16 @@ public class FensterController {
 		textAreaR.setDisable(false);
 
 		// TextArea Green & Black
-		TextArea textAreaGB = new TextArea();
+		textAreaGB = new TextArea();
 		textAreaGB.setId("textAreaGB");
 		textAreaGB.setPrefSize(450.0, 600.0);
 		textAreaGB.setText(aufgabeArrayList.get(choiceBoxFileIndex).Inhalt);
 
 		textAreaGB.setDisable(true);
+
+        if ((TimerBaby.checkTime()) == false){              // Aufruf von der Klasse TimerBaby
+            changeTextArea();
+        }
 
 		// VBox Red
 		VBox vBoxRed = new VBox();
@@ -241,17 +246,14 @@ public class FensterController {
 		subPane.add(vBoxGB, 4, 1, 1, 20);
 
 		// Label Timer
-		Label timeLabel = startTimer();          //Da Klasse TimerBaby importiert wurde: Aufruf von TimerBaby -> runterzählen bis 2:00 min.
+		Label timeLabel = TimerBaby.start(); //Da Klasse TimerBaby importiert wurde: Aufruf von TimerBaby -> runterzählen bis 2:00 min.
+
 		timeLabel.setId("timeLabelBaby");
-		timeLabel.setText("TimeBaby");
 		timeLabel.setAlignment(Pos.CENTER);
 		timeLabel.setPrefSize(145.0, 25.0);
 
 		subPane.add(timeLabel, 1, 0, 3, 1);
 
-        if ((getTime()) == 0){              // Aufruf von der Klasse TimerBaby
-            // Aufruf von changeTextArea(); sofern checkFunktion true ausgibt.
-        }
 
 		// Buttons
         // GO TO GREEN
@@ -292,10 +294,13 @@ public class FensterController {
 
         goToGreen.setOnAction(new EventHandler<ActionEvent>() {
 			@Override public void handle(ActionEvent e) {
+                TimerBaby.endTimer();
+                TimerBaby.start();
                 TimerRed.pauseRedTime();
 
                 if (a == 0){
                     TimerGreen.start();
+                    a = 1;
                 }
                 else{
                     TimerGreen.continueGreenTime();
@@ -341,7 +346,8 @@ public class FensterController {
         backToRed.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent e) {
-                a = 1;
+                TimerBaby.endTimer();
+                TimerBaby.start();
                 TimerGreen.pauseGreenTime();
                 TimerRed.continueRedTime();
 
@@ -364,8 +370,11 @@ public class FensterController {
             public void handle(ActionEvent e) {
                 TimerBlack.start();
                 b = 1;
-                endRecordGreenTime();
+                TimerRed.continueRedTime();
                 endRecordRedTime();
+                TimerGreen.continueGreenTime();
+                endRecordGreenTime();
+
 
 				CompilationUnit c = new CompilationUnit(nameFile, textAreaGB.getText(), false);
 				JavaStringCompiler sc = CompilerFactory.getCompiler(c);
@@ -433,7 +442,7 @@ public class FensterController {
 					vBoxRed.setStyle("-fx-background-color: red");
 					vBoxGB.setStyle("-fx-background-color: lightgrey");
 
-					startTimer();
+					TimerBaby.start();
 
 					textAreaR.setText(textAreaR.getText());
 				}
@@ -456,6 +465,7 @@ public class FensterController {
 		goToRed.setDisable(true);
 
 		subStage.show();
+
         subStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
             @Override
             public void handle(WindowEvent event) {
@@ -463,8 +473,10 @@ public class FensterController {
                     endRecordBlackTime();
                 }
                 if (a == 1){
+                    TimerGreen.continueGreenTime();
                     endRecordGreenTime();
                 }
+
                 endRecordRedTime();
                 endRecordRoundTime();
                 chart();      // kann hier auch falsch platziert sein. Aufruf sollte dann dort geschehen wo es benötigt wird
@@ -487,5 +499,16 @@ public class FensterController {
 		subStage.setResizable(false);
 		return subStage;
 	}
+
+    public void changeTextArea(){
+        if (textAreaR.isDisabled()==true){
+            textAreaR.setDisable(false);
+            textAreaGB.setDisable(true);
+        }
+        else {
+            textAreaR.setDisable(true);
+            textAreaGB.setDisable(false);
+        }
+    }
 
 }

@@ -1,45 +1,44 @@
 package de.hhu.propra16;
 
-import javafx.application.Platform;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.scene.control.Label;
+import javafx.util.Duration;
 
 
 public class TimerBaby {
 
     private static Label timelabel = new Label();
-    private static Thread timeThread;
-    private static boolean running = false;
+    private static Timeline timer;
+
     private static long time = 120000;
+    private static boolean running = true;
 
-    public static Label startTimer() {
-
-        if (!running) {
+        public static Label start() {
 
             running = true;
-            timeThread = new Thread(() -> {
 
-                while (running) {
+            timer = new Timeline(new KeyFrame(Duration.millis(1000), new EventHandler<ActionEvent>() {
 
-                    Platform.runLater(() -> timelabel.setText(String.format("%02d:%02d", time/60000, time/1000%60)));
+                @Override
+                public void handle(ActionEvent event) {
 
-                    try {
-                        Thread.sleep(1000);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
                     time -= 1000;
-                }
-            });
-            timeThread.setDaemon(true);
-            timeThread.start();
+                    timelabel.setText(String.format("%02d:%02d", time / 60000, time / 1000 % 60));
 
-        }
+                }
+            }));
+
+            timer.setCycleCount(Timeline.INDEFINITE);
+            timer.play();
+
         return timelabel;
     }
 
     public static void endTimer() {
-
-        running = false;
+        timer.stop();
         time = 120000;
     }
 
@@ -53,5 +52,14 @@ public class TimerBaby {
         endTimer();
         timelabel.setText("TIMER OFF");
         return timelabel;
+    }
+
+    public static boolean checkTime(){
+        if(time <= 0) {
+            running = false;
+            timer.stop();
+        }
+        return running;
+
     }
 }
