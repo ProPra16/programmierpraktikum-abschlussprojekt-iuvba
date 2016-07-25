@@ -295,8 +295,7 @@ public class FensterController {
 				scTest.compileAndRunTests();
 				CompilerResult crTest = scTest.getCompilerResult();
 				tr = scTest.getTestResult();
-                tf = tr.getTestFailures();
-
+                //tf = tr.getTestFailures();
 
 				try {
 					numberOfFailedTests = tr.getNumberOfFailedTests();
@@ -373,12 +372,11 @@ public class FensterController {
             @Override
             public void handle(ActionEvent e) {
 
-
-
-				CompilationUnit c = new CompilationUnit(nameFile, textAreaGB.getText(), false);
-				JavaStringCompiler sc = CompilerFactory.getCompiler(c);
-				sc.compileAndRunTests();
-				CompilerResult cr = sc.getCompilerResult();
+				CompilationUnit cTest = new CompilationUnit(nameTestFile, textAreaR.getText(), true);
+				CompilationUnit cCode = new CompilationUnit(nameFile, textAreaGB.getText(), false);
+				JavaStringCompiler scTest = CompilerFactory.getCompiler(cCode, cTest);
+				scTest.compileAndRunTests();
+				CompilerResult cr = scTest.getCompilerResult();
 
 
 				if (cr.hasCompileErrors() == false && numberOfFailedTests == 0) {
@@ -422,11 +420,11 @@ public class FensterController {
 			@Override
 			public void handle(ActionEvent e) {
 
-
-				CompilationUnit c = new CompilationUnit(nameFile, textAreaGB.getText(), false);
-				JavaStringCompiler sc = CompilerFactory.getCompiler(c);
-				sc.compileAndRunTests();
-				CompilerResult cr = sc.getCompilerResult();
+				CompilationUnit cTest = new CompilationUnit(nameTestFile, textAreaR.getText(), true);
+				CompilationUnit cCode = new CompilationUnit(nameFile, textAreaGB.getText(), false);
+				JavaStringCompiler scTest = CompilerFactory.getCompiler(cCode, cTest);
+				scTest.compileAndRunTests();
+				CompilerResult cr = scTest.getCompilerResult();
 
 
 				if (cr.hasCompileErrors() == false && numberOfFailedTests == 0) {
