@@ -68,16 +68,9 @@ public class FensterController {
     private int b = 0;
 
 	private TestResult tr;
+	private int numberOfFailedTests;
+	private int numberOfSuccessfulTests;
 
-	// Testet, ob etwas kompilierbar ist.
-	/*
-	CompilationUnit compile = new CompilationUnit("Test", "Das ist ein Test.", false);
-	JavaStringCompiler sc = CompilerFactory.getCompiler(compile);
-	sc.compileAndRunTests();
-	CompilerResult cr = sc.getCompilerResult();
-	cr.hasCompileErrors();
-	*/
-	
 	@FXML
 	protected void btPressedFCFile(ActionEvent event) {
 
@@ -313,13 +306,13 @@ public class FensterController {
 				scTest.compileAndRunTests();
 				CompilerResult crTest = scTest.getCompilerResult();
 				tr = scTest.getTestResult();
-				int numberOfFailedTests = tr.getNumberOfFailedTests();
-				int numberOfSuccessfulTests = tr.getNumberOfSuccessfulTests();
+				numberOfFailedTests = tr.getNumberOfFailedTests();
+				numberOfSuccessfulTests = tr.getNumberOfSuccessfulTests();
 				System.out.println("Anzahl fehlgeschlagener Tests: " + numberOfFailedTests);
 				System.out.println("Anzahl erfolgreicher Tests: " + numberOfSuccessfulTests);
 
 
-				if ((crTest.hasCompileErrors() == false)) {
+				if (crTest.hasCompileErrors() == false && numberOfFailedTests == 1) {
 
 					textAreaR.setDisable(true);
 					textAreaGB.setDisable(false);
@@ -334,11 +327,14 @@ public class FensterController {
 
 					textAreaGB.setText(textAreaGB.getText());
 				}
-				else {
-					Alert alert = new Alert(Alert.AlertType.ERROR, "Test-Datei kompiliert nicht");
+				else if (crTest.hasCompileErrors() == true) {
+					Alert alert = new Alert(Alert.AlertType.ERROR, "Test-Datei kompiliert nicht!");
 					alert.showAndWait();
 				}
-				// Weiterer Alert wenn die Anzahl der fehlschlagenden Tests ungleich 1.
+				else if (numberOfFailedTests != 1) {
+					Alert alert = new Alert(Alert.AlertType.ERROR, "Anzahl der fehlschlagenden Tests nicht gleich 1!");
+					alert.showAndWait();
+				}
 			}
 		});
 
@@ -376,8 +372,8 @@ public class FensterController {
 				sc.compileAndRunTests();
 				CompilerResult cr = sc.getCompilerResult();
 
-				// Und die Bedingung , dass Anzahl der fehlschlagenden Test gleich 0 ist.
-				if (cr.hasCompileErrors() == false) {
+
+				if (cr.hasCompileErrors() == false && numberOfFailedTests == 0) {
 
 					textAreaR.setDisable(true);
 					textAreaGB.setDisable(false);
@@ -395,8 +391,12 @@ public class FensterController {
 
 					textAreaGB.setText(textAreaGB.getText());
 				}
-				else {
-					Alert alert = new Alert(Alert.AlertType.ERROR, "Datei kompiliert nicht");
+				else if (cr.hasCompileErrors() == true) {
+					Alert alert = new Alert(Alert.AlertType.ERROR, "Datei kompiliert nicht!");
+					alert.showAndWait();
+				}
+				else if (numberOfFailedTests != 0) {
+					Alert alert = new Alert(Alert.AlertType.ERROR, "Nicht alle Tests sind erfolgreich!");
 					alert.showAndWait();
 				}
 
@@ -418,8 +418,8 @@ public class FensterController {
 				sc.compileAndRunTests();
 				CompilerResult cr = sc.getCompilerResult();
 
-				// Und die Bedingung , dass Anzahl der fehlschlagenden Test gleich 0 ist.
-				if (cr.hasCompileErrors() == false) {
+
+				if (cr.hasCompileErrors() == false && numberOfFailedTests == 0) {
 
 					textAreaR.setDisable(false);
 					textAreaGB.setDisable(true);
@@ -437,8 +437,12 @@ public class FensterController {
 
 					textAreaR.setText(textAreaR.getText());
 				}
-				else {
-					Alert alert = new Alert(Alert.AlertType.ERROR, "Datei kompiliert nicht");
+				else if (cr.hasCompileErrors() == true) {
+					Alert alert = new Alert(Alert.AlertType.ERROR, "Datei kompiliert nicht!");
+					alert.showAndWait();
+				}
+				else if (numberOfFailedTests != 0) {
+					Alert alert = new Alert(Alert.AlertType.ERROR, "Nicht alle Tests sind erfolgreich!");
 					alert.showAndWait();
 				}
 
@@ -446,7 +450,6 @@ public class FensterController {
 		});
 
 		// Am Anfang ist man immer in Rot, daher nur goToGreen klickbar.
-
 		goToGreen.setDisable(false);
 		backToRed.setDisable(true);
 		goToBlack.setDisable(true);
