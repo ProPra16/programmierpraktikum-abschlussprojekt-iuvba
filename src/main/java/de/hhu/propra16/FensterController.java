@@ -67,6 +67,8 @@ public class FensterController {
     private int a = 0;
     private int b = 0;
 
+	private TestResult tr;
+
 	// Testet, ob etwas kompilierbar ist.
 	/*
 	CompilationUnit compile = new CompilationUnit("Test", "Das ist ein Test.", false);
@@ -306,30 +308,15 @@ public class FensterController {
                     TimerGreen.continueGreenTime();
                 }
 
-
-
-				// funktioniert nicht
-				/*
-				boolean check = checkRED(nameTestFile, inhaltTextAreaR, true);
-
-				System.out.println(check);
-				System.out.println(inhaltTextAreaR);
-
-				if (check == true) {
-					textAreaR.setDisable(true);
-					textAreaGB.setDisable(false);
-				}
-				*/
-
-				CompilationUnit cTest = new CompilationUnit(nameTestFile, textAreaR.getText(), false);
+				CompilationUnit cTest = new CompilationUnit(nameTestFile, textAreaR.getText(), true);
 				JavaStringCompiler scTest = CompilerFactory.getCompiler(cTest);
 				scTest.compileAndRunTests();
 				CompilerResult crTest = scTest.getCompilerResult();
-
-				TestResult tr = scTest.getTestResult();
+				tr = scTest.getTestResult();
 				int numberOfFailedTests = tr.getNumberOfFailedTests();
-
+				int numberOfSuccessfulTests = tr.getNumberOfSuccessfulTests();
 				System.out.println("Anzahl fehlgeschlagener Tests: " + numberOfFailedTests);
+				System.out.println("Anzahl erfolgreicher Tests: " + numberOfSuccessfulTests);
 
 
 				if ((crTest.hasCompileErrors() == false)) {
