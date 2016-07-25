@@ -290,12 +290,12 @@ public class FensterController {
                 TimerBaby.start();
 
 				CompilationUnit cTest = new CompilationUnit(nameTestFile, textAreaR.getText(), true);
-				JavaStringCompiler scTest = CompilerFactory.getCompiler(cTest);
+				CompilationUnit cCode = new CompilationUnit(nameFile, textAreaGB.getText(), false);
+				JavaStringCompiler scTest = CompilerFactory.getCompiler(cCode, cTest);
 				scTest.compileAndRunTests();
 				CompilerResult crTest = scTest.getCompilerResult();
 				tr = scTest.getTestResult();
                 tf = tr.getTestFailures();
-
 
 
 				try {
