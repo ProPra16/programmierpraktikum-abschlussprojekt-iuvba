@@ -74,7 +74,7 @@ public class FensterController {
 	private int numberOfFailedTests = 0;
 	private int numberOfSuccessfulTests = 0;
     private Collection<TestFailure> tf;
-    private boolean baby = false;
+    private boolean baby;
 	private String nameTestFile;
 	private String nameFile;
     private Label timeLabel;
@@ -157,9 +157,15 @@ public class FensterController {
                 @Override
                 public void handle(MouseEvent event) {
                     if (event.getButton() == MouseButton.PRIMARY) {
-
-                        baby = true;
-                        babyCheck.setVisible(true);
+                        if (baby == true){
+                            baby = false;
+                            babyCheck.setVisible(false);
+                            babyOnOff.setText("Set Babysteps ON");
+                        } else {
+                            baby = true;
+                            babyCheck.setVisible(true);
+                            babyOnOff.setText("Set Babysteps OFF");
+                        }
                     }
                 }
             });
@@ -261,15 +267,15 @@ public class FensterController {
 		subPane.add(vBoxGB, 4, 1, 1, 20);
 
 		// Label Timer
-        if (baby = true) {
+        if (baby == true) {
             timeLabel = TimerBaby.start(); //Da Klasse TimerBaby importiert wurde: Aufruf von TimerBaby -> runterzählen bis 2:00 min.
-        }
+
             timeLabel.setId("timeLabelBaby");
             timeLabel.setAlignment(Pos.CENTER);
             timeLabel.setPrefSize(145.0, 25.0);
 
             subPane.add(timeLabel, 1, 0, 3, 1);
-
+        }
 
 		// Buttons
         // GO TO GREEN
@@ -313,8 +319,10 @@ public class FensterController {
         goToGreen.setOnAction(new EventHandler<ActionEvent>() {
 			@Override public void handle(ActionEvent e) {
 
+
+
 				oldTextInTextAreaGB = textAreaGB.getText();
-                if (baby = true) {
+                if (baby == true) {
                     TimerBaby.endTimer();
                     TimerBaby.start();
                 }
@@ -406,9 +414,10 @@ public class FensterController {
             public void handle(ActionEvent e) {
 
 				textAreaGB.setText(oldTextInTextAreaGB);
-
-				TimerBaby.endTimer();
-                TimerBaby.start();
+                if( baby == true) {
+                    TimerBaby.endTimer();
+                    TimerBaby.start();
+                }
                 if (a == 1){
 					TimerGreen.pauseGreenTime();
 				}
@@ -466,7 +475,7 @@ public class FensterController {
 					textAreaGB.setText(textAreaGB.getText());
 				}
 				else if (cr.hasCompileErrors() == true) {
-					Alert alert = new Alert(Alert.AlertType.ERROR, "Datei kompiliert nicht!");
+					Alert alert = new Alert(Alert.AlertType.ERROR, "Code-Datei kompiliert nicht!");
 					alert.showAndWait();
 				}
 				else if (numberOfFailedTests != 0) {
