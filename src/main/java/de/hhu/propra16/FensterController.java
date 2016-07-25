@@ -62,8 +62,8 @@ public class FensterController {
 
 	private int choiceBoxFileIndex = 0;
 	private int choiceBoxTestFileIndex = 0;
-    private TextArea textAreaGB;
-    private TextArea textAreaR;
+    private static TextArea textAreaGB;
+    private static TextArea textAreaR;
     private Label timelabel = new Label();
 	private Thread timeThread;
 	private boolean running = false;
@@ -104,8 +104,6 @@ public class FensterController {
 
             ChoosenFile.setText(selectedFile.getName());
         }
-
-
 	}
 	
 	@FXML
@@ -539,7 +537,7 @@ public class FensterController {
 		return subStage;
 	}
 
-    public void changeTextArea(){
+    public static void changeTextArea(){
         if (textAreaR.isDisabled()==true){
             textAreaR.setDisable(false);
             textAreaGB.setDisable(true);
@@ -549,4 +547,28 @@ public class FensterController {
             textAreaGB.setDisable(false);
         }
     }
+
+	public static String getOldText() {
+
+		String oldText;
+
+		if (textAreaR.isDisable() == false) {
+			oldText = textAreaR.getText();
+		}
+		else {
+			oldText = textAreaGB.getText();
+		}
+		return oldText;
+	}
+
+	public static void setOldText(String oldText) {
+
+		if (textAreaR.isDisable() == false) {
+			textAreaR.setText(oldText);
+		}
+		else {
+			textAreaGB.setText(oldText);
+		}
+		TimerBaby.start();
+	}
 }
