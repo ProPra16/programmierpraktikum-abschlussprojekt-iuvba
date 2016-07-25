@@ -75,6 +75,12 @@ public class FensterController {
 	private int numberOfSuccessfulTests = 0;
     private Collection<TestFailure> tf;
 
+	private String nameTestFile;
+	private String nameFile;
+
+	private JavaStringCompiler scTest;
+
+
     @FXML
 	protected void btPressedFCFile(ActionEvent event) {
 
@@ -279,9 +285,9 @@ public class FensterController {
 
 		subPane.add(goToRed, 1, 9, 3, 2);
 
-		String nameTestFile = aufgabeArrayList.get(choiceBoxTestFileIndex).Name;
+		nameTestFile = aufgabeArrayList.get(choiceBoxTestFileIndex).Name;
 
-		String nameFile = aufgabeArrayList.get(choiceBoxFileIndex).Name;
+		nameFile = aufgabeArrayList.get(choiceBoxFileIndex).Name;
 
         goToGreen.setOnAction(new EventHandler<ActionEvent>() {
 			@Override public void handle(ActionEvent e) {
@@ -289,11 +295,8 @@ public class FensterController {
 				TimerBaby.endTimer();
                 TimerBaby.start();
 
-				CompilationUnit cTest = new CompilationUnit(nameTestFile, textAreaR.getText(), true);
-				CompilationUnit cCode = new CompilationUnit(nameFile, textAreaGB.getText(), false);
-				JavaStringCompiler scTest = CompilerFactory.getCompiler(cCode, cTest);
-				scTest.compileAndRunTests();
-				CompilerResult crTest = scTest.getCompilerResult();
+				CompilerResult cr = compile();
+
 				tr = scTest.getTestResult();
                 //tf = tr.getTestFailures();
 
@@ -309,7 +312,7 @@ public class FensterController {
 				//System.out.println("Anzahl erfolgreicher Tests: " + numberOfSuccessfulTests);
 
 
-				if (crTest.hasCompileErrors() == false && numberOfFailedTests == 1) {
+				if (cr.hasCompileErrors() == false && numberOfFailedTests == 1) {
 
 					if (a == 0){
 						TimerGreen.start();
@@ -333,7 +336,7 @@ public class FensterController {
 
 					textAreaGB.setText(textAreaGB.getText());
 				}
-				else if (crTest.hasCompileErrors() == true) {
+				else if (cr.hasCompileErrors() == true) {
 					Alert alert = new Alert(Alert.AlertType.ERROR, "Test-Datei kompiliert nicht!");
 					alert.showAndWait();
 				}
@@ -372,11 +375,8 @@ public class FensterController {
             @Override
             public void handle(ActionEvent e) {
 
-				CompilationUnit cTest = new CompilationUnit(nameTestFile, textAreaR.getText(), true);
-				CompilationUnit cCode = new CompilationUnit(nameFile, textAreaGB.getText(), false);
-				JavaStringCompiler scTest = CompilerFactory.getCompiler(cCode, cTest);
-				scTest.compileAndRunTests();
-				CompilerResult cr = scTest.getCompilerResult();
+
+				CompilerResult cr = compile();
 
 
 				if (cr.hasCompileErrors() == false && numberOfFailedTests == 0) {
@@ -420,11 +420,8 @@ public class FensterController {
 			@Override
 			public void handle(ActionEvent e) {
 
-				CompilationUnit cTest = new CompilationUnit(nameTestFile, textAreaR.getText(), true);
-				CompilationUnit cCode = new CompilationUnit(nameFile, textAreaGB.getText(), false);
-				JavaStringCompiler scTest = CompilerFactory.getCompiler(cCode, cTest);
-				scTest.compileAndRunTests();
-				CompilerResult cr = scTest.getCompilerResult();
+
+				CompilerResult cr = compile();
 
 
 				if (cr.hasCompileErrors() == false && numberOfFailedTests == 0) {
@@ -516,5 +513,16 @@ public class FensterController {
             textAreaGB.setDisable(false);
         }
     }
+
+	public CompilerResult compile() {
+
+		CompilationUnit cTest = new CompilationUnit(nameTestFile, textAreaR.getText(), true);
+		CompilationUnit cCode = new CompilationUnit(nameFile, textAreaGB.getText(), false);
+		scTest = CompilerFactory.getCompiler(cCode, cTest);
+		scTest.compileAndRunTests();
+		CompilerResult cr = scTest.getCompilerResult();
+
+		return cr;
+	}
 
 }
