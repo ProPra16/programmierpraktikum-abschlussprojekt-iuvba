@@ -18,11 +18,8 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
-import javafx.stage.FileChooser;
+import javafx.stage.*;
 import javafx.stage.FileChooser.ExtensionFilter;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
-import javafx.stage.WindowEvent;
 import vk.core.api.*;
 
 import java.io.File;
@@ -78,21 +75,10 @@ public class FensterController {
 	@FXML
 	protected void btPressedFCFile(ActionEvent event) {
 
-		Stage subStageFileChooser = new Stage();
-
-		/*
-		 * Wenn der File Chooser geöffnet ist soll das Menü "deaktiviert" werden.
-		 * (Wie bei der SubStage wo man die Aufgabe auswählen kann)
-		 * Dort funktioniert es auch, hier allerdings nicht.
-		 */
-
-		subStageFileChooser.initModality(Modality.WINDOW_MODAL);
-		subStageFileChooser.initOwner(primaryStage);
-
 		FileChooser fileChooser = new FileChooser();
 		fileChooser.setTitle("Open File");
 		fileChooser.getExtensionFilters().addAll(new ExtensionFilter("JSON Files", "*.json"));
-		selectedFile = fileChooser.showOpenDialog(subStageFileChooser);
+		selectedFile = fileChooser.showOpenDialog(primaryStage);
 
         if (selectedFile == null) {
             Alert alert = new Alert(Alert.AlertType.ERROR, "Es wurde keine JSON Datei ausgewählt.");
@@ -296,11 +282,9 @@ public class FensterController {
 
         goToGreen.setOnAction(new EventHandler<ActionEvent>() {
 			@Override public void handle(ActionEvent e) {
-                TimerBaby.endTimer();
+
+				TimerBaby.endTimer();
                 TimerBaby.start();
-
-
-
 
 				CompilationUnit cTest = new CompilationUnit(nameTestFile, textAreaR.getText(), true);
 				JavaStringCompiler scTest = CompilerFactory.getCompiler(cTest);
@@ -311,6 +295,8 @@ public class FensterController {
                 List list = new ArrayList(tf);
                 TestFailure tff = (TestFailure) list.get(1);
                 tff.getMessage();
+
+
 
 				try {
 					numberOfFailedTests = tr.getNumberOfFailedTests();
