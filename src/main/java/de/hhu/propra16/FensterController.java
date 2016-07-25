@@ -18,8 +18,11 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
-import javafx.stage.*;
+import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import vk.core.api.*;
 
 import java.io.File;
@@ -29,7 +32,6 @@ import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 
 import static de.hhu.propra16.Chart.chart;
 import static de.hhu.propra16.MenuGUI.primaryStage;
@@ -71,8 +73,9 @@ public class FensterController {
 	private TestResult tr;
 	private int numberOfFailedTests = 0;
 	private int numberOfSuccessfulTests = 0;
+    private Collection<TestFailure> tf;
 
-	@FXML
+    @FXML
 	protected void btPressedFCFile(ActionEvent event) {
 
 		FileChooser fileChooser = new FileChooser();
@@ -291,10 +294,7 @@ public class FensterController {
 				scTest.compileAndRunTests();
 				CompilerResult crTest = scTest.getCompilerResult();
 				tr = scTest.getTestResult();
-                Collection<TestFailure> tf = tr.getTestFailures();
-                List list = new ArrayList(tf);
-                TestFailure tff = (TestFailure) list.get(1);
-                tff.getMessage();
+                tf = tr.getTestFailures();
 
 
 
