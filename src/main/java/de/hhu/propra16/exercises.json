@@ -12,10 +12,10 @@
     "Inhalt":"public class Addieren {\n\tpublic static void main (String[] args) {\n\n\t}\n}"
   },
   {
-	"Name":"FlaecheninhaltRechteck",
-	"Beschreibung":"Berechnung Flaecheninhalt: a*b",
-	"ClassName":"FlaecheninhaltRechteck",
-	"Inhalt":"public class Flaecheninhalt {\n\tpublic static void main (String[] args) {\n\n\t}\n}"
+	"Name":"FlächeninhaltRechteck",
+	"Beschreibung":"Berechnung Flächeninhalt: a*b",
+	"ClassName":"FlächeninhaltRechteck",
+	"Inhalt":"public class Flächeninhalt {\n\tpublic static void main (String[] args) {\n\n\t}\n}"
   },
   {
 	"Name":"FizzBuzz",
@@ -37,8 +37,8 @@
     "Inhalt":"import static org.junit.Assert.*;\nimport org.junit.Test;\n\npublic class A2Test {\n\n}"
   },
   {
-	"Name":"FlaecheninhaltTest",
-	"Beschreibung":"Test von Flaecheninhalt",
+	"Name":"FlächeninhaltTest",
+	"Beschreibung":"Test von Flächeninhalt",
 	"ClassName":"FlaecheninhatTest",
 	"Inhalt":"import static org.junit.Assert.*;\nimport org.junit.Test;\n\npublic class FlaecheninhaltTest {\n\n}"
   },

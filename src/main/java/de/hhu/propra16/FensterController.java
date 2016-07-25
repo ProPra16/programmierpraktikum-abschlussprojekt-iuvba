@@ -78,9 +78,6 @@ public class FensterController {
 	private String nameTestFile;
 	private String nameFile;
 
-	private JavaStringCompiler scTest;
-
-
     @FXML
 	protected void btPressedFCFile(ActionEvent event) {
 
@@ -119,7 +116,7 @@ public class FensterController {
 			subPaneChoiceBox.setHgap(25.0);
 			subPaneChoiceBox.setVgap(10.0);
 			subPaneChoiceBox.setPadding(new Insets(25, 25, 25, 25));
-			Stage subStageChoiceBox = createSubStage(200, 100, subPaneChoiceBox, "Folder Name");
+			Stage subStageChoiceBox = createSubStage(200, 100, subPaneChoiceBox, "Excercise Name");
 
 			subStageChoiceBox.initModality(Modality.WINDOW_MODAL);
 			subStageChoiceBox.initOwner(primaryStage);
@@ -295,7 +292,11 @@ public class FensterController {
 				TimerBaby.endTimer();
                 TimerBaby.start();
 
-				CompilerResult cr = compile();
+				CompilationUnit cTest = new CompilationUnit(nameTestFile, textAreaR.getText(), true);
+				CompilationUnit cCode = new CompilationUnit(nameFile, textAreaGB.getText(), false);
+				JavaStringCompiler scTest = CompilerFactory.getCompiler(cCode, cTest);
+				scTest.compileAndRunTests();
+				CompilerResult cr = scTest.getCompilerResult();
 
 				tr = scTest.getTestResult();
                 //tf = tr.getTestFailures();
@@ -376,7 +377,11 @@ public class FensterController {
             public void handle(ActionEvent e) {
 
 
-				CompilerResult cr = compile();
+				CompilationUnit cTest = new CompilationUnit(nameTestFile, textAreaR.getText(), true);
+				CompilationUnit cCode = new CompilationUnit(nameFile, textAreaGB.getText(), false);
+				JavaStringCompiler scTest = CompilerFactory.getCompiler(cCode, cTest);
+				scTest.compileAndRunTests();
+				CompilerResult cr = scTest.getCompilerResult();
 
 
 				if (cr.hasCompileErrors() == false && numberOfFailedTests == 0) {
@@ -420,9 +425,11 @@ public class FensterController {
 			@Override
 			public void handle(ActionEvent e) {
 
-
-				CompilerResult cr = compile();
-
+				CompilationUnit cTest = new CompilationUnit(nameTestFile, textAreaR.getText(), true);
+				CompilationUnit cCode = new CompilationUnit(nameFile, textAreaGB.getText(), false);
+				JavaStringCompiler scTest = CompilerFactory.getCompiler(cCode, cTest);
+				scTest.compileAndRunTests();
+				CompilerResult cr = scTest.getCompilerResult();
 
 				if (cr.hasCompileErrors() == false && numberOfFailedTests == 0) {
 
@@ -513,16 +520,4 @@ public class FensterController {
             textAreaGB.setDisable(false);
         }
     }
-
-	public CompilerResult compile() {
-
-		CompilationUnit cTest = new CompilationUnit(nameTestFile, textAreaR.getText(), true);
-		CompilationUnit cCode = new CompilationUnit(nameFile, textAreaGB.getText(), false);
-		scTest = CompilerFactory.getCompiler(cCode, cTest);
-		scTest.compileAndRunTests();
-		CompilerResult cr = scTest.getCompilerResult();
-
-		return cr;
-	}
-
 }
