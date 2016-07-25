@@ -2,27 +2,31 @@ Nutzerhandbuch
 
 Ziel des Programms ist es, die testgetriebene Programmierung zu erlernen. Dafür ist das Programm in Teile aufgeteilt:
 RED:      Schreiben des Tests
-GREEN:    Schreiben der Codes
+GREEN:    Schreiben des Codes
 REFACTOR: Code optimieren
 Wie es genau funktioniert wird unten beschrieben.
 
 Beim öffnen soll eine JSON Datei ausgewählt werden.
-Nach dem Klicken auf den "Weiter" Button erscheint ein Fenster mit zwei Arbeitsplätzen, jeweils ein Platz für RED und GREEN.
+Nach dem Klicken auf den "Weiter" Button erscheint eine ChoiceBox, aus der die gewünschte Aufgabe ausgewählt werden muss. Anschließend wird auf den Button "Start working" geklickt.
+Ein Fenster mit zwei Arbeitsplätzen erscheint daraufhin, jeweils ein Platz für RED und GREEN.
 Zuerst ist das Bearbeiten nur bei RED (linke Seite) möglich.
  
 
 RED
-Dort werden die Tests implementiert. Es muss ein fehlschalgender Test implementiert sein oder der Code darf nicht kompilieren, bevor man in den GREEN Teil gehen kann.
-Wenn man den fehlschlagenden Test implementiert hat, wird durch klicken auf den Check-Button getestet, ob ein Test fehl schlägt oder der Code nicht kompiliert.
-Wenn dies der Fall ist, wird ein Weiter-Button sichtbar, mit dem man zum GREEN Teil weitergeleitet wird.
+Dort werden die Tests implementiert. Es muss ein fehlschlagender Test implementiert werden oder der Code darf nicht kompilieren, bevor man in den GREEN Teil gehen kann.
+Wenn man den fehlschlagenden Test implementiert hat, wird durch klicken auf den "Got to Green"-Button getestet, ob ein Test fehl schlägt oder der Code nicht kompiliert.
+Wenn dies der Fall ist, wird man zum GREEN Teil weitergeleitet wird.
 
 GREEN
 Hier ist das Bearbeiten im GREEN Feld möglich. Im  diesem Teil wird der passende Code implementiert.
-Es gibt dort  einen Check-Button, der den Code auf Kompilierbarkeit und fehlschlagende Tests testet.
-Bei erfolgreichem Check kann man durch den Weiter-Button zum Refactor Teil wechseln.
+Hier sollte der Code, so geschrieben werden, dass der zuvor fehlschlagende Test erfüllt wird. Sofern man meint seinen Code richtig implementiert zu haben,
+kann auf den Button "Go To Black" das Refactoring gestartet werden. Wenn der Code jedoch nicht korrekt zum Test implementiert wurde, dann bekommt man eine Fehlermeldung
+und muss in GREEN bleiben und den Code anpassen.
 
 
 REFACTOR
-In diesem Teil sollte man den Code optimieren.
-Durch klicken auf den Weiter-Button, wird der Code auf Kompilierbarkeit und fehlschlagende Tests getestet.
-Bei erfolgreichem Check gelangt man durch klicken auf den Weiter-Button wieder zum Green Teil gelangen
+Der Refactoring Part dient zum Strukturieren und Verbessern vom Code. Es werden beispielsweise redundante Codeabschnitte o.ä. entfernt. Bei dem Refactoring
+soll aber nicht das Programm an sich verändert werden. Es soll also jediglich veständlicher, überischlichter und strukturierter werden ohne das Verhalten des Programms zu ändern.
+Wenn dies nun geschehen ist, bedient man den Knopf "Go To Red". Hier wird erneut geprüft, ob das Programmverhalten auch wirklich nicht geändert wurde.
+Daraufhin beginnt dann in RED die nächste Runde und das ganze Spiel beginnt von vorne.
+
