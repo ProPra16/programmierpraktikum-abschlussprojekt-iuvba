@@ -1,0 +1,48 @@
+Systembeschreibung
+
+Das Programm TDD Trainer umfasst die Klassen: Aufgabe, Chart, Check, FensterController, MenuGUI, TimerRound, TimerBaby, TimerBlack, TimerGreen, TimerRed und TimeTracking.
+Diese Klassen befinden sich alle im Package de.hhu.propra16. Im "resources"-Package befinden sich die FXML-Datei "LayoutMenu", sowie die CSS-Datei "Style".
+
+Durch ausführen der Klasse MenuGUI startet das Programm. Es wird ein Graphical User Interface (GUI) erzeugt, welche durch die FXML ein Layout bekommt und durch die CSS Datei gesylt wird.
+In der FXML-Datei werden ein Label zur Überschrift, ein Button zur Auswahl der Datei, ein Weiter-Button und ein Label, welches den Namen der ausgewählten Datei anzeigt, erstellt.
+Die Klasse FensterController spezifiziert diese weiter.
+Für den Button zur Auswahl der Datei wird ein FileChooser erstellt. Hier ist es nur möglich JSON-Dateien auszuwählen. Die ausgewählte Datei wird als "selectedFile" gespeichert.
+Wenn selectedFile == 0 ist, kommt die Fehlermeldung, dass keine Datei ausgewählt wurde.
+Andernfalls wird eine TypeToken ArrayList erzeugt, die auf die Klasse Aufgabe zugreift. In dieser Klasse wird festgelegt, welche Parameter die JSON-Datei bei jeder Aufgabe bekommt.
+Dazu gehören die Strings: Name, Beschreibung, ClassName, Inhalt & Babysteps.
+Das Label der ausgewählten Datei, ChoosenFile, bekommt als Text den Namen des ausgewählten Datei übergeben.
+
+Bei dem Weiter-Button wird eine neue Stage für die ChoiceBox erzeugt, wenn "selectedFile" ungleich null ist. Dazu wird die Methode createSubStage aufgerufen.
+Diese befindet sich ebenfalls in der Klasse FensterController und bekommt als Parameter die Integer Werte für die Breite und Höhe übergeben, eine GridPane und einen String als Titel.
+Ist diese subStage geöffnet, ist es nicht möglich die primaryStage des Menüs zu bedienen.
+In der ChoiceBox kann der Nutzer nun ausswählen welche Aufgabe er bearbeiten möchte, ist dies erfolgt kann er über klicken des startWorking-Buttons mit dem Bearbeiten der Test und Code Files beginnen.
+Es ist wichtig, dass in der JSON-Datei zuerst alle Code-Files und danach erst alle Test-Files aufgelistet werden, da sonst die korrekte Berechnung der Indexstellen im Verlauf nicht möglich ist.
+Als Beispiel liegt die JSON-Datei "exercises" vor.
+Der Button startWorking ruft die Methode "open" auf und schließt die subStage mit der ChoiceBox.
+
+In der Methode "open" werden zuerst aus den Klassen TimerRed und TimerRound jeweils die Methode "start" aufgerufen.
+Diese beiden Timer zählen jeweils die Zeit, die der Nutzer im Zustand RED, sowie die Zeit die der Nutzer in der ersten Runde (also RED, GREEN und Refactoring) verbracht hat.
+Danach wird eine SubStage für das Bearbeiten von Code und Test Datei, ebenfalls wieder mit der Methode "createSubStage", erzeugt.
+
+Diese enthält zwei Labels, eins für die Beschreibung aus der JSON-Datei für die Test Datei und eins für die der Code Datei.
+Des Weiteren enthält diese subStage zwei VBoxen, diese enthalten jeweils eine TextArea.
+Links ist die TextArea mit dem Inhalt der Test Datei, rechts für den Code (diese fungiert für GREEN und das Refactoring gleichzeitig).
+
+Zwischen den beiden TextAreas befindet sich ein Label für den Timer von Babysteps, sowie die Buttons: goToGreen, backToRed, goToBlack und goToRed.
+Der Button goToGreen speichert zuerst den Text aus der TextArea für Grün, falls man im späteren Verlauf den Button backToRed klickt und die aktuellen Fortschritte aus dem TextFeld wieder entfert werden können.
+
+Danach wird geprüft, ob Babysteps eingescahltet sind. Falls ja wird die Methode "start" aus der Klasse TimerBaby aufegrufen.
+Dieser Timer ähnelt den vorher beschriebenen. Allerdings startet dieser nicht bei 0, sondern bei 2 Minuten und zält rückwärts. Wenn die 0 erreicht wird, endet der Timer und stellt den alten Zustand der aktuellen TextArea wieder her.
+Dazu werden die Methoden getOldText und setOldText aus dem FensterController benötigt.
+
+Dann werden mit Hilfe der Bibliothek von Jens Bendisposto die Test und Code Datei kompiliert und man erhält das CompilerResult cr.
+Wenn cr == true ist, dann startet der Timer aus der Klasse TimerGreen und der Timer von wird mit der Methode "pauseRedTime" pausiert.
+Danach wird die rote TextArea disabled und die für GREEN freigegeben. Außerdem werden die Buttons so eingestellt, dass nur noch backToRed und goToBlack klickbar sind.
+Die VBox für rot bekommt die Hintergrundfarbe grau und die für GREEN und das Refactoring grün. Somit ist immer nur die aktuelle TextArea in der ensprechenden Farbe des Zustands eingefärbt.
+Dies soll dem Nutzer helfen eine Übersicht zu bekommen, wo er sich gerade befindet.
+
+Für die Buttons backToRed, goToBlack und goToRed wiederholt sich der gerade beschriebene Vorgang fast immer gleich. Es werden natürlich lediglich die Disables für TextArea und Buttons entsprechend gesetzt.
+
+Wenn die subStage geschlossen wird, werden die Methoden zum Beenden der Aufnahme für die Runde, rot, grün und refactoring aufgerufen.
+Aus der Klasse Chart wird nun die Methode chart aufgerufen. Diese bekommt die aufgezeichneten Zeiten der verschiedenen Timer übergeben und erstellt eine neue subStage, in der die Ergebnisse in einem Balkendiagramm dargestellt werden.
+
