@@ -1,9 +1,0 @@
-Protokoll vom 04.07.2016
-
-anwesend:alle
-Besprochen:
-		Aus einer Check Methode werden 2 gemacht:
-		-> eine die testet, ob genau ein Test fehlschlägt oder der Code nicht kompiliert
-		-> eine die testet, ob kein Test fehlschlägt und der Code kompiliert
-
-
