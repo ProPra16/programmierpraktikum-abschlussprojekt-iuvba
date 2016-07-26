@@ -228,7 +228,7 @@ public class FensterController {
 		textAreaR.setPrefSize(450.0, 600.0);
 		textAreaR.setText(aufgabeArrayList.get(choiceBoxTestFileIndex).Inhalt);
 
-		textAreaR.setDisable(false);
+
 
 		// TextArea Green & Black
 		textAreaGB = new TextArea();
@@ -236,7 +236,11 @@ public class FensterController {
 		textAreaGB.setPrefSize(450.0, 600.0);
 		textAreaGB.setText(aufgabeArrayList.get(choiceBoxFileIndex).Inhalt);
 
+
+
+        textAreaR.setDisable(false);
 		textAreaGB.setDisable(true);
+
 
 
 
@@ -536,6 +540,12 @@ public class FensterController {
 		goToRed.setDisable(true);
 
 		subStage.show();
+
+        if ((textAreaGB.getText().equals(textAreaR.getText())) == true){
+            subStage.close();
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Es wurde keine Aufgabe ausgewählt!");
+            alert.showAndWait();
+        }
 
         subStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
             @Override
