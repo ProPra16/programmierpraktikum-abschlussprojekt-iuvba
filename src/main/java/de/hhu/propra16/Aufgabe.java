@@ -7,6 +7,7 @@ public class Aufgabe {
 
     public String Name;
     public String Beschreibung;
+    public String Babysteps;
     public String ClassName;
     public String Inhalt;
 }

@@ -27,7 +27,7 @@ public class Check {
 			//System.out.print(NameDerDatei);
 			//return false;
 			
-			//TODO: check if the variables are null or not and print it out
+
 			CompilationUnit compilationUnits = new CompilationUnit(NameDerDatei,file,isTest);
 			compiler.compileAndRunTests();
 			compiler = CompilerFactory.getCompiler(compilationUnits);

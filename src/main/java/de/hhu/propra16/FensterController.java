@@ -32,6 +32,7 @@ import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Objects;
 
 import static de.hhu.propra16.Chart.chart;
 import static de.hhu.propra16.MenuGUI.primaryStage;
@@ -59,8 +60,8 @@ public class FensterController {
 	private Gson gsonFile = new Gson();
 	private ArrayList<Aufgabe> aufgabeArrayList = new ArrayList<>();
 
-	private int choiceBoxFileIndex = 0;
-	private int choiceBoxTestFileIndex = 0;
+	private int choiceBoxFileIndex;
+	private int choiceBoxTestFileIndex;
     private static TextArea textAreaGB;
     private static TextArea textAreaR;
     private Label timelabel = new Label();
@@ -143,33 +144,19 @@ public class FensterController {
 			startWorking.setId("startWorking");
 			startWorking.setText("Start Working");
 
-            Button babyOnOff = new Button();
-            babyOnOff.setPrefSize(150.0, 50.0);
-            babyOnOff.setId("baby");
-            babyOnOff.setText("Set Babysteps ON");
-
             Label babyCheck = new Label();
             babyCheck.setText("BABYSTEPS ON");
+            babyCheck.setAlignment(Pos.CENTER);
             babyCheck.setVisible(false);
+            System.out.println(aufgabeArrayList.get(choiceBoxFileIndex).Babysteps);
 
-            babyOnOff.addEventFilter(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
 
-                @Override
-                public void handle(MouseEvent event) {
-                    if (event.getButton() == MouseButton.PRIMARY) {
-                        if (baby == true){
-                            baby = false;
-                            babyCheck.setVisible(false);
-                            babyOnOff.setText("Set Babysteps ON");
-                        } else {
-                            baby = true;
-                            babyCheck.setVisible(true);
-                            babyOnOff.setText("Set Babysteps OFF");
-                        }
-                    }
-                }
-            });
-            subPaneChoiceBox.add(babyOnOff, 0, 1);
+            if (baby == true){
+                babyCheck.setVisible(true);
+            }
+            else babyCheck.setVisible(false);
+
+
 			subPaneChoiceBox.add(choiceBox, 0, 0);
 			subPaneChoiceBox.add(startWorking, 0, 3);
 			subPaneChoiceBox.add(babyCheck, 0, 2);
@@ -182,7 +169,14 @@ public class FensterController {
 						if (event.getButton() == MouseButton.PRIMARY) {
 
 							try {
+
+                                if (Objects.equals(aufgabeArrayList.get(choiceBoxFileIndex).Babysteps, "on")){
+                                    baby = true;
+                                }
+                                else baby = false;
+
 								open();
+
 							} catch (IOException e) {
 								e.printStackTrace();
 							}
@@ -320,7 +314,6 @@ public class FensterController {
 			@Override public void handle(ActionEvent e) {
 
 
-
 				oldTextInTextAreaGB = textAreaGB.getText();
                 if (baby == true) {
                     TimerBaby.endTimer();
@@ -340,6 +333,7 @@ public class FensterController {
 				CompilerResult cr = scTest.getCompilerResult();
 
                 tr = scTest.getTestResult();
+                CompileError ce;
 
                /* tf = tr.getTestFailures();
 
@@ -449,7 +443,8 @@ public class FensterController {
 				CompilerResult cr = scTest.getCompilerResult();
 
 
-				if (cr.hasCompileErrors() == false && numberOfFailedTests == 0) {
+
+				if (/*cr.hasCompileErrors() == false &&*/ numberOfFailedTests == 0) {
 
 					TimerBlack.start();
 					b = 1;
@@ -469,9 +464,10 @@ public class FensterController {
 					vBoxRed.setStyle("-fx-background-color: lightgrey");
 					vBoxGB.setStyle("-fx-background-color: black");
 
-					endTimer();
-					timerOff();
-
+                    if (baby == true) {
+                        endTimer();
+                        timerOff();
+                    }
 					textAreaGB.setText(textAreaGB.getText());
 				}
 				else if (cr.hasCompileErrors() == true) {
@@ -551,9 +547,12 @@ public class FensterController {
                     TimerGreen.continueGreenTime();
                     endRecordGreenTime();
                 }
+                if (baby == true) endTimer();
 
                 endRecordRedTime();
                 endRecordRoundTime();
+
+
                 chart();      // kann hier auch falsch platziert sein. Aufruf sollte dann dort geschehen wo es benötigt wird
             }
         });
